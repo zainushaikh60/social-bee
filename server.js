@@ -9,6 +9,9 @@ const Posts = require('./routes/posts');
 
 connectDB();
 
+// Init Middleware
+app.use(express.json({ extended: false }));
+
 app.get('/', (req, res) => res.json({ msg: 'Welcome to the Social-Bee API' }));
 
 // Routes

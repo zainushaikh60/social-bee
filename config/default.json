@@ -1,3 +1,4 @@
 {
-  "mongoURI": "mongodb+srv://zain:nayikidukaan890@test-db.v6n82.mongodb.net/<dbname>?retryWrites=true&w=majority"
+  "mongoURI": "mongodb+srv://zain:nayikidukaan890@test-db.v6n82.mongodb.net/Social-Bee?retryWrites=true&w=majority",
+  "jwtSecret": "secret"
 }
