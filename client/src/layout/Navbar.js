@@ -4,13 +4,13 @@ const Navbar = () => {
   return (
     <nav>
       <div className='right-side-container'>
-        <a href='#!' className='logo'>
+        <a href='/' className='logo'>
           <img src='/images/bee.svg' /> Social Bee
         </a>
       </div>
 
       <div className='center-menu-container'>
-        <a href='#!' className='active'>
+        <a href='/' className='active'>
           <i className='fas fa-home'></i>
         </a>
         <a href='#!' className='in-active'>
@@ -19,7 +19,7 @@ const Navbar = () => {
       </div>
 
       <div className='right-menu-container'>
-        <a href='#!' className='in-active'>
+        <a href='/profile' className='in-active'>
           <img src='/images/zain.jpg' className='user-img' />
           Zain
         </a>
