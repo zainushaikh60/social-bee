@@ -660,3 +660,24 @@ nav .logo img {
 .sign-in a {
   color: #377dde;
 }
+
+/* alert */
+
+.alert {
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin: 0px auto;
+  padding: 5px;
+  border-radius: 8px;
+  z-index: 10;
+  width: 500px;
+  background-color: red;
+  color: #fff;
+  margin-top: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 85%;
+  font-weight: 600;
+}
