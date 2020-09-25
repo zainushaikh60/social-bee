@@ -31,11 +31,11 @@ const PostCard = () => {
 
         <div className='post-statistics'>
           <div className='hr-line'></div>
-          <div className='post-likes-comments'>
-            <a href='#!'>
+          <div className='post-likes-comments '>
+            <a href='#!' className='in-active'>
               <i class='far fa-thumbs-up'></i> 1 Like
             </a>
-            <a href='#!'>
+            <a href='#!' className='in-active'>
               <i class='far fa-comment-alt'></i> 1 Comment
             </a>
           </div>

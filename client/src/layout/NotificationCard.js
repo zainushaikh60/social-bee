@@ -1,21 +1,20 @@
 import React, { Fragment } from 'react';
 
-const UserCard = () => {
+const NotificationCard = () => {
   return (
     <Fragment>
       <div className='user-card in-active'>
         <div className='user-info'>
           <a href='#!'>
             <img src='/images/zain.jpg' className='user-img' />
-            Zain
           </a>
         </div>
-        <div className='user-badge'>
-          <a href='#!'>Add Friend</a>
+        <div className='notification-text'>
+          <p>You have recieved a friend request from Zain</p>
         </div>
       </div>
     </Fragment>
   );
 };
 
-export default UserCard;
+export default NotificationCard;

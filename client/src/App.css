@@ -17,6 +17,7 @@ body {
 
 a {
   text-decoration: none;
+  color: #000;
 }
 
 ul {
@@ -69,7 +70,6 @@ nav {
   height: 60px;
   padding: 10px;
   background-color: #fff;
-  padding: 0 40px;
 }
 
 nav .logo {
@@ -83,13 +83,42 @@ nav .logo img {
   width: 50px;
 }
 
-nav .logo {
-  color: #000;
-}
-
 .left-side-container {
   display: flex;
   flex-direction: column;
+}
+
+.center-menu-container {
+  margin-left: 190px;
+  display: flex;
+  align-items: center;
+}
+
+.center-menu-container a {
+  margin: 0 25px;
+  padding: 10px;
+  border-radius: 10px;
+  font-weight: 800;
+  font-size: 90%;
+  transition: ease-in 0.1s;
+}
+
+.active {
+  background-color: #288dda;
+  color: #fff;
+}
+
+.active i {
+  color: #fff;
+}
+
+.in-active:hover {
+  background-color: #0b192469;
+  color: #fff;
+}
+
+.in-active:hover i {
+  color: #fff;
 }
 
 .right-menu-container {
@@ -111,17 +140,7 @@ nav .logo {
 }
 
 .right-menu-container a {
-  color: #000;
   padding: 1px 6px;
-}
-
-.right-menu-container a:hover {
-  background-color: #288dda;
-  color: #fff;
-}
-
-.right-menu-container a:hover > i {
-  color: #fff;
 }
 
 .right-menu-container a img {
@@ -129,17 +148,12 @@ nav .logo {
 }
 
 .right-menu-container a i {
-  color: #000;
   margin-right: 4px;
 }
 
 .user-img {
   width: 43px;
   border-radius: 50%;
-}
-
-.right-menu-container a:nth-of-type(2) {
-  display: none;
 }
 
 /* Add post */
@@ -251,7 +265,6 @@ nav .logo {
 }
 
 .post-by-name-date a {
-  color: #000;
   font-size: 80%;
   font-weight: 800;
 }
@@ -309,7 +322,6 @@ nav .logo {
 }
 
 .post-likes-comments a {
-  color: #000;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -322,11 +334,6 @@ nav .logo {
 
 .post-likes-comments a i {
   margin-right: 4px;
-}
-
-.post-likes-comments a:hover {
-  background-color: #288dda;
-  color: #fff;
 }
 
 .post-comments {
@@ -452,6 +459,12 @@ nav .logo {
   right: 0;
 }
 
+.sidebar__notifications {
+  display: none;
+  top: 0;
+  right: 0;
+}
+
 /* User card */
 
 .user-card {
@@ -466,15 +479,11 @@ nav .logo {
   cursor: pointer;
 }
 
-.user-card:hover {
-  background-color: #288dda;
-}
-
-.user-card:hover .user-info a {
+.in-active:hover .user-info a {
   color: #fff;
 }
 
-.user-card:hover .user-badge a {
+.in-active:hover .user-badge a {
   background-color: #fff;
   color: #000;
 }
@@ -496,4 +505,10 @@ nav .logo {
   padding: 5px;
   border-radius: 20px;
   color: #fff;
+}
+
+/* notifications card */
+
+.notification-text {
+  font-size: 64%;
 }
