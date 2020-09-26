@@ -111,7 +111,11 @@ router.get('/friendRequestsBy', auth, async (req, res) => {
 
 router.get('/friends', auth, async (req, res) => {
   try {
-    const user = await User.findById(req.user.id);
+    const user = await User.findById(req.user.id).populate({
+      path: 'friends',
+      select: 'name avatar email',
+    });
+
     res.json(user.friends);
   } catch (err) {
     console.error(err.message);

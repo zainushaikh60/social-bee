@@ -94,6 +94,10 @@ nav .logo img {
   align-items: center;
 }
 
+.center-menu-container-cancel-margin {
+  margin-left: 0;
+}
+
 .center-menu-container a {
   margin: 0 25px;
   padding: 10px;

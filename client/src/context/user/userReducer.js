@@ -32,6 +32,22 @@ export default (state, action) => {
         ...state,
         users: action.payload,
       };
+    case GET_FRIENDS:
+      return {
+        ...state,
+        friends: action.payload,
+      };
+    case GET_FRIEND_REQUESTS_TO:
+      return {
+        ...state,
+        friendRequestsTo: action.payload,
+      };
+    case GET_FRIEND_REQUESTS_BY:
+      return {
+        ...state,
+        friendRequestsBys: action.payload,
+      };
+
     default:
       return state;
   }

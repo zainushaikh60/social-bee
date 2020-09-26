@@ -8,11 +8,8 @@ const Users = () => {
   const userContext = useContext(UserContext);
 
   const { user } = authContext;
-  const { getUsers, users } = userContext;
 
-  useEffect(() => {
-    getUsers();
-  }, []);
+  const { users } = userContext;
 
   return (
     <Fragment>
@@ -20,7 +17,9 @@ const Users = () => {
         users.length > 0 &&
         users
           .filter((currentUser) => currentUser._id !== user._id)
-          .map((user) => <UserCard key={user._id} user={user} />)}
+          .map((currentUser) => (
+            <UserCard key={currentUser._id} currentUser={currentUser} />
+          ))}
     </Fragment>
   );
 };

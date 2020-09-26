@@ -1,13 +1,13 @@
 import React, { Fragment } from 'react';
 
-const FriendCard = () => {
+const FriendCard = ({ friend }) => {
   return (
     <Fragment>
       <div className='user-card in-active'>
         <div className='user-info'>
           <a href='#!'>
-            <img src='/images/zain.jpg' className='user-img' />
-            Zain
+            <img src={friend.avatar} className='user-img' />
+            {friend.name}
           </a>
         </div>
         <div className='user-badge'>
