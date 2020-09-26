@@ -98,6 +98,18 @@ router.get('/', auth, async (req, res) => {
   }
 });
 
+// Get user profile
+
+router.get('/profile/:id', auth, async (req, res) => {
+  try {
+    const user = await User.findById('name friends email');
+    res.json(user);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server error');
+  }
+});
+
 // Send friend request
 
 router.put('/:id/sendFriendRequest', auth, async (req, res) => {
@@ -293,30 +305,6 @@ router.put('/:id/removeFriend', auth, async (req, res) => {
         .status(400)
         .json({ msg: 'You are not friends with this user' });
     }
-  } catch (err) {
-    console.error(err.message);
-    res.status(500).send('Server error');
-  }
-});
-
-// Get friend requests to
-
-router.get('/friendRequestsTo', auth, async (req, res) => {
-  try {
-    const user = await User.findById(req.user.id);
-    res.json(user.friendRequestsTo);
-  } catch (err) {
-    console.error(err.message);
-    res.status(500).send('Server error');
-  }
-});
-
-// Get friend requests to
-
-router.get('/friendRequestsBy', auth, async (req, res) => {
-  try {
-    const user = await User.findById(req.user.id);
-    res.json(user.friendRequestsBy);
   } catch (err) {
     console.error(err.message);
     res.status(500).send('Server error');

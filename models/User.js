@@ -20,6 +20,7 @@ const UserSchema = mongoose.Schema({
   friends: [{ type: mongoose.Schema.ObjectId, ref: 'User' }],
   friendRequestsTo: [{ type: mongoose.Schema.ObjectId, ref: 'User' }],
   friendRequestsBy: [{ type: mongoose.Schema.ObjectId, ref: 'User' }],
+  notifications: [{ type: String }],
   date: {
     type: Date,
     default: Date.now,

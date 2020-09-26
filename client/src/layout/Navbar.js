@@ -1,6 +1,15 @@
-import React from 'react';
+import React, { Fragment, useContext } from 'react';
+import AuthContext from '../context/auth/authContext';
 
 const Navbar = () => {
+  const authContext = useContext(AuthContext);
+
+  const { logout, user } = authContext;
+
+  const onLogout = () => {
+    logout();
+  };
+
   return (
     <nav>
       <div className='right-side-container'>
@@ -21,7 +30,7 @@ const Navbar = () => {
       <div className='right-menu-container'>
         <a href='/profile' className='in-active'>
           <img src='/images/zain.jpg' className='user-img' />
-          Zain
+          {user && user.name}
         </a>
 
         <a href='#!' className='in-active'>
@@ -32,7 +41,7 @@ const Navbar = () => {
           <i class='fas fa-user-friends'></i> Friends
         </a>
 
-        <a href='#!' className='in-active'>
+        <a href='#!' className='in-active' onClick={onLogout}>
           <i className='fas fa-sign-out-alt'></i> Sign Out
         </a>
       </div>

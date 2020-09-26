@@ -71,4 +71,64 @@ router.post(
   }
 );
 
+// Get my profile
+
+router.get('/my-profile/', auth, async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id);
+    res.json(user);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server error');
+  }
+});
+
+// Get friend requests to
+
+router.get('/friendRequestsTo', auth, async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id);
+    res.json(user.friendRequestsTo);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server error');
+  }
+});
+
+// Get friend requests by
+
+router.get('/friendRequestsBy', auth, async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id);
+    res.json(user.friendRequestsBy);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server error');
+  }
+});
+
+// Get friends
+
+router.get('/friends', auth, async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id);
+    res.json(user.friends);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server error');
+  }
+});
+
+// Get notifications
+
+router.get('/notifications', auth, async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id);
+    res.json(user.notifications);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server error');
+  }
+});
+
 module.exports = router;
