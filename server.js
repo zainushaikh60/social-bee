@@ -1,4 +1,5 @@
 const express = require('express');
+const path = require('path');
 const app = express();
 const connectDB = require('./config/db');
 const Auth = require('./routes/auth');
@@ -9,7 +10,10 @@ const Posts = require('./routes/posts');
 
 connectDB();
 
+app.use('/uploads', express.static('uploads'));
+
 // Init Middleware
+
 app.use(express.json({ extended: false }));
 
 app.get('/', (req, res) => res.json({ msg: 'Welcome to the Social-Bee API' }));

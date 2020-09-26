@@ -1,7 +1,7 @@
-import React, { Fragment, useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import AuthContext from '../context/auth/authContext';
 
-const Navbar = () => {
+const Navbar = ({ onClick }) => {
   const authContext = useContext(AuthContext);
 
   const { logout, user } = authContext;
@@ -28,8 +28,8 @@ const Navbar = () => {
       </div>
 
       <div className='right-menu-container'>
-        <a href='/profile' className='in-active'>
-          <img src='/images/zain.jpg' className='user-img' />
+        <a href='#!' className='in-active' onClick={onClick}>
+          <img src={user && user.avatar} className='user-img' />
           {user && user.name}
         </a>
 

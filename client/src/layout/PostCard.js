@@ -1,6 +1,11 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useContext } from 'react';
+import AuthContext from '../context/auth/authContext';
 
 const PostCard = () => {
+  const authContext = useContext(AuthContext);
+
+  const { user } = authContext;
+
   return (
     <Fragment>
       <div className='post-card'>
@@ -62,7 +67,7 @@ const PostCard = () => {
 
         <div className='post-add-comment'>
           <a href='#!'>
-            <img src='/images/zain.jpg' className='user-img' />
+            <img src={user && user.avatar} className='user-img' />
           </a>
           <div className='post-add-comment-text'>
             <input type='text' placeholder='Write a comment' />

@@ -1,4 +1,4 @@
-import React, { Fragment, useContext, useEffect } from 'react';
+import React, { Fragment, useContext, useEffect, useState } from 'react';
 import Navbar from '../layout/Navbar';
 import Sidebar from './Sidebar';
 import AddPost from '../layout/AddPost';
@@ -13,13 +13,20 @@ const Home = () => {
     authContext.loadUser();
   }, []);
 
+  const [profile, setProfile] = useState(false);
+
+  const onSetProfile = () => {
+    setProfile((profile) => !profile);
+  };
+
   return (
     <Fragment>
-      <Navbar />
-      <Sidebar />
+      <Navbar onClick={onSetProfile} profile={profile} />
+      {profile ? <></> : <Sidebar />}
+
       <div className='wrapper'>
         <div className='container'>
-          {/* <Profile /> */}
+          {profile && <Profile />}
           <AddPost />
           <PostCard />
         </div>

@@ -1,4 +1,5 @@
 const express = require('express');
+const User = require('../models/User');
 const router = express.Router();
 const auth = require('../middleware/auth');
 const { check, validationResult } = require('express-validator');
@@ -127,7 +128,7 @@ router.put('/unlike/:id', auth, async (req, res) => {
     }
 
     // remove the like
-    post.likes = post.likes.filter((user) => user.toString() !== req.user.id);
+    post.likes = post.likes.filter((user) => user.toString() === req.user.id);
 
     await post.save();
 

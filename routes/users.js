@@ -6,9 +6,38 @@ const auth = require('../middleware/auth');
 const config = require('config');
 const normalize = require('normalize');
 const gravatar = require('gravatar');
+const multer = require('multer');
+const fs = require('fs');
 const { check, validationResult } = require('express-validator');
-
 const User = require('../models/User');
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    fs.mkdir('./uploads/profile-pictures/', (err) => {
+      cb(null, './uploads/profile-pictures/');
+    });
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + file.originalname);
+  },
+});
+
+const fileFilter = (req, file, cb) => {
+  // reject file
+  if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png') {
+    cb(null, true);
+  } else {
+    cb(new Error('Only jpeg and png files are allowed'), false);
+  }
+};
+
+const upload = multer({
+  storage: storage,
+  limits: {
+    fileSize: 1024 * 1024 * 5,
+  },
+  fileFilter: fileFilter,
+});
 
 // @route  Post api/users
 // @desc   Register a user
@@ -110,6 +139,26 @@ router.get('/profile/:id', auth, async (req, res) => {
   }
 });
 
+// Upload profile picture
+
+router.post(
+  '/uploadProfilePicture',
+  auth,
+  upload.single('avatar'),
+  async (req, res) => {
+    try {
+      const user = await User.findById(req.user.id);
+      user.avatar = req.file.path;
+
+      await user.save();
+      res.json(user);
+    } catch (err) {
+      console.error(err.message);
+      res.status(500).send('Server error');
+    }
+  }
+);
+
 // Send friend request
 
 router.put('/:id/sendFriendRequest', auth, async (req, res) => {
@@ -149,8 +198,13 @@ router.put('/:id/sendFriendRequest', auth, async (req, res) => {
         .status(400)
         .json({ msg: 'This user have already sent you a friend request' });
     } else {
-      requestReciever.friendRequestsBy.push(requestSender.id);
-      requestSender.friendRequestsTo.push(requestReciever.id);
+      requestReciever.friendRequestsBy.unshift(requestSender.id);
+      requestSender.friendRequestsTo.unshift(requestReciever.id);
+
+      requestReciever.notifications.unshift({
+        notification: `You have recieved a friend request from ${requestSender.name}`,
+        user: requestSender.id,
+      });
 
       await requestReciever.save();
       await requestSender.save();
@@ -183,8 +237,18 @@ router.put('/:id/cancelFriendRequest', auth, async (req, res) => {
         .map((friendRqTo) => friendRqTo.toString() === requestWasSentTo.id)
         .indexOf(requestWasSentTo.id);
 
+      const indexOfRequestCancelerInNotifications = requestWasSentTo.notifications
+        .map(
+          (notification) => notification.user.toString() === requestCanceler.id
+        )
+        .indexOf(requestCanceler.id);
+
       requestWasSentTo.friendRequestsBy.splice(indexOfRequestCanceler, 1);
       requestCanceler.friendRequestsTo.splice(indexOfRequestWasSentTo, 1);
+      requestWasSentTo.notifications.splice(
+        indexOfRequestCancelerInNotifications,
+        1
+      );
 
       await requestCanceler.save();
       await requestWasSentTo.save();
@@ -219,8 +283,18 @@ router.put('/:id/acceptFriendRequest', auth, async (req, res) => {
         .map((friendRqBy) => friendRqBy.toString() === requestSender.id)
         .indexOf(requestAcceptor.id);
 
+      const indexOfRequestSenderIdInNotifications = requestAcceptor.notifications
+        .map(
+          (notification) => notification.user.toString() === requestSender.id
+        )
+        .indexOf(requestSender.id);
+
       requestAcceptor.friendRequestsBy.splice(indexOfSenderId, 1);
       requestSender.friendRequestsTo.splice(indexOfRecieverId, 1);
+      requestAcceptor.notifications.splice(
+        indexOfRequestSenderIdInNotifications,
+        1
+      );
 
       requestAcceptor.friends.push(requestSender.id);
       requestSender.friends.push(requestAcceptor.id);
@@ -258,8 +332,18 @@ router.put('/:id/rejectFriendRequest', auth, async (req, res) => {
         .map((friendRqTo) => friendRqTo.toString() === requestRejector.id)
         .indexOf(requestRejector.id);
 
+      const indexOfRequestSenderIdInNotifications = requestRejector.notifications
+        .map(
+          (notification) => notification.user.toString() === requestSender.id
+        )
+        .indexOf(requestSender.id);
+
       requestRejector.friendRequestsBy.splice(indexOfRequestSender, 1);
       requestSender.friendRequestsTo.splice(indexOfRequestRejector, 1);
+      requestRejector.notifications.splice(
+        indexOfRequestSenderIdInNotifications,
+        1
+      );
 
       await requestSender.save();
       await requestRejector.save();

@@ -13,6 +13,9 @@ const UserSchema = mongoose.Schema({
   avatar: {
     type: String,
   },
+  cover: {
+    type: String,
+  },
   password: {
     type: String,
     required: true,
@@ -20,7 +23,12 @@ const UserSchema = mongoose.Schema({
   friends: [{ type: mongoose.Schema.ObjectId, ref: 'User' }],
   friendRequestsTo: [{ type: mongoose.Schema.ObjectId, ref: 'User' }],
   friendRequestsBy: [{ type: mongoose.Schema.ObjectId, ref: 'User' }],
-  notifications: [{ type: String }],
+  notifications: [
+    {
+      notification: { type: String },
+      user: { type: mongoose.Schema.ObjectId, ref: 'User' },
+    },
+  ],
   date: {
     type: Date,
     default: Date.now,

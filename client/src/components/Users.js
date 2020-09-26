@@ -18,7 +18,9 @@ const Users = () => {
     <Fragment>
       {user &&
         users.length > 0 &&
-        users.map((user) => <UserCard key={user.id} user={user} />)}
+        users
+          .filter((currentUser) => currentUser._id !== user._id)
+          .map((user) => <UserCard key={user._id} user={user} />)}
     </Fragment>
   );
 };

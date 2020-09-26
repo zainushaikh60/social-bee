@@ -1,14 +1,14 @@
 import React, { Fragment } from 'react';
 
 const UserCard = ({ user }) => {
-  const { _id, name } = user;
+  const { _id, name, avatar } = user;
 
   return (
     <Fragment>
       <div className='user-card in-active'>
         <div className='user-info'>
           <a href='#!'>
-            <img src='/images/zain.jpg' className='user-img' />
+            <img src={avatar} className='user-img' />
             {name}
           </a>
         </div>
