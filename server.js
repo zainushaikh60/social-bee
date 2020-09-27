@@ -1,5 +1,4 @@
 const express = require('express');
-const path = require('path');
 const app = express();
 const connectDB = require('./config/db');
 const Auth = require('./routes/auth');
@@ -9,8 +8,6 @@ const Posts = require('./routes/posts');
 // Connect DB
 
 connectDB();
-
-app.use('/uploads', express.static('uploads'));
 
 // Init Middleware
 

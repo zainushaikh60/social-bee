@@ -6,8 +6,8 @@ export const Alerts = () => {
   return (
     alertContext.alerts.length > 0 &&
     alertContext.alerts.map((alert) => (
-      <div key={alert.id} className='alert'>
-        <i className='fas fa-info-circle'></i>&nbsp; {alert.msg}
+      <div key={alert.id} className={`alert alert-${alert.type}`}>
+        <i className={`fas fa-${alert.className}`}></i>&nbsp; {alert.msg}
       </div>
     ))
   );

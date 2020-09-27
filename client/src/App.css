@@ -680,7 +680,6 @@ nav .logo img {
   border-radius: 8px;
   z-index: 10;
   width: 500px;
-  background-color: red;
   color: #fff;
   margin-top: 5px;
   display: flex;
@@ -688,4 +687,12 @@ nav .logo img {
   align-items: center;
   font-size: 85%;
   font-weight: 600;
+}
+
+.alert-danger {
+  background-color: #db4437;
+}
+
+.alert-success {
+  background-color: #0bb32c;
 }

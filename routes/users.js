@@ -4,7 +4,6 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const auth = require('../middleware/auth');
 const config = require('config');
-const normalize = require('normalize');
 const gravatar = require('gravatar');
 const multer = require('multer');
 const fs = require('fs');
@@ -69,12 +68,13 @@ router.post(
         return res.status(400).json({ msg: 'User already exists' });
       }
 
-      const avatar = normalize(
-        gravatar.url(email, {
+      const avatar = gravatar.url(
+        email,
+        {
           s: '200',
           r: 'pg',
           d: 'mm',
-        }),
+        },
         { forceHttps: true }
       );
 
@@ -167,50 +167,43 @@ router.put('/:id/sendFriendRequest', auth, async (req, res) => {
     const requestReciever = await User.findById(req.params.id);
 
     if (requestSender.id === requestReciever.id) {
-      return res
+      res
         .status(400)
-        .json({ msg: 'You can not send friend request to yourself' });
-    } else if (
+        .json({ msg: 'You can not send friend request to yourself ' });
+    }
+
+    if (
       requestSender.friends.length > 0 &&
-      requestSender.friends.map(
-        (friend) => friend.toString === requestReciever.id
-      )
+      requestSender.friends.toString() === requestReciever.id
     ) {
-      return res
+      res
         .status(400)
         .json({ msg: 'You can not send friend request to your friend' });
     } else if (
       requestSender.friendRequestsTo.length > 0 &&
-      requestSender.friendRequestsTo.map(
-        (friendRqTo) => friendRqTo.toString === requestReciever.id
-      )
+      requestSender.friendRequestsTo.toString() === requestReciever.id
     ) {
-      return res
+      res
         .status(400)
         .json({ msg: 'You have already sent this user a friend request' });
     } else if (
       requestSender.friendRequestsBy.length > 0 &&
-      requestSender.friendRequestsBy.map(
-        (friendRqBy) => friendRqBy.toString === requestReciever.id
-      )
+      requestSender.friendRequestsBy.toString() === requestReciever.id
     ) {
-      return res
-        .status(400)
-        .json({ msg: 'This user have already sent you a friend request' });
+      res.status(400).json({
+        msg: 'This user have already sent you a friend request',
+      });
     } else {
       requestReciever.friendRequestsBy.unshift(requestSender.id);
       requestSender.friendRequestsTo.unshift(requestReciever.id);
-
       requestReciever.notifications.unshift({
         notification: `You have recieved a friend request from ${requestSender.name}`,
         user: requestSender.id,
       });
-
       await requestReciever.save();
       await requestSender.save();
-
-      res.json(requestSender.friendRequestsTo);
     }
+    res.json(requestSender.friendRequestsTo);
   } catch (err) {
     console.error(err.message);
     res.status(500).send('Server error');

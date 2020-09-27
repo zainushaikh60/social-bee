@@ -34,6 +34,7 @@ const UserState = (props) => {
     friendRequestsTo: [],
     friends: [],
     notifications: [],
+    error: null,
   };
 
   // Get all users
@@ -108,7 +109,7 @@ const UserState = (props) => {
 
   const sendFriendRequest = async (id) => {
     try {
-      const res = await axios.put(`/api/users/sendFriendRequest/${id}`);
+      const res = await axios.put(`/api/users/${id}/sendFriendRequest`);
       dispatch({
         type: SEND_FRIEND_REQUEST,
         payload: res.data,
@@ -125,7 +126,7 @@ const UserState = (props) => {
 
   const cancelFriendRequest = async (id) => {
     try {
-      const res = await axios.put(`api/users/cancelFriendRequest/${id}`);
+      const res = await axios.put(`api/users/${id}/cancelFriendRequest/`);
       dispatch({
         type: CANCEL_FRIEND_REQUEST,
         payload: res.data,
@@ -221,6 +222,7 @@ const UserState = (props) => {
         friendRequestsBy: state.friendRequestsBy,
         friends: state.friends,
         notifications: state.notifications,
+        error: state.error,
         getUser,
         getUsers,
         getFriendRequestsTo,

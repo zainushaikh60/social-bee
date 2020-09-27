@@ -1,10 +1,28 @@
 import React, { Fragment, useContext } from 'react';
 import UserContext from '../context/user/userContext';
+import AuthContext from '../context/auth/authContext';
+import AlertContext from '../context/alert/alertContext';
 
 const UserCard = ({ currentUser }) => {
   const userContext = useContext(UserContext);
+  const authContext = useContext(AlertContext);
+  const alertContext = useContext(AlertContext);
 
-  const { friends, friendRequestsTo, friendRequestsBy } = userContext;
+  const { setAlert } = alertContext;
+
+  const { user } = authContext;
+
+  const {
+    friends,
+    friendRequestsTo,
+    friendRequestsBy,
+    sendFriendRequest,
+    cancelFriendRequest,
+    acceptFriendRequest,
+    rejectFriendRequest,
+    error,
+    clearErrors,
+  } = userContext;
 
   let isFriends = null;
   let isFriendRequestTo = null;
@@ -22,7 +40,7 @@ const UserCard = ({ currentUser }) => {
     friendRequestsTo.length > 0 &&
     friendRequestsTo.map(
       (friendRequestTo) =>
-        friendRequestTo.toString() === currentUser._id &&
+        friendRequestTo._id.toString() === currentUser._id &&
         (isFriendRequestTo = true)
     )
   );
@@ -31,10 +49,46 @@ const UserCard = ({ currentUser }) => {
     friendRequestsBy.length > 0 &&
     friendRequestsBy.map(
       (friendRequestBy) =>
-        friendRequestBy.toString() === currentUser._id &&
+        friendRequestBy._id.toString() === currentUser._id &&
         (isFriendRequestBy = true)
     )
   );
+
+  const onSendFriendRequest = () => {
+    if (error === 'You can not send friend request to your friend') {
+      setAlert(error, 'danger', 'info-circle');
+      clearErrors();
+    }
+    sendFriendRequest(currentUser._id);
+    setAlert('Friend request sent', 'success', 'check-circle');
+  };
+
+  const onCancelFriendRequest = () => {
+    if (error === 'No friend requests to this user') {
+      setAlert(error, 'danger', 'info-circle');
+      clearErrors();
+    }
+    cancelFriendRequest(currentUser._id);
+    setAlert('Friend request cancelled', 'danger', 'info-circle');
+  };
+
+  const onAcceptFriendRequest = () => {
+    if (error === 'No friend request by this user') {
+      setAlert(error, 'danger', 'info-circle');
+      clearErrors();
+    }
+    acceptFriendRequest(currentUser._id);
+    setAlert('Friend request accepted', 'success', 'user-friends');
+  };
+
+  const onRejectFriendRequest = () => {
+    if (error === 'No friend request by this user') {
+      setAlert(error);
+      clearErrors();
+    }
+    rejectFriendRequest(currentUser._id);
+    setAlert('Friend request rejected', 'danger', 'info-circle');
+  };
 
   return (
     <Fragment>
@@ -54,19 +108,25 @@ const UserCard = ({ currentUser }) => {
 
         {isFriendRequestBy && (
           <div className='user-badge'>
-            <a href='#!'>Respond</a>
+            <p>Respond to friend request</p>
+            <a href='#!'>Accept</a>
+            <a href='#!'>Reject</a>
           </div>
         )}
 
         {isFriendRequestTo && (
           <div className='user-badge'>
-            <a href='#!'>Pending</a>
+            <a href='#!' onClick={onCancelFriendRequest}>
+              Cancel Friend Request
+            </a>
           </div>
         )}
 
         {!isFriends && !isFriendRequestTo && !isFriendRequestBy && (
           <div className='user-badge'>
-            <a href='#!'>Add Friend</a>
+            <a href='#!' onClick={onSendFriendRequest}>
+              Add Friend
+            </a>
           </div>
         )}
       </div>
