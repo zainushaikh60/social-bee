@@ -223,33 +223,26 @@ router.put('/:id/cancelFriendRequest', auth, async (req, res) => {
         (friendRqTo) => friendRqTo.toString() === requestWasSentTo.id
       ).length > 0
     ) {
-      // const indexOfRequestCanceler = requestWasSentTo.friendRequestsBy
-      //   .map((friendRqBy) => friendRqBy.toString() === requestCanceler.id)
-      //   .indexOf(requestCanceler.id);
-
-      // const indexOfRequestWasSentTo = requestCanceler.friendRequestsTo
-      //   .map((friendRqTo) => friendRqTo.toString() === requestWasSentTo.id)
-      //   .indexOf(requestWasSentTo.id);
-
-      // const indexOfRequestCancelerInNotifications = requestWasSentTo.notifications
-      //   .map(
-      //     (notification) => notification.user.toString() === requestCanceler.id
-      //   )
-      //   .indexOf(requestCanceler.id);
-
-      // requestWasSentTo.friendRequestsBy.splice(indexOfRequestCanceler, 1);
-      // requestCanceler.friendRequestsTo.splice(indexOfRequestWasSentTo, 1);
-      // requestWasSentTo.notifications.splice(
-      //   indexOfRequestCancelerInNotifications,
-      //   1
-      // );
-
-      requestWasSentTo.friendRequestsBy.filter(
-        (friendRequestBy) => friendRequestBy === requestCanceler.id
+      requestWasSentTo.friendRequestsBy.splice(
+        requestWasSentTo.friendRequestsBy.findIndex(
+          (friendRequestBy) => friendRequestBy.toString() === requestCanceler.id
+        ),
+        1
       );
 
-      requestCanceler.friendRequestsTo.filter(
-        (friendRequestTo) => friendRequestTo === requestWasSentTo.id
+      requestCanceler.friendRequestsTo.splice(
+        requestCanceler.friendRequestsTo.findIndex(
+          (friendRequestTo) =>
+            friendRequestTo.toString() === requestWasSentTo.id
+        ),
+        1
+      );
+
+      requestWasSentTo.notifications.splice(
+        requestWasSentTo.notifications.findIndex(
+          (notification) => notification.toString() === requestCanceler.id
+        ),
+        1
       );
 
       await requestCanceler.save();
@@ -277,24 +270,24 @@ router.put('/:id/acceptFriendRequest', auth, async (req, res) => {
         (friendRqBy) => friendRqBy.toString() === requestSender.id
       ).length > 0
     ) {
-      const indexOfSenderId = requestAcceptor.friendRequestsBy
-        .map((friendRqBy) => friendRqBy.toString() === requestSender.id)
-        .indexOf(requestSender.id);
+      requestAcceptor.friendRequestsBy.splice(
+        requestAcceptor.friendRequestsBy.findIndex(
+          (friendRequestBy) => friendRequestBy.toString() === requestSender.id
+        ),
+        1
+      );
 
-      const indexOfRecieverId = requestSender.friendRequestsTo
-        .map((friendRqBy) => friendRqBy.toString() === requestSender.id)
-        .indexOf(requestAcceptor.id);
+      requestSender.friendRequestsTo.splice(
+        requestSender.friendRequestsTo.findIndex(
+          (friendRequestTo) => friendRequestTo.toString() === requestAcceptor.id
+        ),
+        1
+      );
 
-      const indexOfRequestSenderIdInNotifications = requestAcceptor.notifications
-        .map(
-          (notification) => notification.user.toString() === requestSender.id
-        )
-        .indexOf(requestSender.id);
-
-      requestAcceptor.friendRequestsBy.splice(indexOfSenderId, 1);
-      requestSender.friendRequestsTo.splice(indexOfRecieverId, 1);
       requestAcceptor.notifications.splice(
-        indexOfRequestSenderIdInNotifications,
+        requestAcceptor.notifications.findIndex(
+          (notification) => notification.toString() === requestSender.id
+        ),
         1
       );
 
@@ -330,31 +323,31 @@ router.put('/:id/rejectFriendRequest', auth, async (req, res) => {
         (friendRqBy) => friendRqBy.toString() === requestSender.id
       ).length > 0
     ) {
-      const indexOfRequestSender = requestRejector.friendRequestsBy
-        .map((friendRqBy) => friendRqBy.toString() === requestSender.id)
-        .indexOf(requestSender.id);
+      requestRejector.friendRequestsBy.splice(
+        requestRejector.friendRequestsBy.findIndex(
+          (friendRequestBy) => friendRequestBy.toString() === requestSender.id
+        ),
+        1
+      );
 
-      const indexOfRequestRejector = requestSender.friendRequestsTo
-        .map((friendRqTo) => friendRqTo.toString() === requestRejector.id)
-        .indexOf(requestRejector.id);
+      requestSender.friendRequestsTo.splice(
+        requestSender.friendRequestsTo.findIndex(
+          (friendRequestTo) => friendRequestTo.toString() === requestRejector.id
+        ),
+        1
+      );
 
-      const indexOfRequestSenderIdInNotifications = requestRejector.notifications
-        .map(
-          (notification) => notification.user.toString() === requestSender.id
-        )
-        .indexOf(requestSender.id);
-
-      requestRejector.friendRequestsBy.splice(indexOfRequestSender, 1);
-      requestSender.friendRequestsTo.splice(indexOfRequestRejector, 1);
       requestRejector.notifications.splice(
-        indexOfRequestSenderIdInNotifications,
+        requestRejector.notifications.findIndex(
+          (notification) => notification.toString() === requestSender.id
+        ),
         1
       );
 
       await requestSender.save();
       await requestRejector.save();
 
-      res.json({
+      return res.json({
         friendRequestsBy: requestRejector.friendRequestsBy,
         notifications: requestRejector.notifications,
       });
@@ -378,21 +371,20 @@ router.put('/:id/removeFriend', auth, async (req, res) => {
       remover.friends.filter((friend) => friend.toString() === target.id)
         .length > 0
     ) {
-      const indexOfTarget = remover.friends
-        .map((friend) => friend.toString() === target.id)
-        .indexOf(target.id);
+      remover.friends.splice(
+        remover.friends.findIndex((friend) => friend.toString() === target.id),
+        1
+      );
 
-      const indexOfRemover = target.friends
-        .map((friend) => friend.toString() === remover.id)
-        .indexOf(remover.id);
-
-      remover.friends.splice(indexOfTarget, 1);
-      target.friends.splice(indexOfRemover, 1);
+      target.friends.splice(
+        target.friends.findIndex((friend) => friend.toString() === remover.id),
+        1
+      );
 
       await remover.save();
       await target.save();
 
-      return res.json(remover.friends.map((friend) => friend));
+      return res.json(remover.friends);
     } else {
       return res
         .status(400)

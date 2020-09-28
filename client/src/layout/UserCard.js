@@ -56,7 +56,7 @@ const UserCard = ({ currentUser }) => {
     friendRequestsBy.map(
       (friendRequestBy) =>
         friendRequestBy.toString() === currentUser._id &&
-        (isFriendRequestBy = isFriendRequestBy)
+        (isFriendRequestBy = !isFriendRequestBy)
     )
   );
 

@@ -43,9 +43,7 @@ export default (state, action) => {
     case CANCEL_FRIEND_REQUEST:
       return {
         ...state,
-        friendRequestsTo: action.payload.filter(
-          (friendRequestTo) => friendRequestTo.toString() !== action.payload.id
-        ),
+        friendRequestsTo: action.payload,
       };
     case ACCEPT_FRIEND_REQUEST:
       return {
