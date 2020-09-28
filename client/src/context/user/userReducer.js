@@ -10,6 +10,8 @@ import {
   ACCEPT_FRIEND_REQUEST_FAIL,
   REJECT_FRIEND_REQUEST,
   REJECT_FRIEND_REQUEST_FAIL,
+  REMOVE_FRIEND,
+  REMOVE_FRIEND_FAIL,
   GET_FRIEND_REQUESTS_TO,
   GET_FRIEND_REQUESTS_TO_FAIL,
   GET_FRIEND_REQUESTS_BY,
@@ -34,13 +36,25 @@ export default (state, action) => {
         users: action.payload,
       };
     case SEND_FRIEND_REQUEST:
-    case CANCEL_FRIEND_REQUEST:
       return {
         ...state,
         friendRequestsTo: action.payload,
       };
+    case CANCEL_FRIEND_REQUEST:
+      return {
+        ...state,
+        friendRequestsTo: action.payload.filter(
+          (friendRequestTo) => friendRequestTo.toString() !== action.payload.id
+        ),
+      };
     case ACCEPT_FRIEND_REQUEST:
-    case REJECT_FRIEND_REQUEST:
+      return {
+        ...state,
+        friends: action.payload.friends,
+        friendRequestsBy: action.payload.friendRequestsBy,
+        notifications: action.payload.notifications,
+      };
+    case REMOVE_FRIEND:
       return {
         ...state,
         friends: action.payload,
@@ -65,11 +79,18 @@ export default (state, action) => {
         ...state,
         friendRequestsBy: action.payload,
       };
+    case REJECT_FRIEND_REQUEST:
+      return {
+        ...state,
+        friendRequestsBy: action.payload.friendRequestsBy,
+        notifications: action.payload.notifications,
+      };
     case GET_USER_FAIL:
     case SEND_FRIEND_REQUEST_FAIL:
     case CANCEL_FRIEND_REQUEST_FAIL:
     case ACCEPT_FRIEND_REQUEST_FAIL:
     case REJECT_FRIEND_REQUEST_FAIL:
+    case REMOVE_FRIEND_FAIL:
     case GET_FRIEND_REQUESTS_TO_FAIL:
     case GET_FRIEND_REQUESTS_BY_FAIL:
     case GET_FRIENDS_FAIL:

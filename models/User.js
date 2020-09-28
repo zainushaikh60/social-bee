@@ -35,4 +35,12 @@ const UserSchema = mongoose.Schema({
   },
 });
 
+UserSchema.pre('save', async function (next) {
+  await this.populate({
+    path: 'friends',
+    select: 'name email avatar',
+  }).execPopulate();
+  next();
+});
+
 module.exports = mongoose.model('User', UserSchema);

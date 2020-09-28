@@ -19,6 +19,8 @@ import {
   ACCEPT_FRIEND_REQUEST_FAIL,
   REJECT_FRIEND_REQUEST,
   REJECT_FRIEND_REQUEST_FAIL,
+  REMOVE_FRIEND,
+  REMOVE_FRIEND_FAIL,
   GET_FRIENDS,
   GET_FRIENDS_FAIL,
   GET_NOTIFICATIONS,
@@ -30,10 +32,10 @@ const UserState = (props) => {
   const initialState = {
     user: null,
     users: [],
-    friendRequestsBy: [],
-    friendRequestsTo: [],
-    friends: [],
-    notifications: [],
+    friendRequestsBy: null,
+    friendRequestsTo: null,
+    friends: null,
+    notifications: null,
     error: null,
   };
 
@@ -75,7 +77,7 @@ const UserState = (props) => {
 
   const getFriendRequestsTo = async () => {
     try {
-      const res = await axios.get('/api/auth/friendRequestsTo/');
+      const res = await axios.get('/api/auth/friendRequestsTo');
       dispatch({
         type: GET_FRIEND_REQUESTS_TO,
         payload: res.data,
@@ -92,7 +94,7 @@ const UserState = (props) => {
 
   const getFriendRequestsBy = async () => {
     try {
-      const res = await axios.get('/api/auth/friendRequestsBy/');
+      const res = await axios.get('/api/auth/friendRequestsBy');
       dispatch({
         type: GET_FRIEND_REQUESTS_BY,
         payload: res.data,
@@ -126,7 +128,7 @@ const UserState = (props) => {
 
   const cancelFriendRequest = async (id) => {
     try {
-      const res = await axios.put(`api/users/${id}/cancelFriendRequest/`);
+      const res = await axios.put(`/api/users/${id}/cancelFriendRequest`);
       dispatch({
         type: CANCEL_FRIEND_REQUEST,
         payload: res.data,
@@ -143,7 +145,7 @@ const UserState = (props) => {
 
   const acceptFriendRequest = async (id) => {
     try {
-      const res = axios.put(`api/users/acceptFriendRequest/${id}`);
+      const res = await axios.put(`/api/users/${id}/acceptFriendRequest`);
       dispatch({
         type: ACCEPT_FRIEND_REQUEST,
         payload: res.data,
@@ -160,7 +162,7 @@ const UserState = (props) => {
 
   const rejectFriendRequest = async (id) => {
     try {
-      const res = axios.put(`api/users/rejecFriendRequest/${id}`);
+      const res = await axios.put(`/api/users/${id}/rejectFriendRequest`);
       dispatch({
         type: REJECT_FRIEND_REQUEST,
         payload: res.data,
@@ -168,6 +170,23 @@ const UserState = (props) => {
     } catch (err) {
       dispatch({
         type: REJECT_FRIEND_REQUEST_FAIL,
+        payload: err.response.data.msg,
+      });
+    }
+  };
+
+  // Remove friend
+
+  const removeFriend = async (id) => {
+    try {
+      const res = await axios.put(`/api/users/${id}/removeFriend`);
+      dispatch({
+        type: REMOVE_FRIEND,
+        payload: res.data,
+      });
+    } catch (err) {
+      dispatch({
+        type: REMOVE_FRIEND_FAIL,
         payload: err.response.data.msg,
       });
     }
@@ -231,6 +250,7 @@ const UserState = (props) => {
         cancelFriendRequest,
         acceptFriendRequest,
         rejectFriendRequest,
+        removeFriend,
         getFriends,
         getNotifications,
         clearErrors,

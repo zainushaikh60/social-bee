@@ -9,7 +9,8 @@ const Friends = () => {
 
   return (
     <Fragment>
-      {friends.length > 0 &&
+      {friends &&
+        friends.length > 0 &&
         friends.map((friend) => (
           <FriendCard key={friend._id} friend={friend} />
         ))}

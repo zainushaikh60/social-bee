@@ -87,10 +87,7 @@ router.get('/my-profile/', auth, async (req, res) => {
 
 router.get('/friendRequestsTo', auth, async (req, res) => {
   try {
-    const user = await User.findById(req.user.id).populate({
-      path: 'friendRequestsTo',
-      select: 'name avatar email',
-    });
+    const user = await User.findById(req.user.id);
     res.json(user.friendRequestsTo);
   } catch (err) {
     console.error(err.message);
@@ -102,10 +99,7 @@ router.get('/friendRequestsTo', auth, async (req, res) => {
 
 router.get('/friendRequestsBy', auth, async (req, res) => {
   try {
-    const user = await User.findById(req.user.id).populate({
-      path: 'friendsRequestsBy',
-      select: 'name avatar email',
-    });
+    const user = await User.findById(req.user.id);
     res.json(user.friendRequestsBy);
   } catch (err) {
     console.error(err.message);
@@ -121,7 +115,6 @@ router.get('/friends', auth, async (req, res) => {
       path: 'friends',
       select: 'name avatar email',
     });
-
     res.json(user.friends);
   } catch (err) {
     console.error(err.message);

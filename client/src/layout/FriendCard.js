@@ -1,6 +1,11 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useContext } from 'react';
+import UserContext from '../context/user/userContext';
 
 const FriendCard = ({ friend }) => {
+  const userContext = useContext(UserContext);
+
+  const { removeFriend } = userContext;
+
   return (
     <Fragment>
       <div className='user-card in-active'>
@@ -11,7 +16,9 @@ const FriendCard = ({ friend }) => {
           </a>
         </div>
         <div className='user-badge'>
-          <a href='#!'>Unfriend</a>
+          <a href='#!' onClick={(e) => removeFriend(friend._id)}>
+            Unfriend
+          </a>
         </div>
       </div>
     </Fragment>

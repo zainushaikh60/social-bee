@@ -166,8 +166,8 @@ router.put('/:id/sendFriendRequest', auth, async (req, res) => {
     const requestSender = await User.findById(req.user.id);
     const requestReciever = await User.findById(req.params.id);
 
-    if (requestSender.id === requestReciever.id) {
-      res
+    if (requestSender.id === req.params.id) {
+      return res
         .status(400)
         .json({ msg: 'You can not send friend request to yourself ' });
     }
@@ -176,21 +176,21 @@ router.put('/:id/sendFriendRequest', auth, async (req, res) => {
       requestSender.friends.length > 0 &&
       requestSender.friends.toString() === requestReciever.id
     ) {
-      res
+      return res
         .status(400)
         .json({ msg: 'You can not send friend request to your friend' });
     } else if (
       requestSender.friendRequestsTo.length > 0 &&
       requestSender.friendRequestsTo.toString() === requestReciever.id
     ) {
-      res
+      return res
         .status(400)
         .json({ msg: 'You have already sent this user a friend request' });
     } else if (
       requestSender.friendRequestsBy.length > 0 &&
       requestSender.friendRequestsBy.toString() === requestReciever.id
     ) {
-      res.status(400).json({
+      return res.status(400).json({
         msg: 'This user have already sent you a friend request',
       });
     } else {
@@ -203,7 +203,8 @@ router.put('/:id/sendFriendRequest', auth, async (req, res) => {
       await requestReciever.save();
       await requestSender.save();
     }
-    res.json(requestSender.friendRequestsTo);
+
+    return res.json(requestSender.friendRequestsTo);
   } catch (err) {
     console.error(err.message);
     res.status(500).send('Server error');
@@ -222,25 +223,33 @@ router.put('/:id/cancelFriendRequest', auth, async (req, res) => {
         (friendRqTo) => friendRqTo.toString() === requestWasSentTo.id
       ).length > 0
     ) {
-      const indexOfRequestCanceler = requestWasSentTo.friendRequestsBy
-        .map((friendRqBy) => friendRqBy.toString() === requestCanceler.id)
-        .indexOf(requestCanceler.id);
+      // const indexOfRequestCanceler = requestWasSentTo.friendRequestsBy
+      //   .map((friendRqBy) => friendRqBy.toString() === requestCanceler.id)
+      //   .indexOf(requestCanceler.id);
 
-      const indexOfRequestWasSentTo = requestCanceler.friendRequestsTo
-        .map((friendRqTo) => friendRqTo.toString() === requestWasSentTo.id)
-        .indexOf(requestWasSentTo.id);
+      // const indexOfRequestWasSentTo = requestCanceler.friendRequestsTo
+      //   .map((friendRqTo) => friendRqTo.toString() === requestWasSentTo.id)
+      //   .indexOf(requestWasSentTo.id);
 
-      const indexOfRequestCancelerInNotifications = requestWasSentTo.notifications
-        .map(
-          (notification) => notification.user.toString() === requestCanceler.id
-        )
-        .indexOf(requestCanceler.id);
+      // const indexOfRequestCancelerInNotifications = requestWasSentTo.notifications
+      //   .map(
+      //     (notification) => notification.user.toString() === requestCanceler.id
+      //   )
+      //   .indexOf(requestCanceler.id);
 
-      requestWasSentTo.friendRequestsBy.splice(indexOfRequestCanceler, 1);
-      requestCanceler.friendRequestsTo.splice(indexOfRequestWasSentTo, 1);
-      requestWasSentTo.notifications.splice(
-        indexOfRequestCancelerInNotifications,
-        1
+      // requestWasSentTo.friendRequestsBy.splice(indexOfRequestCanceler, 1);
+      // requestCanceler.friendRequestsTo.splice(indexOfRequestWasSentTo, 1);
+      // requestWasSentTo.notifications.splice(
+      //   indexOfRequestCancelerInNotifications,
+      //   1
+      // );
+
+      requestWasSentTo.friendRequestsBy.filter(
+        (friendRequestBy) => friendRequestBy === requestCanceler.id
+      );
+
+      requestCanceler.friendRequestsTo.filter(
+        (friendRequestTo) => friendRequestTo === requestWasSentTo.id
       );
 
       await requestCanceler.save();
@@ -295,7 +304,11 @@ router.put('/:id/acceptFriendRequest', auth, async (req, res) => {
       await requestAcceptor.save();
       await requestSender.save();
 
-      res.json(requestAcceptor.friends);
+      return res.json({
+        friends: requestAcceptor.friends,
+        friendRequestsBy: requestAcceptor.friendRequestsBy,
+        notifications: requestAcceptor.notifications,
+      });
     } else {
       return res.status(400).json({ msg: 'No friend request by this user' });
     }
@@ -341,7 +354,10 @@ router.put('/:id/rejectFriendRequest', auth, async (req, res) => {
       await requestSender.save();
       await requestRejector.save();
 
-      res.json(requestRejector.friendRequestsBy);
+      res.json({
+        friendRequestsBy: requestRejector.friendRequestsBy,
+        notifications: requestRejector.notifications,
+      });
     } else {
       return res.status(400).json({ msg: 'No friend request by this user' });
     }
@@ -376,7 +392,7 @@ router.put('/:id/removeFriend', auth, async (req, res) => {
       await remover.save();
       await target.save();
 
-      res.json(remover.friends);
+      return res.json(remover.friends.map((friend) => friend));
     } else {
       return res
         .status(400)

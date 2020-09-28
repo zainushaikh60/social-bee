@@ -5,7 +5,7 @@ import AlertContext from '../context/alert/alertContext';
 
 const UserCard = ({ currentUser }) => {
   const userContext = useContext(UserContext);
-  const authContext = useContext(AlertContext);
+  const authContext = useContext(AuthContext);
   const alertContext = useContext(AlertContext);
 
   const { setAlert } = alertContext;
@@ -24,33 +24,39 @@ const UserCard = ({ currentUser }) => {
     clearErrors,
   } = userContext;
 
-  let isFriends = null;
-  let isFriendRequestTo = null;
-  let isFriendRequestBy = null;
+  let isFriends = false;
+  let isFriendRequestTo = false;
+  let isFriendRequestBy = false;
 
   if (
+    user &&
+    friends &&
     friends.length > 0 &&
     friends.map(
       (friend) =>
-        friend._id.toString() === currentUser._id && (isFriends = true)
+        friend._id.toString() === currentUser._id && (isFriends = !isFriends)
     )
   );
 
   if (
+    user &&
+    friendRequestsTo &&
     friendRequestsTo.length > 0 &&
     friendRequestsTo.map(
       (friendRequestTo) =>
-        friendRequestTo._id.toString() === currentUser._id &&
-        (isFriendRequestTo = true)
+        friendRequestTo.toString() === currentUser._id &&
+        (isFriendRequestTo = !isFriendRequestTo)
     )
   );
 
   if (
+    user &&
+    friendRequestsBy &&
     friendRequestsBy.length > 0 &&
     friendRequestsBy.map(
       (friendRequestBy) =>
-        friendRequestBy._id.toString() === currentUser._id &&
-        (isFriendRequestBy = true)
+        friendRequestBy.toString() === currentUser._id &&
+        (isFriendRequestBy = isFriendRequestBy)
     )
   );
 
@@ -109,8 +115,12 @@ const UserCard = ({ currentUser }) => {
         {isFriendRequestBy && (
           <div className='user-badge'>
             <p>Respond to friend request</p>
-            <a href='#!'>Accept</a>
-            <a href='#!'>Reject</a>
+            <a href='#!' onClick={onRejectFriendRequest}>
+              Reject
+            </a>
+            <a href='#!' onClick={onAcceptFriendRequest}>
+              Accept
+            </a>
           </div>
         )}
 

@@ -513,7 +513,14 @@ nav .logo img {
   background-color: #288dda;
   padding: 5px;
   border-radius: 20px;
+  margin-left: 5px;
+  float: right;
   color: #fff;
+}
+
+.user-badge p {
+  font-size: 60%;
+  margin-bottom: 4px;
 }
 
 /* notifications card */
