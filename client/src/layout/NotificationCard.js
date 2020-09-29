@@ -1,16 +1,19 @@
 import React, { Fragment } from 'react';
 
-const NotificationCard = () => {
+const NotificationCard = ({ notification }) => {
   return (
     <Fragment>
       <div className='user-card in-active'>
         <div className='user-info'>
           <a href='#!'>
-            <img src='/images/zain.jpg' className='user-img' />
+            <img
+              src={notification && notification.user.avatar}
+              className='user-img'
+            />
           </a>
         </div>
         <div className='notification-text'>
-          <p>You have recieved a friend request from Zain</p>
+          <p>{notification && notification.notification}</p>
         </div>
       </div>
     </Fragment>

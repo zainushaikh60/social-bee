@@ -30,14 +30,25 @@ const Home = () => {
 
   const [profile, setProfile] = useState(false);
 
+  const [fnLayout, setFnLayout] = useState(false);
+
   const onSetProfile = () => {
     setProfile((profile) => !profile);
   };
 
+  const onSetFnLayout = () => {
+    setFnLayout((fnLayout) => !fnLayout);
+  };
+
   return (
     <Fragment>
-      <Navbar onClick={onSetProfile} profile={profile} />
-      {profile ? <></> : <Sidebar />}
+      <Navbar
+        onClick={onSetProfile}
+        profile={profile}
+        onSetLayout={onSetFnLayout}
+        fnLayout={fnLayout}
+      />
+      {profile ? <></> : <Sidebar fnLayout={fnLayout} />}
 
       <div className='wrapper'>
         <div className='container'>

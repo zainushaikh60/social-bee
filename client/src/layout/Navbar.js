@@ -1,7 +1,7 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import AuthContext from '../context/auth/authContext';
 
-const Navbar = ({ onClick, profile }) => {
+const Navbar = ({ onClick, profile, onSetLayout, fnLayout }) => {
   const authContext = useContext(AuthContext);
 
   const { logout, user } = authContext;
@@ -54,17 +54,33 @@ const Navbar = ({ onClick, profile }) => {
         )}
 
         {!profile ? (
-          <a href='#!' className='in-active'>
-            <i class='far fa-bell'></i> Notifications
-          </a>
+          fnLayout ? (
+            <a href='#!' className='active'>
+              <i class='far fa-bell'></i> Notifications
+            </a>
+          ) : (
+            !fnLayout && (
+              <a href='#!' className='in-active' onClick={onSetLayout}>
+                <i class='far fa-bell'></i> Notifications
+              </a>
+            )
+          )
         ) : (
           <></>
         )}
 
         {!profile ? (
-          <a href='#!' className='active'>
-            <i class='fas fa-user-friends'></i> Friends
-          </a>
+          !fnLayout ? (
+            <a href='#!' className='active'>
+              <i class='fas fa-user-friends'></i> Friends
+            </a>
+          ) : (
+            fnLayout && (
+              <a href='#!' className='in-active' onClick={onSetLayout}>
+                <i class='fas fa-user-friends'></i> Friends
+              </a>
+            )
+          )
         ) : (
           <></>
         )}

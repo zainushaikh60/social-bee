@@ -240,7 +240,8 @@ router.put('/:id/cancelFriendRequest', auth, async (req, res) => {
 
       requestWasSentTo.notifications.splice(
         requestWasSentTo.notifications.findIndex(
-          (notification) => notification.toString() === requestCanceler.id
+          (notification) =>
+            notification.user._id.toString() === requestCanceler.id
         ),
         1
       );
@@ -286,7 +287,8 @@ router.put('/:id/acceptFriendRequest', auth, async (req, res) => {
 
       requestAcceptor.notifications.splice(
         requestAcceptor.notifications.findIndex(
-          (notification) => notification.toString() === requestSender.id
+          (notification) =>
+            notification.user._id.toString() === requestSender.id
         ),
         1
       );
@@ -339,7 +341,8 @@ router.put('/:id/rejectFriendRequest', auth, async (req, res) => {
 
       requestRejector.notifications.splice(
         requestRejector.notifications.findIndex(
-          (notification) => notification.toString() === requestSender.id
+          (notification) =>
+            notification.user._id.toString() === requestSender.id
         ),
         1
       );

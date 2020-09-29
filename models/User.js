@@ -39,7 +39,15 @@ UserSchema.pre('save', async function (next) {
   await this.populate({
     path: 'friends',
     select: 'name email avatar',
-  }).execPopulate();
+  })
+    .populate({
+      path: 'notifications',
+      populate: {
+        path: 'user',
+        select: 'avatar',
+      },
+    })
+    .execPopulate();
   next();
 });
 

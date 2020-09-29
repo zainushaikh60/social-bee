@@ -39,3 +39,4 @@ export const LOGIN_FAIL = 'LOGIN_FAIL';
 export const LOGOUT = 'LOGOUT';
 export const POST_ERROR = 'POST_ERROR';
 export const CLEAR_ERRORS = 'CLEAR_ERRORS';
+export const SHOW_FN_LAYOUT = 'SHOW_FN_LAYOUT';
