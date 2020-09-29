@@ -9,6 +9,10 @@ const Friends = () => {
 
   return (
     <Fragment>
+      {friends && friends.length === 0 && (
+        <p className='no-update'>No friends</p>
+      )}
+
       {friends &&
         friends.length > 0 &&
         friends.map((friend) => (

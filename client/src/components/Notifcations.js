@@ -9,6 +9,10 @@ const Notifications = () => {
 
   return (
     <Fragment>
+      {notifications && notifications.length === 0 && (
+        <p className='no-update'>No notifications</p>
+      )}
+
       {notifications &&
         notifications.length > 0 &&
         notifications.map((notification) => (

@@ -528,11 +528,17 @@ nav .logo img {
   font-size: 64%;
 }
 
+.no-update {
+  margin-top: 10px;
+  font-size: 16px;
+}
+
 /* Profile */
 .profile-info {
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding: 0px 0px 10px 0px;
 }
 
 .profile-cover {
@@ -583,6 +589,10 @@ nav .logo img {
   align-items: center;
   margin-bottom: 5px;
   height: 60px;
+}
+
+.profile-user button {
+  margin: 4px 0px;
 }
 
 .profile-user a {
