@@ -13,8 +13,13 @@ const UserSchema = mongoose.Schema({
   avatar: {
     type: String,
   },
+  profilePicture: {
+    type: String,
+    default: null,
+  },
   cover: {
     type: String,
+    default: null,
   },
   password: {
     type: String,
@@ -38,13 +43,13 @@ const UserSchema = mongoose.Schema({
 UserSchema.pre('save', async function (next) {
   await this.populate({
     path: 'friends',
-    select: 'name email avatar',
+    select: 'name email avatar profilePicture',
   })
     .populate({
       path: 'notifications',
       populate: {
         path: 'user',
-        select: 'avatar',
+        select: 'avatar profilePicture',
       },
     })
     .execPopulate();

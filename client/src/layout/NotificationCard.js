@@ -7,7 +7,11 @@ const NotificationCard = ({ notification }) => {
         <div className='user-info'>
           <a href='#!'>
             <img
-              src={notification && notification.user.avatar}
+              src={
+                notification && notification.user.profilePicture === null
+                  ? notification.user.avatar
+                  : notification.user.profilePicture
+              }
               className='user-img'
             />
           </a>

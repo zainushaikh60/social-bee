@@ -1,10 +1,15 @@
 import React, { useContext } from 'react';
 import AuthContext from '../context/auth/authContext';
+import UserContext from '../context/user/userContext';
 
 const Navbar = ({ onClick, profile, onSetLayout, fnLayout }) => {
   const authContext = useContext(AuthContext);
 
+  const userContext = useContext(UserContext);
+
   const { logout, user } = authContext;
+
+  const { profilePicture } = userContext;
 
   const onLogout = () => {
     logout();
@@ -43,12 +48,22 @@ const Navbar = ({ onClick, profile, onSetLayout, fnLayout }) => {
       <div className='right-menu-container'>
         {profile ? (
           <a href='#!' className='active'>
-            <img src={user && user.avatar} className='user-img' />
+            <img
+              src={
+                user && profilePicture === null ? user.avatar : profilePicture
+              }
+              className='user-img'
+            />
             {user && user.name}
           </a>
         ) : (
           <a href='#!' className='in-active' onClick={onClick}>
-            <img src={user && user.avatar} className='user-img' />
+            <img
+              src={
+                user && profilePicture === null ? user.avatar : profilePicture
+              }
+              className='user-img'
+            />
             {user && user.name}
           </a>
         )}

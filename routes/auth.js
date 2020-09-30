@@ -109,9 +109,9 @@ router.post(
   async (req, res) => {
     try {
       const user = await User.findById(req.user.id);
-      user.avatar = req.file.path;
+      user.profilePicture = req.file.path;
       await user.save();
-      return res.json(user.avatar);
+      return res.json(user.profilePicture);
     } catch (err) {
       console.error(err.message);
       res.status(500).send('Server error');
@@ -155,7 +155,7 @@ router.get('/my-profile/', auth, async (req, res) => {
 router.get('/profile-picture', auth, async (req, res) => {
   try {
     const user = await User.findById(req.user.id);
-    return res.json(user.avatar);
+    return res.json(user.profilePicture);
   } catch (err) {
     console.error(err.message);
     res.status(500).send('Server error');
@@ -204,7 +204,7 @@ router.get('/friends', auth, async (req, res) => {
   try {
     const user = await User.findById(req.user.id).populate({
       path: 'friends',
-      select: 'name avatar email',
+      select: 'name avatar profilePicture email',
     });
     return res.json(user.friends);
   } catch (err) {
@@ -219,7 +219,7 @@ router.get('/notifications', auth, async (req, res) => {
   try {
     const user = await User.findById(req.user.id).populate({
       path: 'notifications',
-      populate: { path: 'user', select: 'avatar' },
+      populate: { path: 'user', select: 'avatar profilePicture' },
     });
     return res.json(user.notifications);
   } catch (err) {

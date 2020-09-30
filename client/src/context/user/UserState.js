@@ -119,9 +119,9 @@ const UserState = (props) => {
 
   // upload profile picture
 
-  const uploadProfilePicture = async (avatar) => {
+  const uploadProfilePicture = async (profilePicture) => {
     const fd = new FormData();
-    fd.append('avatar', avatar);
+    fd.append('profilePicture', profilePicture);
     const config = {
       headers: {
         'Content-Type': 'multipart/form-data',
