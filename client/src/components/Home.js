@@ -17,11 +17,15 @@ const Home = () => {
     getFriendRequestsTo,
     getFriendRequestsBy,
     getNotifications,
+    getProfilePicture,
+    getCoverPhoto,
   } = userContext;
 
   useEffect(() => {
     authContext.loadUser();
     getUsers();
+    getProfilePicture();
+    getCoverPhoto();
     getFriends();
     getFriendRequestsTo();
     getFriendRequestsBy();

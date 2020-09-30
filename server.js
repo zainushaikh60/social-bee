@@ -9,6 +9,10 @@ const Posts = require('./routes/posts');
 
 connectDB();
 
+// serving images in upload folder
+
+app.use('/uploads', express.static('uploads'));
+
 // Init Middleware
 
 app.use(express.json({ extended: false }));

@@ -5,38 +5,8 @@ const jwt = require('jsonwebtoken');
 const auth = require('../middleware/auth');
 const config = require('config');
 const gravatar = require('gravatar');
-const multer = require('multer');
-const fs = require('fs');
 const { check, validationResult } = require('express-validator');
 const User = require('../models/User');
-
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    fs.mkdir('./uploads/profile-pictures/', (err) => {
-      cb(null, './uploads/profile-pictures/');
-    });
-  },
-  filename: function (req, file, cb) {
-    cb(null, Date.now() + file.originalname);
-  },
-});
-
-const fileFilter = (req, file, cb) => {
-  // reject file
-  if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png') {
-    cb(null, true);
-  } else {
-    cb(new Error('Only jpeg and png files are allowed'), false);
-  }
-};
-
-const upload = multer({
-  storage: storage,
-  limits: {
-    fileSize: 1024 * 1024 * 5,
-  },
-  fileFilter: fileFilter,
-});
 
 // @route  Post api/users
 // @desc   Register a user
@@ -138,26 +108,6 @@ router.get('/profile/:id', auth, async (req, res) => {
     res.status(500).send('Server error');
   }
 });
-
-// Upload profile picture
-
-router.post(
-  '/uploadProfilePicture',
-  auth,
-  upload.single('avatar'),
-  async (req, res) => {
-    try {
-      const user = await User.findById(req.user.id);
-      user.avatar = req.file.path;
-
-      await user.save();
-      res.json(user);
-    } catch (err) {
-      console.error(err.message);
-      res.status(500).send('Server error');
-    }
-  }
-);
 
 // Send friend request
 

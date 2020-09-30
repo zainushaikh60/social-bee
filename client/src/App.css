@@ -534,6 +534,7 @@ nav .logo img {
 }
 
 /* Profile */
+
 .profile-info {
   display: flex;
   flex-direction: column;
@@ -543,7 +544,7 @@ nav .logo img {
 
 .profile-cover {
   position: relative;
-  max-width: 800px;
+  width: 800px;
   height: 300px;
   border-radius: 10px;
   background-color: #fff;
@@ -555,7 +556,34 @@ nav .logo img {
   border-radius: 10px;
 }
 
-.profile-cover button {
+.no-cover {
+  background-color: #fff;
+  width: 800px;
+  height: 300px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-upload {
+  width: 20%;
+  text-align: center;
+  margin: 5px;
+}
+
+label {
+  cursor: pointer;
+}
+
+#cover-photo,
+#profile-photo {
+  opacity: 0;
+  position: absolute;
+  z-index: -1;
+}
+
+.profile-cover label {
   position: absolute;
   background-color: #fff;
   bottom: 0;
@@ -579,7 +607,6 @@ nav .logo img {
   width: 100%;
   height: 100%;
   border-radius: 50%;
-  transition: ease-in 0.1s;
 }
 
 .profile-user {
@@ -587,11 +614,11 @@ nav .logo img {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-bottom: 5px;
+  margin-bottom: 3px;
   height: 60px;
 }
 
-.profile-user button {
+.profile-user label {
   margin: 4px 0px;
 }
 

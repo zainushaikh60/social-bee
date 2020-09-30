@@ -5,8 +5,37 @@ const jwt = require('jsonwebtoken');
 const config = require('config');
 const auth = require('../middleware/auth');
 const { check, validationResult } = require('express-validator');
-
+const multer = require('multer');
+const fs = require('fs');
 const User = require('../models/User');
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    fs.mkdir('./uploads/', (err) => {
+      cb(null, './uploads/');
+    });
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + file.originalname);
+  },
+});
+
+const fileFilter = (req, file, cb) => {
+  // reject file
+  if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png') {
+    cb(null, true);
+  } else {
+    cb(new Error('Only jpeg and png files are allowed'), false);
+  }
+};
+
+const upload = multer({
+  storage: storage,
+  limits: {
+    fileSize: 1024 * 1024 * 5,
+  },
+  fileFilter: fileFilter,
+});
 
 // @route  GET api/auth
 // @desc   GET logged in user
@@ -71,12 +100,74 @@ router.post(
   }
 );
 
+// Upload profile picture
+
+router.post(
+  '/uploadProfilePicture',
+  auth,
+  upload.single('avatar'),
+  async (req, res) => {
+    try {
+      const user = await User.findById(req.user.id);
+      user.avatar = req.file.path;
+      await user.save();
+      return res.json(user.avatar);
+    } catch (err) {
+      console.error(err.message);
+      res.status(500).send('Server error');
+    }
+  }
+);
+
+// Upload cover picture
+
+router.post(
+  '/uploadCoverPhoto',
+  auth,
+  upload.single('cover'),
+  async (req, res) => {
+    try {
+      const user = await User.findById(req.user.id);
+      user.cover = req.file.path;
+      await user.save();
+      return res.json(user.cover);
+    } catch (err) {
+      console.error(err.message);
+      res.status(500).send('Server error');
+    }
+  }
+);
+
 // Get my profile
 
 router.get('/my-profile/', auth, async (req, res) => {
   try {
     const user = await User.findById(req.user.id);
-    res.json(user);
+    return res.json(user);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server error');
+  }
+});
+
+// Get profile picture
+
+router.get('/profile-picture', auth, async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id);
+    return res.json(user.avatar);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server error');
+  }
+});
+
+// Get cover photo
+
+router.get('/cover-photo', auth, async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id);
+    return res.json(user.cover);
   } catch (err) {
     console.error(err.message);
     res.status(500).send('Server error');
@@ -88,7 +179,7 @@ router.get('/my-profile/', auth, async (req, res) => {
 router.get('/friendRequestsTo', auth, async (req, res) => {
   try {
     const user = await User.findById(req.user.id);
-    res.json(user.friendRequestsTo);
+    return res.json(user.friendRequestsTo);
   } catch (err) {
     console.error(err.message);
     res.status(500).send('Server error');
@@ -100,7 +191,7 @@ router.get('/friendRequestsTo', auth, async (req, res) => {
 router.get('/friendRequestsBy', auth, async (req, res) => {
   try {
     const user = await User.findById(req.user.id);
-    res.json(user.friendRequestsBy);
+    return res.json(user.friendRequestsBy);
   } catch (err) {
     console.error(err.message);
     res.status(500).send('Server error');
@@ -115,7 +206,7 @@ router.get('/friends', auth, async (req, res) => {
       path: 'friends',
       select: 'name avatar email',
     });
-    res.json(user.friends);
+    return res.json(user.friends);
   } catch (err) {
     console.error(err.message);
     res.status(500).send('Server error');
@@ -130,7 +221,7 @@ router.get('/notifications', auth, async (req, res) => {
       path: 'notifications',
       populate: { path: 'user', select: 'avatar' },
     });
-    res.json(user.notifications);
+    return res.json(user.notifications);
   } catch (err) {
     console.error(err.message);
     res.status(500).send('Server error');

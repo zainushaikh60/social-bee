@@ -7,6 +7,14 @@ import {
   GET_USER,
   GET_USERS,
   GET_USER_FAIL,
+  GET_PROFILE_PICTURE,
+  GET_PROFILE_PICTURE_FAIL,
+  UPLOAD_PROFILE_PICTURE,
+  UPLOAD_PROFILE_PICTURE_FAIL,
+  GET_COVER_PHOTO,
+  GET_COVER_PHOTO_FAIL,
+  UPLOAD_COVER_PHOTO,
+  UPLOAD_COVER_PHOTO_FAIL,
   GET_FRIEND_REQUESTS_TO,
   GET_FRIEND_REQUESTS_TO_FAIL,
   GET_FRIEND_REQUESTS_BY,
@@ -32,6 +40,8 @@ const UserState = (props) => {
   const initialState = {
     user: null,
     users: [],
+    profilePicture: null,
+    cover: null,
     friendRequestsBy: null,
     friendRequestsTo: null,
     friends: null,
@@ -68,6 +78,92 @@ const UserState = (props) => {
     } catch (err) {
       dispatch({
         type: GET_USER_FAIL,
+        payload: err.response.data.msg,
+      });
+    }
+  };
+
+  // Get profile picture
+
+  const getProfilePicture = async () => {
+    try {
+      const res = await axios.get(`/api/auth/profile-picture`);
+      dispatch({
+        type: GET_PROFILE_PICTURE,
+        payload: res.data,
+      });
+    } catch (err) {
+      dispatch({
+        type: GET_PROFILE_PICTURE_FAIL,
+        payload: err.response.data.msg,
+      });
+    }
+  };
+
+  // Get cover photo
+
+  const getCoverPhoto = async () => {
+    try {
+      const res = await axios.get(`/api/auth/cover-photo`);
+      dispatch({
+        type: GET_COVER_PHOTO,
+        payload: res.data,
+      });
+    } catch (err) {
+      dispatch({
+        type: GET_COVER_PHOTO_FAIL,
+        payload: err.response.data.msg,
+      });
+    }
+  };
+
+  // upload profile picture
+
+  const uploadProfilePicture = async (avatar) => {
+    const fd = new FormData();
+    fd.append('avatar', avatar);
+    const config = {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    };
+    try {
+      const res = await axios.post(
+        `/api/auth/uploadProfilePicture`,
+        fd,
+        config
+      );
+      dispatch({
+        type: UPLOAD_PROFILE_PICTURE,
+        payload: res.data,
+      });
+    } catch (err) {
+      dispatch({
+        type: UPLOAD_PROFILE_PICTURE_FAIL,
+        payload: err.response.data.msg,
+      });
+    }
+  };
+
+  // upload cover photo
+
+  const uploadCoverPhoto = async (cover) => {
+    const fd = new FormData();
+    fd.append('cover', cover);
+    const config = {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    };
+    try {
+      const res = await axios.post(`/api/auth/uploadCoverPhoto`, fd, config);
+      dispatch({
+        type: UPLOAD_COVER_PHOTO,
+        payload: res.data,
+      });
+    } catch (err) {
+      dispatch({
+        type: UPLOAD_COVER_PHOTO_FAIL,
         payload: err.response.data.msg,
       });
     }
@@ -237,6 +333,8 @@ const UserState = (props) => {
       value={{
         user: state.user,
         users: state.users,
+        profilePicture: state.profilePicture,
+        cover: state.cover,
         friendRequestsTo: state.friendRequestsTo,
         friendRequestsBy: state.friendRequestsBy,
         friends: state.friends,
@@ -244,6 +342,10 @@ const UserState = (props) => {
         error: state.error,
         getUser,
         getUsers,
+        getProfilePicture,
+        getCoverPhoto,
+        uploadProfilePicture,
+        uploadCoverPhoto,
         getFriendRequestsTo,
         getFriendRequestsBy,
         sendFriendRequest,

@@ -2,6 +2,14 @@ import {
   GET_USER,
   GET_USERS,
   GET_USER_FAIL,
+  GET_PROFILE_PICTURE,
+  GET_PROFILE_PICTURE_FAIL,
+  GET_COVER_PHOTO,
+  GET_COVER_PHOTO_FAIL,
+  UPLOAD_PROFILE_PICTURE,
+  UPLOAD_PROFILE_PICTURE_FAIL,
+  UPLOAD_COVER_PHOTO,
+  UPLOAD_COVER_PHOTO_FAIL,
   SEND_FRIEND_REQUEST,
   SEND_FRIEND_REQUEST_FAIL,
   CANCEL_FRIEND_REQUEST,
@@ -35,11 +43,20 @@ export default (state, action) => {
         ...state,
         users: action.payload,
       };
-    case SEND_FRIEND_REQUEST:
+    case GET_PROFILE_PICTURE:
+    case UPLOAD_PROFILE_PICTURE:
       return {
         ...state,
-        friendRequestsTo: action.payload,
+        profilePicture: action.payload,
       };
+    case GET_COVER_PHOTO:
+    case UPLOAD_COVER_PHOTO:
+      return {
+        ...state,
+        cover: action.payload,
+      };
+    case GET_FRIEND_REQUESTS_TO:
+    case SEND_FRIEND_REQUEST:
     case CANCEL_FRIEND_REQUEST:
       return {
         ...state,
@@ -52,6 +69,7 @@ export default (state, action) => {
         friendRequestsBy: action.payload.friendRequestsBy,
         notifications: action.payload.notifications,
       };
+    case GET_FRIENDS:
     case REMOVE_FRIEND:
       return {
         ...state,
@@ -61,16 +79,6 @@ export default (state, action) => {
       return {
         ...state,
         notifications: action.payload,
-      };
-    case GET_FRIENDS:
-      return {
-        ...state,
-        friends: action.payload,
-      };
-    case GET_FRIEND_REQUESTS_TO:
-      return {
-        ...state,
-        friendRequestsTo: action.payload,
       };
     case GET_FRIEND_REQUESTS_BY:
       return {
@@ -84,6 +92,10 @@ export default (state, action) => {
         notifications: action.payload.notifications,
       };
     case GET_USER_FAIL:
+    case GET_PROFILE_PICTURE_FAIL:
+    case GET_COVER_PHOTO_FAIL:
+    case UPLOAD_PROFILE_PICTURE_FAIL:
+    case UPLOAD_COVER_PHOTO_FAIL:
     case SEND_FRIEND_REQUEST_FAIL:
     case CANCEL_FRIEND_REQUEST_FAIL:
     case ACCEPT_FRIEND_REQUEST_FAIL:
