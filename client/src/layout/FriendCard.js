@@ -11,7 +11,14 @@ const FriendCard = ({ friend }) => {
       <div className='user-card in-active'>
         <div className='user-info'>
           <a href='#!'>
-            <img src={friend.avatar} className='user-img' />
+            <img
+              src={
+                friend.profilePicture === null
+                  ? friend.avatar
+                  : friend.profilePicture
+              }
+              className='user-img'
+            />
             {friend.name}
           </a>
         </div>

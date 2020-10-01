@@ -34,9 +34,9 @@ const SignUp = (props) => {
   const onSubmit = (e) => {
     e.preventDefault();
     if (name === '' || email === '' || password === '' || password2 === '') {
-      setAlert('Please enter all fields');
+      setAlert('Please enter all fields', 'danger', 'info-circle');
     } else if (password !== password2) {
-      setAlert('Passwords do not match');
+      setAlert('Passwords do not match', 'danger', 'info-circle');
     } else {
       register({
         name,

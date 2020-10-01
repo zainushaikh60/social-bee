@@ -32,7 +32,7 @@ const SignIn = (props) => {
   const onSubmit = (e) => {
     e.preventDefault();
     if (email === '' || password === '') {
-      setAlert('Please fill in all fields', 'danger');
+      setAlert('Please enter all fields', 'danger', 'info-circle');
     } else {
       login({
         email,

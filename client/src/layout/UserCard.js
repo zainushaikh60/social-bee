@@ -103,7 +103,14 @@ const UserCard = ({ currentUser }) => {
       <div className='user-card in-active'>
         <div className='user-info'>
           <a href='#!'>
-            <img src={currentUser.avatar} className='user-img' />
+            <img
+              src={
+                currentUser.profilePicture === null
+                  ? currentUser.avatar
+                  : currentUser.profilePicture
+              }
+              className='user-img'
+            />
             {currentUser.name}
           </a>
         </div>
