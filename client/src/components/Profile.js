@@ -1,4 +1,4 @@
-import React, { Fragment, useContext, useState, useEffect } from 'react';
+import React, { Fragment, useContext, useState } from 'react';
 import AuthContext from '../context/auth/authContext';
 import UserContext from '../context/user/userContext';
 
@@ -53,12 +53,12 @@ const Profile = () => {
 
           {user && cover === null && coverPhoto !== null && (
             <div className='no-cover'>
-              <button
+              <label
                 className='btn btn-primary btn-upload'
                 onClick={onUploadCoverPhoto}
               >
                 Upload Selected Cover Photo
-              </button>
+              </label>
             </div>
           )}
 
@@ -90,6 +90,84 @@ const Profile = () => {
               <label className='btn btn-primary' onClick={onUploadCoverPhoto}>
                 Upload Selected Cover Photo
               </label>
+            </div>
+          )}
+
+          {user && profilePicture === null && (
+            <div className='profile-picture'>
+              <a href='#!'>
+                <img src={user.avatar} />
+              </a>
+            </div>
+          )}
+
+          {user && profilePicture !== null && (
+            <div className='profile-picture'>
+              <a href='#!'>
+                <img src={profilePicture} />
+              </a>
+            </div>
+          )}
+
+          {user && profilePicture === null && profilePhoto === null && (
+            <div className='profile-user'>
+              <label for='profile-photo' className='btn btn-primary'>
+                Add Profile Picture
+              </label>
+
+              <input
+                type='file'
+                name='profile-photo'
+                id='profile-photo'
+                accept='.jpg, .jpeg, .png'
+                onChange={(e) => setProfilePhoto(e.target.files[0])}
+              />
+
+              <h3>{user && user.name}</h3>
+            </div>
+          )}
+
+          {user && profilePicture === null && profilePhoto !== null && (
+            <div className='profile-user'>
+              <label
+                className='btn btn-primary'
+                onClick={onUploadProfilePicture}
+              >
+                Upload Selected Profile Picture
+              </label>
+
+              <h3>{user && user.name}</h3>
+            </div>
+          )}
+
+          {user && profilePicture !== null && profilePhoto === null && (
+            <div className='profile-user'>
+              <label for='profile-photo' className='btn btn-primary'>
+                Change Profile Picture
+              </label>
+
+              <input
+                type='file'
+                name='profile-photo'
+                id='profile-photo'
+                accept='.jpg, .jpeg, .png'
+                onChange={(e) => setProfilePhoto(e.target.files[0])}
+              />
+
+              <h3>{user && user.name}</h3>
+            </div>
+          )}
+
+          {user && profilePicture !== null && profilePhoto !== null && (
+            <div className='profile-user'>
+              <label
+                className='btn btn-primary'
+                onClick={onUploadProfilePicture}
+              >
+                Upload Selected Profile Picture
+              </label>
+
+              <h3>{user && user.name}</h3>
             </div>
           )}
         </div>

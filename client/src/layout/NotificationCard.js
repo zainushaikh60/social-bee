@@ -16,6 +16,7 @@ const NotificationCard = ({ notification }) => {
             />
           </a>
         </div>
+
         <div className='notification-text'>
           <p>{notification && notification.notification}</p>
         </div>

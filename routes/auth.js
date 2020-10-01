@@ -105,7 +105,7 @@ router.post(
 router.post(
   '/uploadProfilePicture',
   auth,
-  upload.single('avatar'),
+  upload.single('profilePicture'),
   async (req, res) => {
     try {
       const user = await User.findById(req.user.id);
