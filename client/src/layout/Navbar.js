@@ -4,9 +4,11 @@ import UserContext from '../context/user/userContext';
 
 const Navbar = ({ onClick, profile, onSetLayout, fnLayout }) => {
   const authContext = useContext(AuthContext);
+
   const userContext = useContext(UserContext);
 
   const { logout, user } = authContext;
+
   const { profilePicture } = userContext;
 
   const onLogout = () => {

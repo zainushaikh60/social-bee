@@ -13,6 +13,7 @@ const UserCard = ({ currentUser }) => {
   const { user } = authContext;
 
   const {
+    users,
     friends,
     friendRequestsTo,
     friendRequestsBy,
@@ -24,6 +25,7 @@ const UserCard = ({ currentUser }) => {
     clearErrors,
   } = userContext;
 
+  let isYou = false;
   let isFriends = false;
   let isFriendRequestTo = false;
   let isFriendRequestBy = false;

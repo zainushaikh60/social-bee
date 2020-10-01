@@ -7,7 +7,7 @@ const Sidebar = (props) => {
   return (
     <Fragment>
       <div className='sidebar sidebar__users'>
-        <h2>All users</h2>
+        <h2>Other users</h2>
         <Users />
       </div>
 

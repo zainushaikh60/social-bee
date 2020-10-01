@@ -9,7 +9,7 @@ import SignUp from './components/SignUp';
 import SignIn from './components/SignIn';
 import Alerts from './layout/Alerts';
 import Home from './components/Home';
-import Profile from './components/Profile';
+import MyProfile from './components/MyProfile';
 import './App.css';
 
 if (localStorage.token) {
@@ -28,7 +28,7 @@ function App() {
                 <PrivateRoute exact path='/' component={Home} />
                 <Route exact path='/signup' component={SignUp} />
                 <Route exact path='/signin' component={SignIn} />
-                <Route exact path='/profile' component={Profile} />
+                <Route exact path='/my-profile' component={MyProfile} />
               </Switch>
             </Fragment>
           </Router>

@@ -1,12 +1,15 @@
 import React, { Fragment, useContext, useState } from 'react';
 import AuthContext from '../context/auth/authContext';
 import UserContext from '../context/user/userContext';
+import AlertContext from '../context/alert/alertContext';
 
-const Profile = () => {
+const MyProfile = () => {
   const authContext = useContext(AuthContext);
   const userContext = useContext(UserContext);
+  const alertContext = useContext(AlertContext);
 
   const { user } = authContext;
+  const { setAlert } = alertContext;
 
   const {
     profilePicture,
@@ -14,6 +17,8 @@ const Profile = () => {
     uploadProfilePicture,
     uploadCoverPhoto,
   } = userContext;
+
+  const maxAllowedSize = 5 * 1024 * 1024;
 
   const coverInitialState = null;
   const profilePictureInitialState = null;
@@ -42,7 +47,16 @@ const Profile = () => {
                 name='cover-photo'
                 id='cover-photo'
                 accept='.jpg, .jpeg, .png'
-                onChange={(e) => setCoverPhoto(e.target.files[0])}
+                onChange={(e) =>
+                  e.target.files && e.target.files[0].size > maxAllowedSize
+                    ? (setAlert(
+                        `Image file size should be less than 5 mb`,
+                        'danger',
+                        'info-circle'
+                      ),
+                      (e.target.value = ''))
+                    : setCoverPhoto(e.target.files[0])
+                }
               />
 
               <label for='cover-photo' className='btn btn-primary btn-upload'>
@@ -77,7 +91,16 @@ const Profile = () => {
                 name='cover-photo'
                 id='cover-photo'
                 accept='.jpg, .jpeg, .png'
-                onChange={(e) => setCoverPhoto(e.target.files[0])}
+                onChange={(e) =>
+                  e.target.files && e.target.files[0].size > maxAllowedSize
+                    ? (setAlert(
+                        `Image file size should be less than 50 kb`,
+                        'danger',
+                        'info-circle'
+                      ),
+                      (e.target.value = ''))
+                    : setCoverPhoto(e.target.files[0])
+                }
               />
             </div>
           )}
@@ -120,7 +143,16 @@ const Profile = () => {
                 name='profile-photo'
                 id='profile-photo'
                 accept='.jpg, .jpeg, .png'
-                onChange={(e) => setProfilePhoto(e.target.files[0])}
+                onChange={(e) =>
+                  e.target.files && e.target.files[0].size > maxAllowedSize
+                    ? (setAlert(
+                        `Image file size should be less than 50 kb`,
+                        'danger',
+                        'info-circle'
+                      ),
+                      (e.target.value = ''))
+                    : setProfilePhoto(e.target.files[0])
+                }
               />
 
               <h3>{user && user.name}</h3>
@@ -151,7 +183,16 @@ const Profile = () => {
                 name='profile-photo'
                 id='profile-photo'
                 accept='.jpg, .jpeg, .png'
-                onChange={(e) => setProfilePhoto(e.target.files[0])}
+                onChange={(e) =>
+                  e.target.files && e.target.files[0].size > maxAllowedSize
+                    ? (setAlert(
+                        `Image file size should be less than 50 kb`,
+                        'danger',
+                        'info-circle'
+                      ),
+                      (e.target.value = ''))
+                    : setProfilePhoto(e.target.files[0])
+                }
               />
 
               <h3>{user && user.name}</h3>
@@ -176,4 +217,4 @@ const Profile = () => {
   );
 };
 
-export default Profile;
+export default MyProfile;

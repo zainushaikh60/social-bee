@@ -14,12 +14,18 @@ const Users = () => {
   return (
     <Fragment>
       {user &&
-        users.length > 0 &&
+      users.length > 0 &&
+      users.filter((currentUser) => currentUser._id !== user._id).length ===
+        0 ? (
+        <p className='no-update'>No other users</p>
+      ) : (
+        user &&
         users
           .filter((currentUser) => currentUser._id !== user._id)
           .map((currentUser) => (
             <UserCard key={currentUser._id} currentUser={currentUser} />
-          ))}
+          ))
+      )}
     </Fragment>
   );
 };

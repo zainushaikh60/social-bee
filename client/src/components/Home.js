@@ -3,7 +3,7 @@ import Navbar from '../layout/Navbar';
 import Sidebar from './Sidebar';
 import AddPost from '../layout/AddPost';
 import PostCard from '../layout/PostCard';
-import Profile from './Profile';
+import MyProfile from './MyProfile';
 import AuthContext from '../context/auth/authContext';
 import UserContext from '../context/user/userContext';
 
@@ -56,7 +56,7 @@ const Home = () => {
 
       <div className='wrapper'>
         <div className='container'>
-          {profile && <Profile />}
+          {profile && <MyProfile />}
           <AddPost />
           <PostCard />
         </div>
