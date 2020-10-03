@@ -26,22 +26,30 @@ export default (state, action) => {
     case DELETE_POST:
       return {
         ...state,
-        posts: action.payload,
+        posts: state.posts.filter((post) => post._id !== action.payload),
       };
     case LIKE_POST:
-      return {
-        ...state,
-        posts: [...state.posts, ...action.payload],
-      };
     case UNLIKE_POST:
       return {
         ...state,
-        posts: [...state.posts, ...action.payload],
+        posts: state.posts.map((post) =>
+          post._id === action.payload.id
+            ? { ...post, likes: action.payload.likes }
+            : post
+        ),
       };
+
     case COMMENT_ON_POST:
-      return {};
     case DELETE_COMMENT_FROM_POST:
-      return {};
+      return {
+        ...state,
+        posts: state.posts.map((post) =>
+          post._id === action.payload.id
+            ? { ...post, comments: action.payload.comments }
+            : post
+        ),
+      };
+
     case GET_POSTS:
       return {
         ...state,

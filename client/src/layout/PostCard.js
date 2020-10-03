@@ -16,6 +16,8 @@ const PostCard = ({ post }) => {
     deleteCommentOnPost,
   } = postContext;
 
+  const comment = post.comments.map((comment) => console.log(comment));
+
   return (
     <Fragment>
       <div className='post-card'>
@@ -60,7 +62,7 @@ const PostCard = ({ post }) => {
         <div className='post-statistics'>
           <div className='hr-line'></div>
           <div className='post-likes-comments '>
-            {post.likes.find((e) => e.toString() === user._id) ? (
+            {post.likes.find((e) => e.user.toString() === user._id) ? (
               <a
                 href='#!'
                 className='in-active'
@@ -85,31 +87,28 @@ const PostCard = ({ post }) => {
           <div className='hr-line'></div>
         </div>
 
-        {post.comments && post.comments.length > 0 && (
+        {comment && comment.length > 0 && (
           <div className='post-comments'>
             <div className='comment-by'>
               <div>
                 <a href='#!'>
                   <img
                     src={
-                      post.comments.profilePicture === null
-                        ? post.comments.avatar
-                        : post.comments.profilePicture
+                      comment.profilePicture === null
+                        ? comment.avatar
+                        : comment.profilePicture
                     }
                     className='user-img'
                   />
                 </a>
                 <div className='comment-body'>
-                  <a href='#!'>{post.name}</a>
-                  <p>{post.text}</p>
+                  <a href='#!'>{comment.name}</a>
+                  <p>{comment.text}</p>
 
-                  {post.comments.image !== null && (
+                  {comment.images !== null && (
                     <div className='comment-image'>
                       <a href='#!'>
-                        <img
-                          src={post.comments.image}
-                          className='comment-img'
-                        ></img>
+                        <img src={comment.image} className='comment-img'></img>
                       </a>
                     </div>
                   )}
@@ -117,7 +116,7 @@ const PostCard = ({ post }) => {
               </div>
 
               {user &&
-                post.comments.user.find((e) => e.toString() === user._id) && (
+                post.comments.find((e) => e.user.toString() === user._id) && (
                   <a
                     href='#!'
                     className='delete-comment'
@@ -137,7 +136,7 @@ const PostCard = ({ post }) => {
           <a href='#!'>
             <img
               src={
-                post.profilePicture === null ? post.avatar : post.profilePicture
+                user.profilePicture === null ? user.avatar : user.profilePicture
               }
               className='user-img'
             />

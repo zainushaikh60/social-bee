@@ -78,10 +78,10 @@ const PostState = (props) => {
 
   const likePost = async (id) => {
     try {
-      const res = await axios.put(`/api/posts/${id}`);
+      const res = await axios.put(`/api/posts/like/${id}`);
       dispatch({
-        trype: LIKE_POST,
-        payload: res.data,
+        type: LIKE_POST,
+        payload: { id, likes: res.data },
       });
     } catch (err) {
       dispatch({
@@ -95,10 +95,10 @@ const PostState = (props) => {
 
   const unlikePost = async (id) => {
     try {
-      const res = await axios.put(`/api/posts/${id}`);
+      const res = await axios.put(`/api/posts/unlike/${id}`);
       dispatch({
-        trype: UNLIKE_POST,
-        payload: res.data,
+        type: UNLIKE_POST,
+        payload: { id, likes: res.data },
       });
     } catch (err) {
       dispatch({
@@ -119,10 +119,10 @@ const PostState = (props) => {
       },
     };
     try {
-      const res = await axios.post(`/api/posts/${id}`, fd, config);
+      const res = await axios.post(`/api/posts/comment/${id}`, fd, config);
       dispatch({
         type: COMMENT_ON_POST,
-        payload: res.data,
+        payload: { id, comments: res.data },
       });
     } catch (err) {
       dispatch({
