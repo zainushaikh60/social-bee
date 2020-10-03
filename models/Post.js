@@ -18,6 +18,9 @@ const PostSchema = new Schema({
   avatar: {
     type: String,
   },
+  profilePicture: {
+    type: String,
+  },
   likes: [
     {
       user: {
@@ -38,6 +41,9 @@ const PostSchema = new Schema({
         type: String,
       },
       avatar: {
+        type: String,
+      },
+      profilePicture: {
         type: String,
       },
       date: {

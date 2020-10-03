@@ -2,14 +2,16 @@ import React, { Fragment, useContext, useEffect, useState } from 'react';
 import Navbar from '../layout/Navbar';
 import Sidebar from './Sidebar';
 import AddPost from '../layout/AddPost';
-import PostCard from '../layout/PostCard';
+import Posts from './Posts';
 import MyProfile from './MyProfile';
 import AuthContext from '../context/auth/authContext';
 import UserContext from '../context/user/userContext';
+import PostContext from '../context/post/postContext';
 
 const Home = () => {
   const authContext = useContext(AuthContext);
   const userContext = useContext(UserContext);
+  const postContext = useContext(PostContext);
 
   const {
     getUsers,
@@ -21,6 +23,8 @@ const Home = () => {
     getCoverPhoto,
   } = userContext;
 
+  const { getPosts } = postContext;
+
   useEffect(() => {
     authContext.loadUser();
     getUsers();
@@ -30,6 +34,7 @@ const Home = () => {
     getFriendRequestsTo();
     getFriendRequestsBy();
     getNotifications();
+    getPosts();
   }, []);
 
   const [profile, setProfile] = useState(false);
@@ -58,7 +63,7 @@ const Home = () => {
         <div className='container'>
           {profile && <MyProfile />}
           <AddPost />
-          <PostCard />
+          <Posts />
         </div>
       </div>
     </Fragment>

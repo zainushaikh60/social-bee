@@ -4,6 +4,7 @@ import setAuthToken from './utils/setAuthToken';
 import PrivateRoute from './components/routing/PrivateRoute';
 import AuthState from './context/auth/AuthState';
 import UserState from './context/user/UserState';
+import PostState from './context/post/PostState';
 import AlertState from './context/alert/AlertState';
 import SignUp from './components/SignUp';
 import SignIn from './components/SignIn';
@@ -20,19 +21,25 @@ function App() {
   return (
     <AuthState>
       <UserState>
-        <AlertState>
-          <Router>
-            <Fragment>
-              <Alerts />
-              <Switch>
-                <PrivateRoute exact path='/' component={Home} />
-                <Route exact path='/signup' component={SignUp} />
-                <Route exact path='/signin' component={SignIn} />
-                <Route exact path='/my-profile' component={MyProfile} />
-              </Switch>
-            </Fragment>
-          </Router>
-        </AlertState>
+        <PostState>
+          <AlertState>
+            <Router>
+              <Fragment>
+                <Alerts />
+                <Switch>
+                  <Route exact path='/signup' component={SignUp} />
+                  <Route exact path='/signin' component={SignIn} />
+                  <PrivateRoute exact path='/' component={Home} />
+                  <PrivateRoute
+                    exact
+                    path='/my-profile'
+                    component={MyProfile}
+                  />
+                </Switch>
+              </Fragment>
+            </Router>
+          </AlertState>
+        </PostState>
       </UserState>
     </AuthState>
   );

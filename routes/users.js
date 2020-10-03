@@ -26,14 +26,16 @@ router.post(
   ],
   async (req, res) => {
     const errors = validationResult(req);
+
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
 
-    const { name, email, password, profilePicture } = req.body;
+    const { name, email, password } = req.body;
 
     try {
       let user = await User.findOne({ email });
+
       if (user) {
         return res.status(400).json({ msg: 'User already exists' });
       }
@@ -52,7 +54,6 @@ router.post(
         name,
         email,
         avatar,
-        profilePicture,
         password,
       });
 
@@ -102,7 +103,9 @@ router.get('/', auth, async (req, res) => {
 
 router.get('/profile/:id', auth, async (req, res) => {
   try {
-    const user = await User.findById('name friends email');
+    const user = await User.findById(
+      'name friends email avatar profilePicture'
+    );
     res.json(user);
   } catch (err) {
     console.error(err.message);

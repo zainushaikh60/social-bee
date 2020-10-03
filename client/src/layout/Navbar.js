@@ -57,7 +57,7 @@ const Navbar = ({ onClick, profile, onSetLayout, fnLayout }) => {
             {user && user.name}
           </a>
         ) : (
-          <a href='#!' className='in-active' onClick={onClick}>
+          <a href='/my-profile' className='in-active' onClick={onClick}>
             <img
               src={
                 user && profilePicture === null ? user.avatar : profilePicture

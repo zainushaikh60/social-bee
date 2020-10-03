@@ -299,7 +299,7 @@ nav .logo img {
 }
 
 .post-body {
-  margin-top: 5px;
+  margin: 8px 0px;
   padding: 0px 3px;
 }
 
@@ -402,6 +402,12 @@ nav .logo img {
 .comment-body p {
   margin: 0;
   font-size: 70%;
+}
+
+.comment-body .comment-img {
+  width: 200px;
+  margin-top: 3px;
+  border-radius: 5px;
 }
 
 .post-add-comment {

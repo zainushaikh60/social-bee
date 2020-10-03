@@ -15,7 +15,9 @@ app.use('/uploads', express.static('uploads'));
 
 // Init Middleware
 
-app.use(express.json({ extended: false }));
+app.use(express.json());
+
+app.use(express.urlencoded({ extended: true }));
 
 app.get('/', (req, res) => res.json({ msg: 'Welcome to the Social-Bee API' }));
 

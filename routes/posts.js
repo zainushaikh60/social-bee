@@ -1,15 +1,47 @@
 const express = require('express');
-const User = require('../models/User');
 const router = express.Router();
 const auth = require('../middleware/auth');
 const { check, validationResult } = require('express-validator');
+const multer = require('multer');
+const fs = require('fs');
+const User = require('../models/User');
 const Post = require('../models/Post');
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    fs.mkdir('./uploads/', (err) => {
+      cb(null, './uploads/');
+    });
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + file.originalname);
+  },
+});
+
+const fileFilter = (req, file, cb) => {
+  // reject file
+  if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png') {
+    cb(null, true);
+  } else {
+    cb(new Error('Only jpeg and png files are allowed'), false);
+  }
+};
+
+const upload = multer({
+  storage: storage,
+  limits: {
+    fileSize: 1024 * 1024 * 5,
+  },
+  fileFilter: fileFilter,
+});
 
 router.post(
   '/',
-  [auth, [check('text', 'Text is required').not().isEmpty()]],
+  upload.single('image'),
+  [auth, check('text', 'Text is required').not().isEmpty()],
   async (req, res) => {
     const errors = validationResult(req);
+
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
@@ -19,8 +51,10 @@ router.post(
 
       const newPost = new Post({
         text: req.body.text,
+        image: req.file ? req.file.path : undefined,
         name: user.name,
         avatar: user.avatar,
+        profilePicture: user.profilePicture,
         user: req.user.id,
       });
 
@@ -37,6 +71,7 @@ router.post(
 // @route    GET api/posts
 // @desc     Get all posts
 // @access   Private
+
 router.get('/', auth, async (req, res) => {
   try {
     const posts = await Post.find().sort({ date: -1 });
@@ -144,6 +179,7 @@ router.put('/unlike/:id', auth, async (req, res) => {
 // @access   Private
 router.post(
   '/comment/:id',
+  upload.single('image'),
   [auth, [check('text', 'Text is required').not().isEmpty()]],
   async (req, res) => {
     const errors = validationResult(req);
@@ -158,6 +194,8 @@ router.post(
       const newComment = {
         text: req.body.text,
         name: user.name,
+        image: req.file ? req.file.path : undefined,
+        profilePicture: user.profilePicture,
         avatar: user.avatar,
         user: req.user.id,
       };
