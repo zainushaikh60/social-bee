@@ -1,12 +1,15 @@
-import React, { Fragment, useContext } from 'react';
+import React, { Fragment, useContext, useState, useRef } from 'react';
 import AuthContext from '../context/auth/authContext';
 import PostContext from '../context/post/postContext';
+import AlertContext from '../context/alert/alertContext';
 
 const PostCard = ({ post }) => {
   const authContext = useContext(AuthContext);
   const postContext = useContext(PostContext);
+  const alertContext = useContext(AlertContext);
 
   const { user } = authContext;
+  const { setAlert } = alertContext;
 
   const {
     deletePost,
@@ -16,7 +19,32 @@ const PostCard = ({ post }) => {
     deleteCommentOnPost,
   } = postContext;
 
-  const comment = post.comments.map((comment) => console.log(comment));
+  const clearInput = useRef();
+
+  function clear() {
+    clearInput.current.value = '';
+  }
+
+  const maxAllowedSize = 5 * 1024 * 1024;
+
+  const commentTextState = null;
+  const commentImageState = null;
+
+  const [comment, setComment] = useState(commentTextState);
+  const [commentImage, setCommentImage] = useState(commentImageState);
+
+  const onClick = () => {
+    if (comment === null) {
+      setAlert('Comment can not be left empty', 'danger', 'info-circle');
+    } else if (commentImage === null) {
+      commentOnPost(post._id, comment);
+      setComment(commentTextState);
+    } else {
+      commentOnPost(post._id, comment, commentImage);
+      setComment(commentTextState);
+      setCommentImage(commentImageState);
+    }
+  };
 
   return (
     <Fragment>
@@ -87,50 +115,58 @@ const PostCard = ({ post }) => {
           <div className='hr-line'></div>
         </div>
 
-        {comment && comment.length > 0 && (
-          <div className='post-comments'>
-            <div className='comment-by'>
-              <div>
-                <a href='#!'>
-                  <img
-                    src={
-                      comment.profilePicture === null
-                        ? comment.avatar
-                        : comment.profilePicture
-                    }
-                    className='user-img'
-                  />
-                </a>
-                <div className='comment-body'>
-                  <a href='#!'>{comment.name}</a>
-                  <p>{comment.text}</p>
-
-                  {comment.images !== null && (
-                    <div className='comment-image'>
-                      <a href='#!'>
-                        <img src={comment.image} className='comment-img'></img>
-                      </a>
-                    </div>
-                  )}
-                </div>
-              </div>
-
-              {user &&
-                post.comments.find((e) => e.user.toString() === user._id) && (
-                  <a
-                    href='#!'
-                    className='delete-comment'
-                    onClick={(e) =>
-                      deleteCommentOnPost(post._id, post.comment._id)
-                    }
-                  >
-                    <i class='far fa-trash-alt'></i>
+        {post.comments &&
+          post.comments.length > 0 &&
+          post.comments.map((comment) => (
+            <div className='post-comments' key={comment._id}>
+              <div className='comment-by'>
+                <div>
+                  <a href='#!'>
+                    <img
+                      src={
+                        comment.profilePicture === null
+                          ? comment.avatar
+                          : comment.profilePicture
+                      }
+                      className='user-img'
+                    />
                   </a>
-                )}
+                  <div className='comment-body'>
+                    <a href='#!'>{comment.name}</a>
+                    <p className='comment-date'>{comment.date}</p>
+
+                    <p className='comment-text'>{comment.text}</p>
+
+                    {comment.images !== null && (
+                      <div className='comment-image'>
+                        <a href='#!'>
+                          <img
+                            src={comment.image}
+                            className='comment-img'
+                          ></img>
+                        </a>
+                      </div>
+                    )}
+                  </div>
+                </div>
+
+                {user &&
+                  post.comments.find(
+                    (comment) => comment.user === user._id
+                  ) && (
+                    <a
+                      href='#!'
+                      className='delete-comment'
+                      onClick={(e) =>
+                        deleteCommentOnPost(post._id, comment._id)
+                      }
+                    >
+                      <i class='far fa-trash-alt'></i>
+                    </a>
+                  )}
+              </div>
             </div>
-            <div className='hr-line'></div>
-          </div>
-        )}
+          ))}
 
         <div className='post-add-comment'>
           <a href='#!'>
@@ -141,9 +177,48 @@ const PostCard = ({ post }) => {
               className='user-img'
             />
           </a>
+
           <div className='post-add-comment-text'>
-            <input type='text' placeholder='Write a comment' />
-            <button className='btn btn-primary btn-comment'>Comment</button>
+            <input
+              type='text'
+              placeholder='Write a comment'
+              onChange={(e) => setComment(e.target.value)}
+              ref={clearInput}
+            />
+
+            <input
+              type='file'
+              name='post-comment'
+              id='post-comment'
+              accept='.jpg, .jpeg, .png, .gif'
+              onChange={(e) =>
+                e.target.files && e.target.files[0].size > maxAllowedSize
+                  ? (setAlert(
+                      `Image file size should be less than 5 mb`,
+                      'danger',
+                      'info-circle'
+                    ),
+                    (e.target.value = ''))
+                  : setCommentImage(e.target.files[0])
+              }
+            />
+
+            <label
+              for='post-comment'
+              className='btn btn-primary btn-comment btn-comment-image'
+            >
+              <i class='far fa-image'></i>
+            </label>
+
+            <button
+              className='btn btn-primary btn-comment'
+              onClick={() => {
+                onClick();
+                clear();
+              }}
+            >
+              Comment
+            </button>
           </div>
         </div>
       </div>

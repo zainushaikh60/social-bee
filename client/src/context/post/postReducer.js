@@ -40,16 +40,20 @@ export default (state, action) => {
       };
 
     case COMMENT_ON_POST:
+      return {
+        ...state,
+        posts: { ...state.posts, comments: action.payload },
+      };
     case DELETE_COMMENT_FROM_POST:
       return {
         ...state,
-        posts: state.posts.map((post) =>
-          post._id === action.payload.id
-            ? { ...post, comments: action.payload.comments }
-            : post
-        ),
+        posts: {
+          ...state.posts,
+          comments: state.posts.comments.filter(
+            (comment) => comment._id !== action.payload
+          ),
+        },
       };
-
     case GET_POSTS:
       return {
         ...state,

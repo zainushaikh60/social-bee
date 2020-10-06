@@ -110,9 +110,10 @@ const PostState = (props) => {
 
   //   Comment on post
 
-  const commentOnPost = async (id, formData) => {
+  const commentOnPost = async (id, comment, commentImage) => {
     const fd = new FormData();
-    fd.append('formData', formData);
+    fd.append('text', comment);
+    fd.append('image', commentImage);
     const config = {
       headers: {
         'Content-Type': 'multipart/form-data',
@@ -136,10 +137,10 @@ const PostState = (props) => {
 
   const deleteCommentOnPost = async (id, commentId) => {
     try {
-      const res = await axios.delete(`/api/posts/${id}/${commentId}`);
+      const res = await axios.delete(`/api/posts/comment/${id}/${commentId}`);
       dispatch({
         type: DELETE_COMMENT_FROM_POST,
-        payload: res.data,
+        payload: { id, comments: res.data },
       });
     } catch (err) {
       dispatch({
