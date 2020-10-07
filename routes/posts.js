@@ -232,7 +232,12 @@ router.delete('/comment/:id/:comment_id', auth, async (req, res) => {
       return res.status(401).json({ msg: 'User not authorized' });
     }
 
-    post.comments = post.comments.filter((id) => id !== req.params.comment_id);
+    post.comments.splice(
+      post.comments.findIndex(
+        (comment) => comment._id.toString() === req.params.comment_id
+      ),
+      1
+    );
 
     await post.save();
 

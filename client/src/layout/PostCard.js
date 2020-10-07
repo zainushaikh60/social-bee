@@ -1,4 +1,6 @@
 import React, { Fragment, useContext, useState, useRef } from 'react';
+import CommentCard from '../layout/CommentCard';
+import AddCommentCard from '../layout/AddCommentCard';
 import AuthContext from '../context/auth/authContext';
 import PostContext from '../context/post/postContext';
 import AlertContext from '../context/alert/alertContext';
@@ -118,109 +120,25 @@ const PostCard = ({ post }) => {
         {post.comments &&
           post.comments.length > 0 &&
           post.comments.map((comment) => (
-            <div className='post-comments' key={comment._id}>
-              <div className='comment-by'>
-                <div>
-                  <a href='#!'>
-                    <img
-                      src={
-                        comment.profilePicture === null
-                          ? comment.avatar
-                          : comment.profilePicture
-                      }
-                      className='user-img'
-                    />
-                  </a>
-                  <div className='comment-body'>
-                    <a href='#!'>{comment.name}</a>
-                    <p className='comment-date'>{comment.date}</p>
-
-                    <p className='comment-text'>{comment.text}</p>
-
-                    {comment.images !== null && (
-                      <div className='comment-image'>
-                        <a href='#!'>
-                          <img
-                            src={comment.image}
-                            className='comment-img'
-                          ></img>
-                        </a>
-                      </div>
-                    )}
-                  </div>
-                </div>
-
-                {user &&
-                  post.comments.find(
-                    (comment) => comment.user === user._id
-                  ) && (
-                    <a
-                      href='#!'
-                      className='delete-comment'
-                      onClick={(e) =>
-                        deleteCommentOnPost(post._id, comment._id)
-                      }
-                    >
-                      <i class='far fa-trash-alt'></i>
-                    </a>
-                  )}
-              </div>
-            </div>
+            <CommentCard
+              key={comment._id}
+              comment={comment}
+              postId={post._id}
+              deleteCommentOnPost={deleteCommentOnPost}
+              user={user}
+            />
           ))}
 
-        <div className='post-add-comment'>
-          <a href='#!'>
-            <img
-              src={
-                user.profilePicture === null ? user.avatar : user.profilePicture
-              }
-              className='user-img'
-            />
-          </a>
-
-          <div className='post-add-comment-text'>
-            <input
-              type='text'
-              placeholder='Write a comment'
-              onChange={(e) => setComment(e.target.value)}
-              ref={clearInput}
-            />
-
-            <input
-              type='file'
-              name='post-comment'
-              id='post-comment'
-              accept='.jpg, .jpeg, .png, .gif'
-              onChange={(e) =>
-                e.target.files && e.target.files[0].size > maxAllowedSize
-                  ? (setAlert(
-                      `Image file size should be less than 5 mb`,
-                      'danger',
-                      'info-circle'
-                    ),
-                    (e.target.value = ''))
-                  : setCommentImage(e.target.files[0])
-              }
-            />
-
-            <label
-              for='post-comment'
-              className='btn btn-primary btn-comment btn-comment-image'
-            >
-              <i class='far fa-image'></i>
-            </label>
-
-            <button
-              className='btn btn-primary btn-comment'
-              onClick={() => {
-                onClick();
-                clear();
-              }}
-            >
-              Comment
-            </button>
-          </div>
-        </div>
+        <AddCommentCard
+          user={user}
+          clear={clear}
+          onClick={onClick}
+          clearInput={clearInput}
+          maxAllowedSize={maxAllowedSize}
+          setComment={setComment}
+          setCommentImage={setCommentImage}
+          setAlert={setAlert}
+        />
       </div>
     </Fragment>
   );

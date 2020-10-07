@@ -38,21 +38,15 @@ export default (state, action) => {
             : post
         ),
       };
-
     case COMMENT_ON_POST:
-      return {
-        ...state,
-        posts: { ...state.posts, comments: action.payload },
-      };
     case DELETE_COMMENT_FROM_POST:
       return {
         ...state,
-        posts: {
-          ...state.posts,
-          comments: state.posts.comments.filter(
-            (comment) => comment._id !== action.payload
-          ),
-        },
+        posts: state.posts.map((post) =>
+          post._id === action.payload.id
+            ? { ...post, comments: action.payload.comments }
+            : post
+        ),
       };
     case GET_POSTS:
       return {
