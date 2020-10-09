@@ -422,6 +422,11 @@ nav .logo img {
   position: relative;
   margin: 7px 10px 3px 10px;
   display: flex;
+  flex-direction: column;
+}
+
+.add-comm {
+  display: flex;
 }
 
 .post-add-comment a {
@@ -463,6 +468,34 @@ nav .logo img {
 
 .btn-comment-image {
   margin-right: 4px;
+}
+
+.preview-heading {
+  margin: 5px;
+  text-align: center;
+  font-size: 70%;
+}
+
+.comment-image-preview {
+  border-radius: 4px;
+  margin: 0 auto;
+}
+
+.image-preview {
+  position: relative;
+}
+
+.image-preview img {
+  width: 250px;
+  border-radius: 5px;
+}
+
+.comment-image-cancel {
+  position: absolute;
+  color: #fff;
+  top: 0;
+  right: 0;
+  margin: 5px;
 }
 
 /* Sidebar */
