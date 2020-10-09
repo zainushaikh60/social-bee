@@ -1,4 +1,4 @@
-import React, { Fragment, useContext, useState, useEffect } from 'react';
+import React, { Fragment, useContext, useState } from 'react';
 import AuthContext from '../context/auth/authContext';
 import UserContext from '../context/user/userContext';
 import AlertContext from '../context/alert/alertContext';
@@ -35,6 +35,12 @@ const MyProfile = () => {
     setCoverPhoto(coverInitialState);
     uploadCoverPhoto(coverPhoto);
   };
+
+  let url = null;
+
+  if (profilePhoto && profilePhoto !== null) {
+    url = URL.createObjectURL(profilePhoto);
+  }
 
   return (
     <Fragment>
@@ -110,8 +116,18 @@ const MyProfile = () => {
               <a href='#!'>
                 <img src={user && cover} />
               </a>
-              <label className='btn btn-primary' onClick={onUploadCoverPhoto}>
+              <div className='label-container'></div>
+              <label
+                className='btn btn-primary upload-cover'
+                onClick={onUploadCoverPhoto}
+              >
                 Upload Selected Cover Photo
+              </label>
+              <label
+                className='btn btn-primary cancel-upload-cover'
+                onClick={onUploadCoverPhoto}
+              >
+                Cancel Upload
               </label>
             </div>
           )}

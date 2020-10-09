@@ -21,7 +21,7 @@ export default (state, action) => {
     case ADD_POST:
       return {
         ...state,
-        posts: action.payload,
+        posts: [action.payload, ...state.posts],
       };
     case DELETE_POST:
       return {

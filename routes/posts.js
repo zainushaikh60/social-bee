@@ -47,14 +47,9 @@ router.post(
     }
 
     try {
-      const user = await User.findById(req.user.id).select('-password');
-
       const newPost = new Post({
         text: req.body.text,
         image: req.file ? req.file.path : undefined,
-        name: user.name,
-        avatar: user.avatar,
-        profilePicture: user.profilePicture,
         user: req.user.id,
       });
 
@@ -74,7 +69,21 @@ router.post(
 
 router.get('/', auth, async (req, res) => {
   try {
-    const posts = await Post.find().sort({ date: -1 });
+    const posts = await Post.find()
+      .sort({ date: -1 })
+      .populate({
+        path: 'user',
+        model: 'User',
+        select: 'name avatar profilePicture',
+      })
+      .populate({
+        path: 'comments',
+        populate: {
+          path: 'user',
+          model: 'User',
+          select: 'name avatar profilePicture',
+        },
+      });
     res.json(posts);
   } catch (err) {
     console.error(err.message);
@@ -188,15 +197,11 @@ router.post(
     }
 
     try {
-      const user = await User.findById(req.user.id).select('-password');
       const post = await Post.findById(req.params.id);
 
       const newComment = {
         text: req.body.text,
-        name: user.name,
         image: req.file ? req.file.path : undefined,
-        profilePicture: user.profilePicture,
-        avatar: user.avatar,
         user: req.user.id,
       };
 

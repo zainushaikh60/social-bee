@@ -35,9 +35,10 @@ const PostState = (props) => {
 
   // Add post
 
-  const addPost = async (formData) => {
+  const addPost = async (postText, postImage) => {
     const fd = new FormData();
-    fd.append('formData', formData);
+    fd.append('text', postText);
+    fd.append('image', postImage);
     const config = {
       headers: {
         'Content-Type': 'multipart/form-data',

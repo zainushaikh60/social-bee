@@ -166,13 +166,13 @@ nav .logo img {
 .add-post-container {
   max-width: 500px;
   width: 100%;
-  height: 108px;
   background-color: #fff;
   border-radius: 10px;
   padding: 10px;
   display: flex;
   align-items: center;
   flex-direction: column;
+  margin-bottom: 10px;
 }
 
 .add-post-text {
@@ -234,8 +234,12 @@ nav .logo img {
 
 /* Post card */
 
+.post-card:first-child {
+  margin-top: 10px;
+}
+
 .post-card {
-  margin: 10px 0px;
+  margin-bottom: 10px;
   max-width: 500px;
   width: 100%;
   display: flex;
@@ -327,6 +331,10 @@ nav .logo img {
   width: 100%;
   display: flex;
   justify-content: space-around;
+}
+
+.post-likes-comments .liked {
+  color: #288dda;
 }
 
 .post-likes-comments a {
@@ -425,7 +433,7 @@ nav .logo img {
   flex-direction: column;
 }
 
-.add-comm {
+.add-comment {
   display: flex;
 }
 
@@ -462,6 +470,16 @@ nav .logo img {
   margin-left: 0px;
   font-size: 60%;
   background-color: #288dda;
+  border: none;
+  color: #fff;
+}
+
+.btn-comment-disabled {
+  padding: 10px;
+  border-radius: 20px;
+  margin-left: 0px;
+  font-size: 60%;
+  background-color: #7ab3df;
   border: none;
   color: #fff;
 }
@@ -601,6 +619,15 @@ nav .logo img {
   border-radius: 10px;
 }
 
+.profile-cover label {
+  position: absolute;
+  background-color: #fff;
+  bottom: 0;
+  right: 0;
+  margin-right: 10px;
+  margin-bottom: 10px;
+}
+
 .profile-cover img {
   width: 100%;
   height: 100%;
@@ -625,23 +652,18 @@ nav .logo img {
 
 label {
   cursor: pointer;
+  text-align: center;
 }
 
 #cover-photo,
 #profile-photo,
-#post-comment {
+#post-comment,
+#add-post,
+#add-post-image {
+  overflow: hidden;
   opacity: 0;
   position: absolute;
   z-index: -1;
-}
-
-.profile-cover label {
-  position: absolute;
-  background-color: #fff;
-  bottom: 0;
-  right: 0;
-  margin-right: 10px;
-  margin-bottom: 10px;
 }
 
 .profile-picture {

@@ -23,8 +23,6 @@ const Home = () => {
     getCoverPhoto,
   } = userContext;
 
-  const { getPosts } = postContext;
-
   useEffect(() => {
     authContext.loadUser();
     getUsers();
@@ -34,7 +32,6 @@ const Home = () => {
     getFriendRequestsTo();
     getFriendRequestsBy();
     getNotifications();
-    getPosts();
   }, []);
 
   const [profile, setProfile] = useState(false);

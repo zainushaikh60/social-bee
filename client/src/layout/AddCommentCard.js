@@ -1,19 +1,39 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useRef } from 'react';
 
 const AddCommentCard = ({
   user,
   setComment,
+  comment,
   clearInput,
   maxAllowedSize,
   setAlert,
   setCommentImage,
+  commentImage,
+  onClearImage,
   onClick,
   clear,
 }) => {
+  let url = null;
+  let isCommentEmpty = true;
+
+  if (comment && comment !== null) {
+    isCommentEmpty = false;
+  }
+
+  if (commentImage && commentImage !== null) {
+    url = URL.createObjectURL(commentImage);
+  }
+
+  const clearImageInput = useRef();
+
+  const clearImage = () => {
+    clearImageInput.current.value = '';
+  };
+
   return (
     <Fragment>
       <div className='post-add-comment'>
-        <div className='add-comm'>
+        <div className='add-comment'>
           <a href='#!'>
             <img
               src={
@@ -32,6 +52,7 @@ const AddCommentCard = ({
             />
 
             <input
+              ref={clearImageInput}
               type='file'
               name='post-comment'
               id='post-comment'
@@ -48,18 +69,27 @@ const AddCommentCard = ({
               }
             />
 
-            <label
-              for='post-comment'
-              className='btn btn-primary btn-comment btn-comment-image'
-            >
-              <i class='far fa-image'></i>
-            </label>
+            {!isCommentEmpty && (
+              <label
+                for='post-comment'
+                className='btn btn-primary btn-comment btn-comment-image'
+              >
+                <i class='far fa-image'></i>
+              </label>
+            )}
 
             <button
-              className='btn btn-primary btn-comment'
+              className={
+                isCommentEmpty
+                  ? 'btn-comment-disabled'
+                  : 'btn btn-primary btn-comment'
+              }
+              disabled={isCommentEmpty}
               onClick={() => {
+                url = null;
                 onClick();
                 clear();
+                clearImage();
               }}
             >
               Comment
@@ -67,15 +97,24 @@ const AddCommentCard = ({
           </div>
         </div>
 
-        <div className='comment-image-preview'>
-          <p className='preview-heading'>Attached Image Preview:</p>
-          <div className='image-preview'>
-            <img src='/images/post.jpg'></img>
-            <a href='#!' className='comment-image-cancel'>
-              <i class='fas fa-times'></i>
-            </a>
+        {commentImage !== null && (
+          <div className='comment-image-preview'>
+            <p className='preview-heading'>Attached Image Preview:</p>
+            <div className='image-preview'>
+              <img src={url} />
+              <a
+                href='#!'
+                className='comment-image-cancel'
+                onClick={() => {
+                  onClearImage();
+                  clearImage();
+                }}
+              >
+                <i class='fas fa-times'></i>
+              </a>
+            </div>
           </div>
-        </div>
+        )}
       </div>
     </Fragment>
   );

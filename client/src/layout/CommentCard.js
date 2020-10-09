@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react';
+import Moment from 'react-moment';
 
 const CommentCard = ({ postId, comment, user, deleteCommentOnPost }) => {
   return (
@@ -9,16 +10,18 @@ const CommentCard = ({ postId, comment, user, deleteCommentOnPost }) => {
             <a href='#!'>
               <img
                 src={
-                  comment.profilePicture === null
-                    ? comment.avatar
-                    : comment.profilePicture
+                  comment.user.profilePicture === null
+                    ? comment.user.avatar
+                    : comment.user.profilePicture
                 }
                 className='user-img'
               />
             </a>
             <div className='comment-body'>
-              <a href='#!'>{comment.name}</a>
-              <p className='comment-date'>{comment.date}</p>
+              <a href='#!'>{comment.user.name}</a>
+              <p className='comment-date'>
+                <Moment fromNow>{comment.date}</Moment>
+              </p>
 
               <p className='comment-text'>{comment.text}</p>
 
@@ -32,7 +35,7 @@ const CommentCard = ({ postId, comment, user, deleteCommentOnPost }) => {
             </div>
           </div>
 
-          {user && comment.user.toString() === user._id && (
+          {user && comment.user._id === user._id && (
             <a
               href='#!'
               className='delete-comment'

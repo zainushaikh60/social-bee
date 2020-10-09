@@ -12,15 +12,6 @@ const PostSchema = new Schema({
   image: {
     type: String,
   },
-  name: {
-    type: String,
-  },
-  avatar: {
-    type: String,
-  },
-  profilePicture: {
-    type: String,
-  },
   likes: [
     {
       user: {
@@ -40,15 +31,6 @@ const PostSchema = new Schema({
       image: {
         type: String,
       },
-      name: {
-        type: String,
-      },
-      avatar: {
-        type: String,
-      },
-      profilePicture: {
-        type: String,
-      },
       date: {
         type: Date,
         default: Date.now,
@@ -59,6 +41,24 @@ const PostSchema = new Schema({
     type: Date,
     default: Date.now,
   },
+});
+
+PostSchema.pre('save', async function (next) {
+  await this.populate({
+    path: 'comments',
+    populate: {
+      path: 'user',
+      model: 'User',
+      select: 'name avatar profilePicture',
+    },
+  })
+    .populate({
+      path: 'user',
+      model: 'User',
+      select: 'name avatar profilePicture',
+    })
+    .execPopulate();
+  next();
 });
 
 module.exports = mongoose.model('Post', PostSchema);

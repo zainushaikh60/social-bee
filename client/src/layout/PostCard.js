@@ -1,4 +1,5 @@
 import React, { Fragment, useContext, useState, useRef } from 'react';
+import Moment from 'react-moment';
 import CommentCard from '../layout/CommentCard';
 import AddCommentCard from '../layout/AddCommentCard';
 import AuthContext from '../context/auth/authContext';
@@ -23,9 +24,9 @@ const PostCard = ({ post }) => {
 
   const clearInput = useRef();
 
-  function clear() {
+  const clear = () => {
     clearInput.current.value = '';
-  }
+  };
 
   const maxAllowedSize = 5 * 1024 * 1024;
 
@@ -48,6 +49,10 @@ const PostCard = ({ post }) => {
     }
   };
 
+  const onClearImage = () => {
+    setCommentImage(commentImageState);
+  };
+
   return (
     <Fragment>
       <div className='post-card'>
@@ -56,19 +61,21 @@ const PostCard = ({ post }) => {
             <a href='#!'>
               <img
                 src={
-                  post.profilePicture === null
-                    ? post.avatar
-                    : post.profilePicture
+                  post.user.profilePicture === null
+                    ? post.user.avatar
+                    : post.user.profilePicture
                 }
                 className='user-img'
               />
             </a>
             <div className='post-by-name-date'>
-              <a href='#!'>{post.name}</a>
-              <p>{post.date}</p>
+              <a href='#!'>{post.user.name}</a>
+              <p>
+                <Moment fromNow>{post.date}</Moment>
+              </p>
             </div>
           </div>
-          {user && post.user === user._id && (
+          {user && post.user._id === user._id && (
             <div className='post-delete' onClick={(e) => deletePost(post._id)}>
               <a href='#!'>
                 <i class='fas fa-times'></i>
@@ -92,13 +99,14 @@ const PostCard = ({ post }) => {
         <div className='post-statistics'>
           <div className='hr-line'></div>
           <div className='post-likes-comments '>
-            {post.likes.find((e) => e.user.toString() === user._id) ? (
+            {user && post.likes.find((e) => e.user.toString() === user._id) ? (
               <a
                 href='#!'
                 className='in-active'
                 onClick={(e) => unlikePost(post._id)}
               >
-                <i class='fas fa-thumbs-up'></i> {post.likes.length} Likes
+                <i class='fas fa-thumbs-up liked'></i> Unlike |{' '}
+                {post.likes.length} Likes
               </a>
             ) : (
               <a
@@ -106,7 +114,8 @@ const PostCard = ({ post }) => {
                 className='in-active'
                 onClick={(e) => likePost(post._id)}
               >
-                <i class='far fa-thumbs-up'></i> {post.likes.length} Likes
+                <i class='far fa-thumbs-up'></i> Like | {post.likes.length}{' '}
+                Likes
               </a>
             )}
 
@@ -136,7 +145,10 @@ const PostCard = ({ post }) => {
           clearInput={clearInput}
           maxAllowedSize={maxAllowedSize}
           setComment={setComment}
+          comment={comment}
           setCommentImage={setCommentImage}
+          commentImage={commentImage}
+          onClearImage={onClearImage}
           setAlert={setAlert}
         />
       </div>
