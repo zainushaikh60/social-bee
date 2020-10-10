@@ -1,7 +1,13 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useContext } from 'react';
 import Moment from 'react-moment';
 
-const CommentCard = ({ postId, comment, user, deleteCommentOnPost }) => {
+const CommentCard = ({
+  postId,
+  comment,
+  user,
+  profilePicture,
+  deleteCommentOnPost,
+}) => {
   return (
     <Fragment>
       <div className='post-comments'>
@@ -10,7 +16,11 @@ const CommentCard = ({ postId, comment, user, deleteCommentOnPost }) => {
             <a href='#!'>
               <img
                 src={
-                  comment.user.profilePicture === null
+                  comment.user._id === user._id
+                    ? profilePicture === null
+                      ? user.avatar
+                      : profilePicture
+                    : comment.user.profilePicture === null
                     ? comment.user.avatar
                     : comment.user.profilePicture
                 }

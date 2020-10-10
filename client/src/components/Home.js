@@ -6,12 +6,10 @@ import Posts from './Posts';
 import MyProfile from './MyProfile';
 import AuthContext from '../context/auth/authContext';
 import UserContext from '../context/user/userContext';
-import PostContext from '../context/post/postContext';
 
 const Home = () => {
   const authContext = useContext(AuthContext);
   const userContext = useContext(UserContext);
-  const postContext = useContext(PostContext);
 
   const {
     getUsers,

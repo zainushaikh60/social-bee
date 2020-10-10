@@ -2,6 +2,7 @@ import React, { Fragment, useRef } from 'react';
 
 const AddCommentCard = ({
   user,
+  profilePicture,
   setComment,
   comment,
   clearInput,
@@ -36,9 +37,7 @@ const AddCommentCard = ({
         <div className='add-comment'>
           <a href='#!'>
             <img
-              src={
-                user.profilePicture === null ? user.avatar : user.profilePicture
-              }
+              src={profilePicture === null ? user.avatar : profilePicture}
               className='user-img'
             />
           </a>

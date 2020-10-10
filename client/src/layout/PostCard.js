@@ -3,6 +3,7 @@ import Moment from 'react-moment';
 import CommentCard from '../layout/CommentCard';
 import AddCommentCard from '../layout/AddCommentCard';
 import AuthContext from '../context/auth/authContext';
+import UserContext from '../context/user/userContext';
 import PostContext from '../context/post/postContext';
 import AlertContext from '../context/alert/alertContext';
 
@@ -10,8 +11,10 @@ const PostCard = ({ post }) => {
   const authContext = useContext(AuthContext);
   const postContext = useContext(PostContext);
   const alertContext = useContext(AlertContext);
+  const userContext = useContext(UserContext);
 
   const { user } = authContext;
+  const { profilePicture } = userContext;
   const { setAlert } = alertContext;
 
   const {
@@ -61,7 +64,11 @@ const PostCard = ({ post }) => {
             <a href='#!'>
               <img
                 src={
-                  post.user.profilePicture === null
+                  post.user._id === user._id
+                    ? profilePicture === null
+                      ? user.avatar
+                      : profilePicture
+                    : post.user.profilePicture === null
                     ? post.user.avatar
                     : post.user.profilePicture
                 }
@@ -135,11 +142,13 @@ const PostCard = ({ post }) => {
               postId={post._id}
               deleteCommentOnPost={deleteCommentOnPost}
               user={user}
+              profilePicture={profilePicture}
             />
           ))}
 
         <AddCommentCard
           user={user}
+          profilePicture={profilePicture}
           clear={clear}
           onClick={onClick}
           clearInput={clearInput}
