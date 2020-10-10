@@ -635,6 +635,7 @@ nav .logo img {
 }
 
 .no-cover {
+  position: relative;
   background-color: #fff;
   width: 800px;
   height: 300px;
@@ -644,10 +645,28 @@ nav .logo img {
   justify-content: center;
 }
 
+.cover-preview {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+  opacity: 0.5;
+}
+
 .btn-upload {
   width: 20%;
   text-align: center;
   margin: 5px;
+  z-index: 1;
+}
+
+.btn-no-cover {
+  background-color: #fff;
+  border: none;
+}
+
+.profile-cover .upload-cover-cancel {
+  margin-right: 86px;
 }
 
 label {

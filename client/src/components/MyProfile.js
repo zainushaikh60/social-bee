@@ -36,10 +36,15 @@ const MyProfile = () => {
     uploadCoverPhoto(coverPhoto);
   };
 
-  let url = null;
+  let profilePicturePreview = null;
+  let coverPhotoPreview = null;
 
   if (profilePhoto && profilePhoto !== null) {
-    url = URL.createObjectURL(profilePhoto);
+    profilePicturePreview = URL.createObjectURL(profilePhoto);
+  }
+
+  if (coverPhoto && coverPhoto !== null) {
+    coverPhotoPreview = URL.createObjectURL(coverPhoto);
   }
 
   return (
@@ -73,11 +78,21 @@ const MyProfile = () => {
 
           {user && cover === null && coverPhoto !== null && (
             <div className='no-cover'>
+              <img src={coverPhotoPreview} className='cover-preview'></img>
+
               <label
-                className='btn btn-primary btn-upload'
+                className='btn btn-primary btn-upload btn-no-cover'
                 onClick={onUploadCoverPhoto}
               >
-                Upload Selected Cover Photo
+                Upload
+              </label>
+              <label
+                className='btn btn-primary btn-upload btn-no-cover'
+                onClick={(e) => {
+                  setCoverPhoto(coverInitialState);
+                }}
+              >
+                Cancel
               </label>
             </div>
           )}
@@ -100,7 +115,7 @@ const MyProfile = () => {
                 onChange={(e) =>
                   e.target.files && e.target.files[0].size > maxAllowedSize
                     ? (setAlert(
-                        `Image file size should be less than 50 kb`,
+                        `Image file size should be less than 5 mb`,
                         'danger',
                         'info-circle'
                       ),
@@ -114,20 +129,22 @@ const MyProfile = () => {
           {user && cover !== null && coverPhoto !== null && (
             <div className='profile-cover'>
               <a href='#!'>
-                <img src={user && cover} />
+                <img
+                  src={coverPhoto !== null ? coverPhotoPreview : cover}
+                  className={coverPhoto !== null && 'cover-preview'}
+                />
               </a>
               <div className='label-container'></div>
-              <label
-                className='btn btn-primary upload-cover'
-                onClick={onUploadCoverPhoto}
-              >
-                Upload Selected Cover Photo
+              <label className='btn btn-primary' onClick={onUploadCoverPhoto}>
+                Change
               </label>
               <label
-                className='btn btn-primary cancel-upload-cover'
-                onClick={onUploadCoverPhoto}
+                className='btn btn-primary upload-cover-cancel'
+                onClick={(e) => {
+                  setCoverPhoto(coverInitialState);
+                }}
               >
-                Cancel Upload
+                Cancel
               </label>
             </div>
           )}
