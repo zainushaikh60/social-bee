@@ -17,6 +17,7 @@ const UserSchema = mongoose.Schema({
     type: String,
     default: null,
   },
+
   cover: {
     type: String,
     default: null,

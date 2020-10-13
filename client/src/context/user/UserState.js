@@ -11,8 +11,12 @@ import {
   GET_PROFILE_PICTURE_FAIL,
   UPLOAD_PROFILE_PICTURE,
   UPLOAD_PROFILE_PICTURE_FAIL,
+  DELETE_PROFILE_PICTURE,
+  DELETE_PROFILE_PICTURE_FAIL,
   GET_COVER_PHOTO,
   GET_COVER_PHOTO_FAIL,
+  DELETE_COVER_PHOTO,
+  DELETE_COVER_PHOTO_FAIL,
   UPLOAD_COVER_PHOTO,
   UPLOAD_COVER_PHOTO_FAIL,
   GET_FRIEND_REQUESTS_TO,
@@ -145,6 +149,23 @@ const UserState = (props) => {
     }
   };
 
+  // delete profile picture
+
+  const deleteProfilePicture = async () => {
+    try {
+      const res = await axios.put(`/api/auth/deleteProfilePicture`);
+      dispatch({
+        type: DELETE_PROFILE_PICTURE,
+        payload: res.data,
+      });
+    } catch (err) {
+      dispatch({
+        type: DELETE_PROFILE_PICTURE_FAIL,
+        payload: err.response.data.msg,
+      });
+    }
+  };
+
   // upload cover photo
 
   const uploadCoverPhoto = async (cover) => {
@@ -164,6 +185,23 @@ const UserState = (props) => {
     } catch (err) {
       dispatch({
         type: UPLOAD_COVER_PHOTO_FAIL,
+        payload: err.response.data.msg,
+      });
+    }
+  };
+
+  // delete cover photo
+
+  const deleteCoverPhoto = async () => {
+    try {
+      const res = await axios.put(`/api/auth/deleteCoverPhoto`);
+      dispatch({
+        type: DELETE_COVER_PHOTO,
+        payload: res.data,
+      });
+    } catch (err) {
+      dispatch({
+        type: DELETE_COVER_PHOTO_FAIL,
         payload: err.response.data.msg,
       });
     }
@@ -345,7 +383,9 @@ const UserState = (props) => {
         getProfilePicture,
         getCoverPhoto,
         uploadProfilePicture,
+        deleteProfilePicture,
         uploadCoverPhoto,
+        deleteCoverPhoto,
         getFriendRequestsTo,
         getFriendRequestsBy,
         sendFriendRequest,

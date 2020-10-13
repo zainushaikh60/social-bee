@@ -172,7 +172,11 @@ router.put('/unlike/:id', auth, async (req, res) => {
     }
 
     // remove the like
-    post.likes = post.likes.filter((user) => user.toString() === req.user.id);
+
+    post.likes.splice(
+      post.likes.findIndex((user) => user.toString() === req.user.id),
+      1
+    );
 
     await post.save();
 

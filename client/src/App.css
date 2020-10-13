@@ -619,13 +619,28 @@ nav .logo img {
   border-radius: 10px;
 }
 
-.profile-cover label {
+.profile-cover label:first-of-type {
   position: absolute;
   background-color: #fff;
+  bottom: 44px;
+  color: #000;
+  right: 0;
+  margin-right: 10px;
+  margin-bottom: 10px;
+}
+
+.profile-cover label:last-of-type {
+  position: absolute;
+  background-color: #fff;
+  color: #000;
   bottom: 0;
   right: 0;
   margin-right: 10px;
   margin-bottom: 10px;
+}
+
+.profile-cover label:last-child {
+  margin-top: 50px;
 }
 
 .profile-cover img {
@@ -651,6 +666,25 @@ nav .logo img {
   height: 100%;
   border-radius: inherit;
   opacity: 0.5;
+}
+
+.profile-picture-preview {
+  opacity: 0.7;
+}
+
+.profile-picture-overlay {
+  background: #fff;
+  overflow: hidden;
+  border-radius: 50%;
+}
+
+.change-delete-profile-picture {
+  display: flex;
+  margin-bottom: 3px;
+}
+
+.change-delete-profile-picture .btn {
+  margin: 0px 4px;
 }
 
 .btn-upload {
@@ -709,6 +743,52 @@ label {
   align-items: center;
   margin-bottom: 3px;
   height: 60px;
+}
+
+.modal {
+  position: fixed;
+  z-index: 20;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow-y: hidden;
+  background-color: rgba(0, 0, 0, 0.398);
+}
+
+.modal .modal-layout {
+  width: 400px;
+  padding: 8px;
+  border-radius: 5px;
+  background-color: #fff;
+}
+
+.modal-layout .modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modal-btns {
+  margin-top: 4px;
+  display: flex;
+  justify-content: center;
+}
+
+.modal-btns button {
+  margin: 0 5px;
+}
+
+.profile-user .upload-profile-picture-cancel {
+  display: flex;
+}
+
+.profile-user .upload-profile-picture-cancel label {
+  margin: 2px 3px;
 }
 
 .profile-user label {

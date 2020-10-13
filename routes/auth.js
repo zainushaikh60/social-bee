@@ -119,6 +119,26 @@ router.post(
   }
 );
 
+// delete profile picture
+
+router.put('/deleteProfilePicture', auth, async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id);
+
+    if (user.profilePicture === null) {
+      return res.status(400).json({ msg: 'No profile picture found' });
+    } else {
+      user.profilePicture = null;
+      await user.save();
+    }
+
+    return res.json(user.profilePicture);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server error');
+  }
+});
+
 // Upload cover picture
 
 router.post(
@@ -137,6 +157,24 @@ router.post(
     }
   }
 );
+
+router.put('/deleteCoverPhoto', auth, async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id);
+
+    if (user.cover === null) {
+      return res.status(400).json({ msg: 'No cover photo found' });
+    } else {
+      user.cover = null;
+      await user.save();
+    }
+
+    return res.json(user.cover);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server error');
+  }
+});
 
 // Get my profile
 

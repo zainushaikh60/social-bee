@@ -16,6 +16,8 @@ const MyProfile = () => {
     cover,
     uploadProfilePicture,
     uploadCoverPhoto,
+    deleteProfilePicture,
+    deleteCoverPhoto,
   } = userContext;
 
   const maxAllowedSize = 5 * 1024 * 1024;
@@ -25,6 +27,8 @@ const MyProfile = () => {
 
   const [profilePhoto, setProfilePhoto] = useState(profilePictureInitialState);
   const [coverPhoto, setCoverPhoto] = useState(coverInitialState);
+  const [profileModal, showProfileModal] = useState(false);
+  const [coverModal, showCoverModal] = useState(false);
 
   const onUploadProfilePicture = () => {
     setProfilePhoto(profilePictureInitialState);
@@ -34,6 +38,20 @@ const MyProfile = () => {
   const onUploadCoverPhoto = () => {
     setCoverPhoto(coverInitialState);
     uploadCoverPhoto(coverPhoto);
+  };
+
+  const showPModal = () => {
+    showProfileModal((profileModal) => !profileModal);
+    document.body.style.overflow = 'hidden';
+  };
+
+  const showCModal = () => {
+    showCoverModal((coverModal) => !coverModal);
+    document.body.style.overflow = 'hidden';
+  };
+
+  const overFlow = () => {
+    document.body.style.overflow = 'scroll';
   };
 
   let profilePicturePreview = null;
@@ -86,6 +104,7 @@ const MyProfile = () => {
               >
                 Upload
               </label>
+
               <label
                 className='btn btn-primary btn-upload btn-no-cover'
                 onClick={(e) => {
@@ -99,12 +118,57 @@ const MyProfile = () => {
 
           {user && cover !== null && coverPhoto === null && (
             <div className='profile-cover'>
+              {coverModal && (
+                <div className='modal'>
+                  <div className='modal-layout'>
+                    <div className='modal-header'>
+                      <div></div>
+                      <h3>Delete Cover Photo?</h3>
+                      <a
+                        href='#!'
+                        onClick={() => {
+                          showCModal();
+                          overFlow();
+                        }}
+                      >
+                        <i class='fas fa-times'></i>
+                      </a>
+                    </div>
+                    <div className='modal-btns'>
+                      <button
+                        className='btn btn-primary'
+                        onClick={() => {
+                          showCModal();
+                          deleteCoverPhoto();
+                          overFlow();
+                        }}
+                      >
+                        Confirm
+                      </button>
+                      <button
+                        className='btn btn-primary'
+                        onClick={() => {
+                          showCModal();
+                          overFlow();
+                        }}
+                      >
+                        Cancel
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              )}
+
               <a href='#!'>
                 <img src={user && cover} />
               </a>
 
-              <label for='cover-photo' className='btn btn-primary'>
+              <label for='cover-photo' className='btn btn-primary change-cover'>
                 Change Cover Photo
+              </label>
+
+              <label className='btn btn-primary' onClick={showCModal}>
+                Delete Cover Photo
               </label>
 
               <input
@@ -152,15 +216,41 @@ const MyProfile = () => {
           {user && profilePicture === null && (
             <div className='profile-picture'>
               <a href='#!'>
-                <img src={user.avatar} />
+                <img
+                  src={
+                    profilePhoto === null ? user.avatar : profilePicturePreview
+                  }
+                  className={
+                    profilePhoto !== null
+                      ? 'profile-picture-preview'
+                      : undefined
+                  }
+                />
               </a>
             </div>
           )}
 
           {user && profilePicture !== null && (
-            <div className='profile-picture'>
+            <div
+              className={
+                profilePhoto === null
+                  ? 'profile-picture'
+                  : 'profile-picture profile-picture-overlay'
+              }
+            >
               <a href='#!'>
-                <img src={profilePicture} />
+                <img
+                  src={
+                    profilePhoto === null
+                      ? profilePicture
+                      : profilePicturePreview
+                  }
+                  className={
+                    profilePhoto !== null
+                      ? 'profile-picture-preview'
+                      : undefined
+                  }
+                />
               </a>
             </div>
           )}
@@ -194,12 +284,21 @@ const MyProfile = () => {
 
           {user && profilePicture === null && profilePhoto !== null && (
             <div className='profile-user'>
-              <label
-                className='btn btn-primary'
-                onClick={onUploadProfilePicture}
-              >
-                Upload Selected Profile Picture
-              </label>
+              <div className='upload-profile-picture-cancel'>
+                <label
+                  className='btn btn-primary'
+                  onClick={onUploadProfilePicture}
+                >
+                  Upload
+                </label>
+
+                <label
+                  className='btn btn-primary'
+                  onClick={() => setProfilePhoto(profilePictureInitialState)}
+                >
+                  Cancel
+                </label>
+              </div>
 
               <h3>{user && user.name}</h3>
             </div>
@@ -207,9 +306,55 @@ const MyProfile = () => {
 
           {user && profilePicture !== null && profilePhoto === null && (
             <div className='profile-user'>
-              <label for='profile-photo' className='btn btn-primary'>
-                Change Profile Picture
-              </label>
+              {profileModal && (
+                <div className='modal'>
+                  <div className='modal-layout'>
+                    <div className='modal-header'>
+                      <div></div>
+                      <h3>Delete Profile Picture?</h3>
+                      <a
+                        href='#!'
+                        onClick={() => {
+                          showPModal();
+                          overFlow();
+                        }}
+                      >
+                        <i class='fas fa-times'></i>
+                      </a>
+                    </div>
+                    <div className='modal-btns'>
+                      <button
+                        className='btn btn-primary'
+                        onClick={() => {
+                          showPModal();
+                          deleteProfilePicture();
+                          overFlow();
+                        }}
+                      >
+                        Confirm
+                      </button>
+                      <button
+                        className='btn btn-primary'
+                        onClick={() => {
+                          showPModal();
+                          overFlow();
+                        }}
+                      >
+                        Cancel
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              <div className='change-delete-profile-picture'>
+                <label for='profile-photo' className='btn btn-primary'>
+                  Change Profile Picture
+                </label>
+                <label className='btn btn-primary' onClick={showPModal}>
+                  Delete Profile Picture
+                </label>
+              </div>
 
               <input
                 type='file'
@@ -234,12 +379,21 @@ const MyProfile = () => {
 
           {user && profilePicture !== null && profilePhoto !== null && (
             <div className='profile-user'>
-              <label
-                className='btn btn-primary'
-                onClick={onUploadProfilePicture}
-              >
-                Upload Selected Profile Picture
-              </label>
+              <div className='upload-profile-picture-cancel'>
+                <label
+                  className='btn btn-primary'
+                  onClick={onUploadProfilePicture}
+                >
+                  Change
+                </label>
+
+                <label
+                  className='btn btn-primary'
+                  onClick={() => setProfilePhoto(profilePictureInitialState)}
+                >
+                  Cancel
+                </label>
+              </div>
 
               <h3>{user && user.name}</h3>
             </div>

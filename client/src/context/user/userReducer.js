@@ -8,6 +8,8 @@ import {
   GET_COVER_PHOTO_FAIL,
   UPLOAD_PROFILE_PICTURE,
   UPLOAD_PROFILE_PICTURE_FAIL,
+  DELETE_PROFILE_PICTURE,
+  DELETE_PROFILE_PICTURE_FAIL,
   UPLOAD_COVER_PHOTO,
   UPLOAD_COVER_PHOTO_FAIL,
   SEND_FRIEND_REQUEST,
@@ -29,6 +31,8 @@ import {
   GET_NOTIFICATIONS,
   GET_NOTIFICATIONS_FAIL,
   CLEAR_ERRORS,
+  DELETE_COVER_PHOTO_FAIL,
+  DELETE_COVER_PHOTO,
 } from '../types';
 
 export default (state, action) => {
@@ -45,12 +49,14 @@ export default (state, action) => {
       };
     case GET_PROFILE_PICTURE:
     case UPLOAD_PROFILE_PICTURE:
+    case DELETE_PROFILE_PICTURE:
       return {
         ...state,
         profilePicture: action.payload,
       };
     case GET_COVER_PHOTO:
     case UPLOAD_COVER_PHOTO:
+    case DELETE_COVER_PHOTO:
       return {
         ...state,
         cover: action.payload,
@@ -96,6 +102,8 @@ export default (state, action) => {
     case GET_COVER_PHOTO_FAIL:
     case UPLOAD_PROFILE_PICTURE_FAIL:
     case UPLOAD_COVER_PHOTO_FAIL:
+    case DELETE_PROFILE_PICTURE_FAIL:
+    case DELETE_COVER_PHOTO_FAIL:
     case SEND_FRIEND_REQUEST_FAIL:
     case CANCEL_FRIEND_REQUEST_FAIL:
     case ACCEPT_FRIEND_REQUEST_FAIL:
