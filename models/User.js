@@ -33,6 +33,8 @@ const UserSchema = mongoose.Schema({
     {
       notification: { type: String },
       user: { type: mongoose.Schema.ObjectId, ref: 'User' },
+      userReciever: { type: mongoose.Schema.ObjectId, ref: 'User' },
+      read: { type: Boolean, default: false },
     },
   ],
   date: {

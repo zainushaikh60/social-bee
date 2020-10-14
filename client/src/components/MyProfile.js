@@ -1,9 +1,14 @@
-import React, { Fragment, useContext, useState } from 'react';
+import React, { Fragment, useContext, useState, useEffect } from 'react';
 import AuthContext from '../context/auth/authContext';
 import UserContext from '../context/user/userContext';
 import AlertContext from '../context/alert/alertContext';
+import MyPosts from '../layout/MyPosts';
 
 const MyProfile = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const authContext = useContext(AuthContext);
   const userContext = useContext(UserContext);
   const alertContext = useContext(AlertContext);
@@ -399,6 +404,7 @@ const MyProfile = () => {
             </div>
           )}
         </div>
+        <MyPosts />
       </div>
     </Fragment>
   );

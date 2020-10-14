@@ -13,7 +13,6 @@ const UserCard = ({ currentUser }) => {
   const { user } = authContext;
 
   const {
-    users,
     friends,
     friendRequestsTo,
     friendRequestsBy,
@@ -25,7 +24,6 @@ const UserCard = ({ currentUser }) => {
     clearErrors,
   } = userContext;
 
-  let isYou = false;
   let isFriends = false;
   let isFriendRequestTo = false;
   let isFriendRequestBy = false;
@@ -68,7 +66,7 @@ const UserCard = ({ currentUser }) => {
       clearErrors();
     }
     sendFriendRequest(currentUser._id);
-    setAlert('Friend request sent', 'success', 'check-circle');
+    setAlert('Friend request sent', 'success', 'user-friends');
   };
 
   const onCancelFriendRequest = () => {
@@ -77,7 +75,7 @@ const UserCard = ({ currentUser }) => {
       clearErrors();
     }
     cancelFriendRequest(currentUser._id);
-    setAlert('Friend request cancelled', 'danger', 'info-circle');
+    setAlert('Friend request cancelled', 'danger', 'user-friends');
   };
 
   const onAcceptFriendRequest = () => {
@@ -91,11 +89,11 @@ const UserCard = ({ currentUser }) => {
 
   const onRejectFriendRequest = () => {
     if (error === 'No friend request by this user') {
-      setAlert(error);
+      setAlert(error, 'danger', 'info-circle');
       clearErrors();
     }
     rejectFriendRequest(currentUser._id);
-    setAlert('Friend request rejected', 'danger', 'info-circle');
+    setAlert('Friend request rejected', 'danger', 'user-friends');
   };
 
   return (

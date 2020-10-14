@@ -64,7 +64,7 @@ const PostCard = ({ post }) => {
             <a href='#!'>
               <img
                 src={
-                  post.user._id === user._id
+                  user && post.user._id === user._id
                     ? profilePicture === null
                       ? user.avatar
                       : profilePicture
@@ -106,7 +106,7 @@ const PostCard = ({ post }) => {
         <div className='post-statistics'>
           <div className='hr-line'></div>
           <div className='post-likes-comments '>
-            {user && post.likes.find((e) => e.user.toString() === user._id) ? (
+            {user && post.likes.find((like) => like.user === user._id) ? (
               <a
                 href='#!'
                 className='in-active'

@@ -153,6 +153,7 @@ router.put('/:id/sendFriendRequest', auth, async (req, res) => {
       requestReciever.notifications.unshift({
         notification: `You have recieved a friend request from ${requestSender.name}`,
         user: requestSender.id,
+        userReciever: requestReciever.id,
       });
       await requestReciever.save();
       await requestSender.save();
@@ -192,13 +193,15 @@ router.put('/:id/cancelFriendRequest', auth, async (req, res) => {
         1
       );
 
-      requestWasSentTo.notifications.splice(
-        requestWasSentTo.notifications.findIndex(
-          (notification) =>
-            notification.user._id.toString() === requestCanceler.id
-        ),
-        1
-      );
+      if (requestWasSentTo.notifications.length > 0) {
+        requestWasSentTo.notifications.splice(
+          requestWasSentTo.notifications.findIndex(
+            (notification) =>
+              notification.user._id.toString() === requestCanceler.id
+          ),
+          1
+        );
+      }
 
       await requestCanceler.save();
       await requestWasSentTo.save();
@@ -239,13 +242,21 @@ router.put('/:id/acceptFriendRequest', auth, async (req, res) => {
         1
       );
 
-      requestAcceptor.notifications.splice(
-        requestAcceptor.notifications.findIndex(
-          (notification) =>
-            notification.user._id.toString() === requestSender.id
-        ),
-        1
-      );
+      requestSender.notifications.unshift({
+        notification: `${requestAcceptor.name} has accepted your friend request`,
+        user: requestAcceptor.id,
+        userReciever: requestSender.id,
+      });
+
+      if (requestAcceptor.notifications.length > 0) {
+        requestAcceptor.notifications.splice(
+          requestAcceptor.notifications.findIndex(
+            (notification) =>
+              notification.user._id.toString() === requestSender.id
+          ),
+          1
+        );
+      }
 
       requestAcceptor.friends.push(requestSender.id);
       requestSender.friends.push(requestAcceptor.id);
@@ -293,13 +304,15 @@ router.put('/:id/rejectFriendRequest', auth, async (req, res) => {
         1
       );
 
-      requestRejector.notifications.splice(
-        requestRejector.notifications.findIndex(
-          (notification) =>
-            notification.user._id.toString() === requestSender.id
-        ),
-        1
-      );
+      if (requestRejector.length > 0) {
+        requestRejector.notifications.splice(
+          requestRejector.notifications.findIndex(
+            (notification) =>
+              notification.user._id.toString() === requestSender.id
+          ),
+          1
+        );
+      }
 
       await requestSender.save();
       await requestRejector.save();
@@ -347,6 +360,36 @@ router.put('/:id/removeFriend', auth, async (req, res) => {
         .status(400)
         .json({ msg: 'You are not friends with this user' });
     }
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server error');
+  }
+});
+
+// remove notifications
+
+router.delete('/:id/notifications', auth, async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id);
+
+    if (
+      user.notifications.filter(
+        (notification) => notification.userReciever.toString() === req.user.id
+      ).length > 0
+    ) {
+      user.notifications.splice(
+        user.notifications.findIndex(
+          (notification) => notification._id.toString() === req.params.id
+        ),
+        1
+      );
+    } else {
+      return res.status(400).json({ msg: 'Not authorized' });
+    }
+
+    await user.save();
+
+    return res.json(user.notifications);
   } catch (err) {
     console.error(err.message);
     res.status(500).send('Server error');

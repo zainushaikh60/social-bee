@@ -74,7 +74,7 @@ router.get('/', auth, async (req, res) => {
       .populate({
         path: 'user',
         model: 'User',
-        select: 'name avatar profilePicture',
+        select: 'name avatar profilePicture friends',
       })
       .populate({
         path: 'comments',
@@ -142,6 +142,8 @@ router.delete('/:id', auth, async (req, res) => {
 router.put('/like/:id', auth, async (req, res) => {
   try {
     const post = await Post.findById(req.params.id);
+    const user = await User.findById(req.user.id);
+    const userPost = await User.findById(post.user).select('notifications');
 
     // Check if the post has already been liked
     if (post.likes.some((like) => like.user.toString() === req.user.id)) {
@@ -150,7 +152,16 @@ router.put('/like/:id', auth, async (req, res) => {
 
     post.likes.unshift({ user: req.user.id });
 
+    if (userPost.id !== user.id) {
+      userPost.notifications.unshift({
+        notification: `${user.name} liked your post`,
+        user: user.id,
+        userReciever: userPost.id,
+      });
+    }
+
     await post.save();
+    await userPost.save();
 
     return res.json(post.likes);
   } catch (err) {
@@ -165,6 +176,7 @@ router.put('/like/:id', auth, async (req, res) => {
 router.put('/unlike/:id', auth, async (req, res) => {
   try {
     const post = await Post.findById(req.params.id);
+    const user = await User.findById(post.user);
 
     // Check if the post has not yet been liked
     if (!post.likes.some((like) => like.user.toString() === req.user.id)) {
@@ -172,13 +184,20 @@ router.put('/unlike/:id', auth, async (req, res) => {
     }
 
     // remove the like
-
     post.likes.splice(
-      post.likes.findIndex((user) => user.toString() === req.user.id),
+      post.likes.findIndex((like) => like.user.toString() === req.user.id),
+      1
+    );
+
+    user.notifications.splice(
+      user.notifications.findIndex(
+        (notification) => notification.user._id.toString() === req.user.id
+      ),
       1
     );
 
     await post.save();
+    await user.save();
 
     return res.json(post.likes);
   } catch (err) {
@@ -202,6 +221,8 @@ router.post(
 
     try {
       const post = await Post.findById(req.params.id);
+      const user = await User.findById(req.user.id);
+      const userPost = await User.findById(post.user).select('notifications');
 
       const newComment = {
         text: req.body.text,
@@ -211,7 +232,17 @@ router.post(
 
       post.comments.push(newComment);
 
+      if (userPost.id !== user.id) {
+        userPost.notifications.unshift({
+          notification: `${user.name} commented on your post`,
+          user: user.id,
+          userReciever: userPost.id,
+        });
+      }
+
       await post.save();
+
+      await userPost.save();
 
       return res.json(post.comments);
     } catch (err) {
@@ -227,6 +258,7 @@ router.post(
 router.delete('/comment/:id/:comment_id', auth, async (req, res) => {
   try {
     const post = await Post.findById(req.params.id);
+    const user = await User.findById(post.user);
 
     // Pull out comment
     const comment = post.comments.find(
@@ -248,7 +280,15 @@ router.delete('/comment/:id/:comment_id', auth, async (req, res) => {
       1
     );
 
+    user.notifications.splice(
+      user.notifications.findIndex(
+        (notification) => notification.user._id.toString() === req.user.id
+      ),
+      1
+    );
+
     await post.save();
+    await user.save();
 
     return res.json(post.comments);
   } catch (err) {

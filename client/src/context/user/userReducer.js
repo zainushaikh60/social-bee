@@ -30,6 +30,12 @@ import {
   GET_FRIENDS_FAIL,
   GET_NOTIFICATIONS,
   GET_NOTIFICATIONS_FAIL,
+  UNREAD_NOTIFICATIONS,
+  UNREAD_NOTIFICATIONS_FAIL,
+  READ_NOTIFICATIONS,
+  READ_NOTIFICATIONS_FAIL,
+  REMOVE_NOTIFICATION,
+  REMOVE_NOTIFICATION_FAIL,
   CLEAR_ERRORS,
   DELETE_COVER_PHOTO_FAIL,
   DELETE_COVER_PHOTO,
@@ -82,9 +88,16 @@ export default (state, action) => {
         friends: action.payload,
       };
     case GET_NOTIFICATIONS:
+    case REMOVE_NOTIFICATION:
       return {
         ...state,
         notifications: action.payload,
+      };
+    case UNREAD_NOTIFICATIONS:
+    case READ_NOTIFICATIONS:
+      return {
+        ...state,
+        unreadNotifications: action.payload,
       };
     case GET_FRIEND_REQUESTS_BY:
       return {
@@ -113,6 +126,9 @@ export default (state, action) => {
     case GET_FRIEND_REQUESTS_BY_FAIL:
     case GET_FRIENDS_FAIL:
     case GET_NOTIFICATIONS_FAIL:
+    case REMOVE_NOTIFICATION_FAIL:
+    case UNREAD_NOTIFICATIONS_FAIL:
+    case READ_NOTIFICATIONS_FAIL:
       return {
         ...state,
         error: action.payload,

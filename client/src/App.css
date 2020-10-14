@@ -557,7 +557,42 @@ nav .logo img {
   cursor: pointer;
 }
 
+.user-notification {
+  justify-content: space-between;
+}
+
+.notification-container {
+  display: flex;
+  align-items: center;
+}
+
 .in-active:hover .user-info a {
+  color: #fff;
+}
+
+.bell {
+  position: relative;
+}
+
+.notification-bell {
+  position: relative;
+}
+
+.notification-length {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  bottom: 15px;
+  left: 6px;
+  font-size: 93%;
+  font-weight: 500;
+  background-color: #ff0000;
+  color: #fff;
+  padding: 1px 4px 1px 4px;
+  border-radius: 50%;
+}
+
+.in-active:hover .notification-text p {
   color: #fff;
 }
 

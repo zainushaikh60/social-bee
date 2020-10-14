@@ -1,10 +1,22 @@
 import React, { Fragment, useContext } from 'react';
 import UserContext from '../context/user/userContext';
+import AlertContext from '../context/alert/alertContext';
 
 const FriendCard = ({ friend }) => {
   const userContext = useContext(UserContext);
+  const alertContext = useContext(AlertContext);
 
-  const { removeFriend } = userContext;
+  const { removeFriend, error, clearErrors } = userContext;
+  const { setAlert } = alertContext;
+
+  const onRemoveFriend = () => {
+    if (error === 'You are not friends with this user') {
+      setAlert(error, 'danger', 'info-circle');
+      clearErrors();
+    }
+    removeFriend(friend._id);
+    setAlert('Friend removed', 'danger', 'user-friends');
+  };
 
   return (
     <Fragment>
@@ -13,7 +25,7 @@ const FriendCard = ({ friend }) => {
           <a href='#!'>
             <img
               src={
-                friend.profilePicture === null
+                friend && friend.profilePicture === null
                   ? friend.avatar
                   : friend.profilePicture
               }
@@ -23,7 +35,7 @@ const FriendCard = ({ friend }) => {
           </a>
         </div>
         <div className='user-badge'>
-          <a href='#!' onClick={(e) => removeFriend(friend._id)}>
+          <a href='#!' onClick={onRemoveFriend}>
             Unfriend
           </a>
         </div>

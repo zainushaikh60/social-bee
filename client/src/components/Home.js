@@ -56,9 +56,14 @@ const Home = () => {
 
       <div className='wrapper'>
         <div className='container'>
-          {profile && <MyProfile />}
-          <AddPost />
-          <Posts />
+          {profile ? (
+            <MyProfile />
+          ) : (
+            <Fragment>
+              <AddPost />
+              <Posts />
+            </Fragment>
+          )}
         </div>
       </div>
     </Fragment>

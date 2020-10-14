@@ -37,6 +37,12 @@ import {
   GET_FRIENDS_FAIL,
   GET_NOTIFICATIONS,
   GET_NOTIFICATIONS_FAIL,
+  UNREAD_NOTIFICATIONS,
+  UNREAD_NOTIFICATIONS_FAIL,
+  READ_NOTIFICATIONS,
+  READ_NOTIFICATIONS_FAIL,
+  REMOVE_NOTIFICATION,
+  REMOVE_NOTIFICATION_FAIL,
   CLEAR_ERRORS,
 } from '../types';
 
@@ -50,6 +56,7 @@ const UserState = (props) => {
     friendRequestsTo: null,
     friends: null,
     notifications: null,
+    unreadNotifications: null,
     error: null,
   };
 
@@ -360,6 +367,57 @@ const UserState = (props) => {
     }
   };
 
+  // Get unread notifications
+
+  const getUnreadNotifications = async () => {
+    try {
+      const res = await axios.get(`/api/auth/unread-notifications`);
+      dispatch({
+        type: UNREAD_NOTIFICATIONS,
+        payload: res.data,
+      });
+    } catch (err) {
+      dispatch({
+        type: UNREAD_NOTIFICATIONS_FAIL,
+        payload: err.response.data.msg,
+      });
+    }
+  };
+
+  // Read all notifications
+
+  const readAllNotifications = async () => {
+    try {
+      const res = await axios.put(`/api/auth/read-notifications`);
+      dispatch({
+        type: READ_NOTIFICATIONS,
+        payload: res.data,
+      });
+    } catch (err) {
+      dispatch({
+        type: READ_NOTIFICATIONS_FAIL,
+        payload: err.response.data.msg,
+      });
+    }
+  };
+
+  // Remove notifications
+
+  const removeNotification = async (id) => {
+    try {
+      const res = await axios.delete(`/api/auth/${id}/notifications`);
+      dispatch({
+        type: REMOVE_NOTIFICATION,
+        payload: res.data,
+      });
+    } catch (err) {
+      dispatch({
+        type: REMOVE_NOTIFICATION_FAIL,
+        payload: err.response.data.msg,
+      });
+    }
+  };
+
   // Clear Errors
 
   const clearErrors = () => dispatch({ type: CLEAR_ERRORS });
@@ -377,6 +435,7 @@ const UserState = (props) => {
         friendRequestsBy: state.friendRequestsBy,
         friends: state.friends,
         notifications: state.notifications,
+        unreadNotifications: state.unreadNotifications,
         error: state.error,
         getUser,
         getUsers,
@@ -395,6 +454,9 @@ const UserState = (props) => {
         removeFriend,
         getFriends,
         getNotifications,
+        getUnreadNotifications,
+        readAllNotifications,
+        removeNotification,
         clearErrors,
       }}
     >

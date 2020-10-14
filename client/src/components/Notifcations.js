@@ -5,7 +5,7 @@ import NotificationCard from '../layout/NotificationCard';
 const Notifications = () => {
   const userContext = useContext(UserContext);
 
-  const { notifications } = userContext;
+  const { notifications, removeNotification } = userContext;
 
   return (
     <Fragment>
@@ -19,6 +19,7 @@ const Notifications = () => {
           <NotificationCard
             key={notification._id}
             notification={notification}
+            removeNotification={removeNotification}
           />
         ))}
     </Fragment>

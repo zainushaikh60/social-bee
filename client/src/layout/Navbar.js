@@ -2,13 +2,19 @@ import React, { useContext } from 'react';
 import AuthContext from '../context/auth/authContext';
 import UserContext from '../context/user/userContext';
 
-const Navbar = ({ onClick, profile, onSetLayout, fnLayout }) => {
+const Navbar = ({
+  onClick,
+  profile,
+  onSetLayout,
+  fnLayout,
+  notifications,
+  unreadNotifications,
+  readAllNotifications,
+}) => {
   const authContext = useContext(AuthContext);
-
   const userContext = useContext(UserContext);
 
   const { logout, user } = authContext;
-
   const { profilePicture } = userContext;
 
   const onLogout = () => {
@@ -71,12 +77,32 @@ const Navbar = ({ onClick, profile, onSetLayout, fnLayout }) => {
         {!profile ? (
           fnLayout ? (
             <a href='#!' className='active'>
-              <i class='far fa-bell'></i> Notifications
+              <i class='far fa-bell'></i>
+              Notifications
             </a>
           ) : (
             !fnLayout && (
-              <a href='#!' className='in-active' onClick={onSetLayout}>
-                <i class='far fa-bell'></i> Notifications
+              <a
+                href='#!'
+                className='in-active'
+                onClick={() => {
+                  onSetLayout();
+
+                  {
+                    unreadNotifications &&
+                      unreadNotifications > 0 &&
+                      readAllNotifications();
+                  }
+                }}
+              >
+                <i class='far fa-bell notification-bell'>
+                  {unreadNotifications && unreadNotifications > 0 ? (
+                    <p className='notification-length'>{unreadNotifications}</p>
+                  ) : (
+                    <></>
+                  )}
+                </i>
+                Notifications
               </a>
             )
           )

@@ -266,4 +266,78 @@ router.get('/notifications', auth, async (req, res) => {
   }
 });
 
+// get unread notifications
+
+router.get('/unread-notifications', auth, async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id);
+
+    res.json(
+      user.notifications.filter((notification) => notification.read !== true)
+        .length
+    );
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server error');
+  }
+});
+
+// remove notifications
+
+router.delete('/:id/notifications', auth, async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id);
+
+    if (
+      user.notifications.filter(
+        (notification) => notification.userReciever.toString() === req.user.id
+      ).length > 0
+    ) {
+      user.notifications.splice(
+        user.notifications.findIndex(
+          (notification) => notification._id.toString() === req.params.id
+        ),
+        1
+      );
+    } else {
+      return res.status(400).json({ msg: 'Not authorized' });
+    }
+
+    await user.save();
+
+    return res.json(user.notifications);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server error');
+  }
+});
+
+// read notifications
+
+router.put('/read-notifications', auth, async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id);
+    if (
+      user.notifications.filter(
+        (notification) => notification.userReciever.toString() === req.user.id
+      ).length > 0
+    ) {
+      user.notifications.filter(
+        (notification) =>
+          notification.read === false && (notification.read = true),
+        await user.save()
+      );
+    } else {
+      return res.status(400).json({ msg: 'Not authorized' });
+    }
+
+    return res.json(
+      user.notifications.filter((notification) => notification.read !== true)
+    );
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server error');
+  }
+});
+
 module.exports = router;
