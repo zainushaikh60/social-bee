@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import { Link } from 'react-router-dom';
 import AuthContext from '../context/auth/authContext';
 import UserContext from '../context/user/userContext';
 
@@ -7,7 +8,6 @@ const Navbar = ({
   profile,
   onSetLayout,
   fnLayout,
-  notifications,
   unreadNotifications,
   readAllNotifications,
 }) => {
@@ -24,16 +24,16 @@ const Navbar = ({
   return (
     <nav>
       <div className='right-side-container'>
-        <a href='/' className='logo'>
+        <Link to='/' className='logo'>
           <img src='/images/bee.svg' /> Social Bee
-        </a>
+        </Link>
       </div>
 
       {profile ? (
         <div className='center-menu-container center-menu-container-cancel-margin'>
-          <a href='#!' className='in-active' onClick={onClick}>
+          <Link to='/' className='in-active' onClick={onClick}>
             <i className='fas fa-home'></i>
-          </a>
+          </Link>
 
           <a href='#!' className='in-active'>
             <i class='fab fa-facebook-messenger'></i>
@@ -41,9 +41,9 @@ const Navbar = ({
         </div>
       ) : (
         <div className='center-menu-container'>
-          <a href='#!' className='active'>
+          <Link to='/' className='active'>
             <i className='fas fa-home'></i>
-          </a>
+          </Link>
 
           <a href='#!' className='in-active'>
             <i class='fab fa-facebook-messenger'></i>
@@ -52,81 +52,58 @@ const Navbar = ({
       )}
 
       <div className='right-menu-container'>
-        {profile ? (
-          <a href='#!' className='active'>
-            <img
-              src={
-                user && profilePicture === null ? user.avatar : profilePicture
-              }
-              className='user-img'
-            />
-            {user && user.name}
+        <Link to='/my-profile' className='in-active' onClick={onClick}>
+          <img
+            src={user && profilePicture === null ? user.avatar : profilePicture}
+            className='user-img'
+          />
+          {user && user.name}
+        </Link>
+
+        {fnLayout ? (
+          <a className='active'>
+            <i class='far fa-bell'></i>
+            Notifications
           </a>
         ) : (
-          <a href='/my-profile' className='in-active' onClick={onClick}>
-            <img
-              src={
-                user && profilePicture === null ? user.avatar : profilePicture
-              }
-              className='user-img'
-            />
-            {user && user.name}
-          </a>
-        )}
+          !fnLayout && (
+            <a
+              className='in-active'
+              onClick={() => {
+                onSetLayout();
 
-        {!profile ? (
-          fnLayout ? (
-            <a href='#!' className='active'>
-              <i class='far fa-bell'></i>
+                {
+                  unreadNotifications &&
+                    unreadNotifications > 0 &&
+                    readAllNotifications();
+                }
+              }}
+            >
+              <i class='far fa-bell notification-bell'>
+                {unreadNotifications && unreadNotifications > 0 ? (
+                  <p className='notification-length'>{unreadNotifications}</p>
+                ) : (
+                  <></>
+                )}
+              </i>
               Notifications
             </a>
-          ) : (
-            !fnLayout && (
-              <a
-                href='#!'
-                className='in-active'
-                onClick={() => {
-                  onSetLayout();
-
-                  {
-                    unreadNotifications &&
-                      unreadNotifications > 0 &&
-                      readAllNotifications();
-                  }
-                }}
-              >
-                <i class='far fa-bell notification-bell'>
-                  {unreadNotifications && unreadNotifications > 0 ? (
-                    <p className='notification-length'>{unreadNotifications}</p>
-                  ) : (
-                    <></>
-                  )}
-                </i>
-                Notifications
-              </a>
-            )
           )
-        ) : (
-          <></>
         )}
 
-        {!profile ? (
-          !fnLayout ? (
-            <a href='#!' className='active'>
+        {!fnLayout ? (
+          <a className='active'>
+            <i class='fas fa-user-friends'></i> Friends
+          </a>
+        ) : (
+          fnLayout && (
+            <a className='in-active' onClick={onSetLayout}>
               <i class='fas fa-user-friends'></i> Friends
             </a>
-          ) : (
-            fnLayout && (
-              <a href='#!' className='in-active' onClick={onSetLayout}>
-                <i class='fas fa-user-friends'></i> Friends
-              </a>
-            )
           )
-        ) : (
-          <></>
         )}
 
-        <a href='#!' className='in-active' onClick={onLogout}>
+        <a className='in-active' onClick={onLogout}>
           <i className='fas fa-sign-out-alt'></i> Sign Out
         </a>
       </div>

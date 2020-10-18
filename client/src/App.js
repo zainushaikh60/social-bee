@@ -10,6 +10,7 @@ import SignUp from './components/SignUp';
 import SignIn from './components/SignIn';
 import Alerts from './layout/Alerts';
 import Home from './components/Home';
+import Profile from './components/Profile';
 import MyProfile from './components/MyProfile';
 import './App.css';
 
@@ -35,6 +36,7 @@ function App() {
                     path='/my-profile'
                     component={MyProfile}
                   />
+                  <PrivateRoute exact path='/profile/:id' component={Profile} />
                 </Switch>
               </Fragment>
             </Router>

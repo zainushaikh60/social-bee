@@ -3,6 +3,7 @@ import UserContext from '../context/user/userContext';
 import AuthContext from '../context/auth/authContext';
 import PostContext from '../context/post/postContext';
 import AlertContext from '../context/alert/alertContext';
+import { Link } from 'react-router-dom';
 
 const AddPost = () => {
   const userContext = useContext(UserContext);
@@ -64,14 +65,14 @@ const AddPost = () => {
     <Fragment>
       <div className='add-post-container'>
         <div className='add-post-text'>
-          <a href='#!'>
+          <Link to='/my-profile'>
             <img
               src={
                 user && profilePicture === null ? user.avatar : profilePicture
               }
               className='user-img'
             />
-          </a>
+          </Link>
 
           <input
             type='text'
@@ -128,8 +129,7 @@ const AddPost = () => {
             <p className='preview-heading'>Attached Image Preview:</p>
             <div className='image-preview'>
               <img src={url} />
-              <a
-                href='#!'
+              <Link
                 className='comment-image-cancel'
                 onClick={() => {
                   clearImage();
@@ -137,7 +137,7 @@ const AddPost = () => {
                 }}
               >
                 <i class='fas fa-times' />
-              </a>
+              </Link>
             </div>
           </div>
         )}

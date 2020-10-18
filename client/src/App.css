@@ -780,6 +780,11 @@ label {
   height: 60px;
 }
 
+.profile-user-margin {
+  margin: 10px;
+  height: 0px;
+}
+
 .modal {
   position: fixed;
   z-index: 20;

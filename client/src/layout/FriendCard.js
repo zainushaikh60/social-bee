@@ -1,6 +1,7 @@
 import React, { Fragment, useContext } from 'react';
 import UserContext from '../context/user/userContext';
 import AlertContext from '../context/alert/alertContext';
+import { Link } from 'react-router-dom';
 
 const FriendCard = ({ friend }) => {
   const userContext = useContext(UserContext);
@@ -22,7 +23,12 @@ const FriendCard = ({ friend }) => {
     <Fragment>
       <div className='user-card in-active'>
         <div className='user-info'>
-          <a href='#!'>
+          <Link
+            to={{
+              pathname: `/profile/${friend._id}`,
+              user: friend,
+            }}
+          >
             <img
               src={
                 friend && friend.profilePicture === null
@@ -30,14 +36,13 @@ const FriendCard = ({ friend }) => {
                   : friend.profilePicture
               }
               className='user-img'
+              user={friend}
             />
             {friend.name}
-          </a>
+          </Link>
         </div>
         <div className='user-badge'>
-          <a href='#!' onClick={onRemoveFriend}>
-            Unfriend
-          </a>
+          <a onClick={onRemoveFriend}>Unfriend</a>
         </div>
       </div>
     </Fragment>

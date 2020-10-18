@@ -2,6 +2,7 @@ import React, { Fragment, useContext } from 'react';
 import UserContext from '../context/user/userContext';
 import AuthContext from '../context/auth/authContext';
 import AlertContext from '../context/alert/alertContext';
+import { Link } from 'react-router-dom';
 
 const UserCard = ({ currentUser }) => {
   const userContext = useContext(UserContext);
@@ -100,7 +101,12 @@ const UserCard = ({ currentUser }) => {
     <Fragment>
       <div className='user-card in-active'>
         <div className='user-info'>
-          <a href='#!'>
+          <Link
+            to={{
+              pathname: `/profile/${currentUser._id}`,
+              user: currentUser,
+            }}
+          >
             <img
               src={
                 currentUser.profilePicture === null
@@ -110,40 +116,32 @@ const UserCard = ({ currentUser }) => {
               className='user-img'
             />
             {currentUser.name}
-          </a>
+          </Link>
         </div>
 
         {isFriends && (
           <div className='user-badge'>
-            <a href='#!'>Friend</a>
+            <a>Friend</a>
           </div>
         )}
 
         {isFriendRequestBy && (
           <div className='user-badge'>
             <p>Respond to friend request</p>
-            <a href='#!' onClick={onRejectFriendRequest}>
-              Reject
-            </a>
-            <a href='#!' onClick={onAcceptFriendRequest}>
-              Accept
-            </a>
+            <a onClick={onRejectFriendRequest}>Reject</a>
+            <a onClick={onAcceptFriendRequest}>Accept</a>
           </div>
         )}
 
         {isFriendRequestTo && (
           <div className='user-badge'>
-            <a href='#!' onClick={onCancelFriendRequest}>
-              Cancel Friend Request
-            </a>
+            <a onClick={onCancelFriendRequest}>Cancel Friend Request</a>
           </div>
         )}
 
         {!isFriends && !isFriendRequestTo && !isFriendRequestBy && (
           <div className='user-badge'>
-            <a href='#!' onClick={onSendFriendRequest}>
-              Add Friend
-            </a>
+            <a onClick={onSendFriendRequest}>Add Friend</a>
           </div>
         )}
       </div>

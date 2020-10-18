@@ -1,7 +1,9 @@
 import React, { Fragment, useRef } from 'react';
+import { Link } from 'react-router-dom';
 
 const AddCommentCard = ({
   user,
+  profileUser,
   profilePicture,
   setComment,
   comment,
@@ -35,12 +37,20 @@ const AddCommentCard = ({
     <Fragment>
       <div className='post-add-comment'>
         <div className='add-comment'>
-          <a href='#!'>
+          <Link to='/my-profile'>
             <img
-              src={profilePicture === null ? user.avatar : profilePicture}
+              src={
+                user && profileUser !== null
+                  ? profilePicture === null
+                    ? `/${user.avatar}`
+                    : `/${profilePicture}`
+                  : profilePicture === null
+                  ? user.avatar
+                  : profilePicture
+              }
               className='user-img'
             />
-          </a>
+          </Link>
 
           <div className='post-add-comment-text'>
             <input
@@ -101,8 +111,7 @@ const AddCommentCard = ({
             <p className='preview-heading'>Attached Image Preview:</p>
             <div className='image-preview'>
               <img src={url} />
-              <a
-                href='#!'
+              <Link
                 className='comment-image-cancel'
                 onClick={() => {
                   onClearImage();
@@ -110,7 +119,7 @@ const AddCommentCard = ({
                 }}
               >
                 <i class='fas fa-times'></i>
-              </a>
+              </Link>
             </div>
           </div>
         )}

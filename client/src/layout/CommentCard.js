@@ -1,10 +1,12 @@
-import React, { Fragment, useContext } from 'react';
+import React, { Fragment } from 'react';
 import Moment from 'react-moment';
+import { Link } from 'react-router-dom';
 
 const CommentCard = ({
   postId,
   comment,
   user,
+  profileUser,
   profilePicture,
   deleteCommentOnPost,
 }) => {
@@ -13,10 +15,27 @@ const CommentCard = ({
       <div className='post-comments'>
         <div className='comment-by'>
           <div>
-            <a href='#!'>
+            <Link
+              to={
+                comment.user._id === user._id
+                  ? '/my-profile'
+                  : {
+                      pathname: `/profile/${comment.user._id}`,
+                      user: comment.user,
+                    }
+              }
+            >
               <img
                 src={
-                  comment.user._id === user._id
+                  user && profileUser !== null
+                    ? comment.user._id === user._id
+                      ? profilePicture === null
+                        ? `/${user.avatar}`
+                        : `/${profilePicture}`
+                      : comment.user.profilePicture === null
+                      ? `/${comment.user.avatar}`
+                      : `/${comment.user.profilePicture}`
+                    : comment.user._id === user._id
                     ? profilePicture === null
                       ? user.avatar
                       : profilePicture
@@ -26,9 +45,20 @@ const CommentCard = ({
                 }
                 className='user-img'
               />
-            </a>
+            </Link>
             <div className='comment-body'>
-              <a href='#!'>{comment.user.name}</a>
+              <Link
+                to={
+                  comment.user._id === user._id
+                    ? '/my-profile'
+                    : {
+                        pathname: `/profile/${comment.user._id}`,
+                        user: comment.user,
+                      }
+                }
+              >
+                {comment.user.name}
+              </Link>
               <p className='comment-date'>
                 <Moment fromNow>{comment.date}</Moment>
               </p>

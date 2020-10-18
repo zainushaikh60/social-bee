@@ -74,14 +74,14 @@ router.get('/', auth, async (req, res) => {
       .populate({
         path: 'user',
         model: 'User',
-        select: 'name avatar profilePicture friends',
+        select: 'name avatar profilePicture friends cover',
       })
       .populate({
         path: 'comments',
         populate: {
           path: 'user',
           model: 'User',
-          select: 'name avatar profilePicture',
+          select: 'name avatar profilePicture friends cover',
         },
       });
     res.json(posts);
