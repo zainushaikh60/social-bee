@@ -79,7 +79,7 @@ const PostCard = ({ post, profileUser }) => {
                       : profilePicture
                     : post.user.profilePicture === null
                     ? post.user.avatar
-                    : post.user.profilePicture
+                    : `/${post.user.profilePicture}`
                 }
                 className='user-img'
               />

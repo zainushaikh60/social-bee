@@ -30,10 +30,10 @@ const CommentCard = ({
                   user && profileUser !== null
                     ? comment.user._id === user._id
                       ? profilePicture === null
-                        ? `/${user.avatar}`
+                        ? user.avatar
                         : `/${profilePicture}`
                       : comment.user.profilePicture === null
-                      ? `/${comment.user.avatar}`
+                      ? comment.user.avatar
                       : `/${comment.user.profilePicture}`
                     : comment.user._id === user._id
                     ? profilePicture === null

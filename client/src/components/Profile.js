@@ -160,8 +160,10 @@ const Profile = (props) => {
             {isFriendRequestBy && (
               <div className='user-badge profile-user-request'>
                 <p>Respond to friend request</p>
-                <a onClick={onRejectFriendRequest}>Reject</a>
-                <a onClick={onAcceptFriendRequest}>Accept</a>
+                <div>
+                  <a onClick={onRejectFriendRequest}>Reject</a>
+                  <a onClick={onAcceptFriendRequest}>Accept</a>
+                </div>
               </div>
             )}
 
@@ -177,20 +179,29 @@ const Profile = (props) => {
               </div>
             )}
 
-            {props.location.user &&
-              posts &&
-              posts.length > 0 &&
-              posts
-                .filter(
-                  (post) => post.user._id.toString() === props.location.user._id
-                )
-                .map((post) => (
-                  <PostCard
-                    key={post._id}
-                    post={post}
-                    profileUser={props.location.user}
-                  />
-                ))}
+            {isFriends === false ? (
+              <h4 className='no-friend-message'>{`Add ${
+                props.location.user && props.location.user.name
+              } as a friend to see their posts.`}</h4>
+            ) : (
+              <div className='post-wrapper'>
+                {props.location.user &&
+                  posts &&
+                  posts.length > 0 &&
+                  posts
+                    .filter(
+                      (post) =>
+                        post.user._id.toString() === props.location.user._id
+                    )
+                    .map((post) => (
+                      <PostCard
+                        key={post._id}
+                        post={post}
+                        profileUser={props.location.user}
+                      />
+                    ))}
+              </div>
+            )}
           </div>
         </div>
       </div>

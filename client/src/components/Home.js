@@ -19,6 +19,9 @@ const Home = () => {
     getNotifications,
     getProfilePicture,
     getCoverPhoto,
+    unreadNotifications,
+    getUnreadNotifications,
+    readAllNotifications,
   } = userContext;
 
   useEffect(() => {
@@ -30,6 +33,7 @@ const Home = () => {
     getFriendRequestsTo();
     getFriendRequestsBy();
     getNotifications();
+    getUnreadNotifications();
   }, []);
 
   const [profile, setProfile] = useState(false);
@@ -51,6 +55,8 @@ const Home = () => {
         profile={profile}
         onSetLayout={onSetFnLayout}
         fnLayout={fnLayout}
+        unreadNotifications={unreadNotifications}
+        readAllNotifications={readAllNotifications}
       />
       {profile ? <></> : <Sidebar fnLayout={fnLayout} />}
 

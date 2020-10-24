@@ -42,7 +42,7 @@ const AddCommentCard = ({
               src={
                 user && profileUser !== null
                   ? profilePicture === null
-                    ? `/${user.avatar}`
+                    ? user.avatar
                     : `/${profilePicture}`
                   : profilePicture === null
                   ? user.avatar

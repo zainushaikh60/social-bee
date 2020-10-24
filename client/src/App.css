@@ -18,6 +18,7 @@ body {
 a {
   text-decoration: none;
   color: #000;
+  cursor: pointer;
 }
 
 ul {
@@ -246,6 +247,20 @@ nav .logo img {
   flex-direction: column;
   background-color: #fff;
   border-radius: 10px;
+}
+
+.post-wrapper {
+  margin-top: 15px;
+  max-width: 500px;
+  width: 100%;
+}
+
+.post-wrapper .post-card {
+  margin-bottom: 0px;
+}
+
+.post-card-margin {
+  margin-top: 15px;
 }
 
 .post-info {
@@ -601,6 +616,10 @@ nav .logo img {
   color: #000;
 }
 
+.in-active:hover .user-badge p {
+  color: #fff;
+}
+
 .user-info a {
   color: #000;
   display: flex;
@@ -781,8 +800,23 @@ label {
 }
 
 .profile-user-margin {
-  margin: 10px;
+  margin: 8px;
   height: 0px;
+}
+
+.profile-user-margin a {
+  margin-left: 0px;
+}
+
+.profile-user-request {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.no-friend-message {
+  margin-top: 20px;
 }
 
 .modal {

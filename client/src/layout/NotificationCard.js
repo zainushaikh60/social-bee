@@ -6,7 +6,7 @@ const NotificationCard = ({ notification, removeNotification }) => {
       <div className='user-card user-notification in-active'>
         <div className='notification-container'>
           <div className='user-info'>
-            <a href='#!'>
+            <a>
               <img
                 src={
                   notification && notification.user.profilePicture === null
@@ -24,7 +24,6 @@ const NotificationCard = ({ notification, removeNotification }) => {
         </div>
 
         <a
-          href='#!'
           className='remove-notification'
           onClick={() => removeNotification(notification._id)}
         >

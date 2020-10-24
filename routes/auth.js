@@ -324,9 +324,9 @@ router.put('/read-notifications', auth, async (req, res) => {
     ) {
       user.notifications.filter(
         (notification) =>
-          notification.read === false && (notification.read = true),
-        await user.save()
+          notification.read === false && (notification.read = true)
       );
+      await user.save();
     } else {
       return res.status(400).json({ msg: 'Not authorized' });
     }
