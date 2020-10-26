@@ -26,10 +26,6 @@ const ProfileNavbar = () => {
         <Link to='/' className='in-active'>
           <i className='fas fa-home'></i>
         </Link>
-
-        <a href='#!' className='in-active'>
-          <i class='fab fa-facebook-messenger'></i>
-        </a>
       </div>
 
       <div className='right-menu-container'>

@@ -8,7 +8,7 @@ import UserContext from '../context/user/userContext';
 import PostContext from '../context/post/postContext';
 import AlertContext from '../context/alert/alertContext';
 
-const PostCard = ({ post, profileUser }) => {
+const PostCard = ({ post, profileUser, postWrapper }) => {
   const authContext = useContext(AuthContext);
   const postContext = useContext(PostContext);
   const alertContext = useContext(AlertContext);
@@ -59,7 +59,7 @@ const PostCard = ({ post, profileUser }) => {
 
   return (
     <Fragment>
-      <div className='post-card'>
+      <div className={!postWrapper ? 'post-card' : 'post-card post-wrapper'}>
         <div className='post-info'>
           <div className='post-by-image'>
             <Link
@@ -116,7 +116,13 @@ const PostCard = ({ post, profileUser }) => {
         {post.image && post.image !== null && (
           <div className='post-image'>
             <a>
-              <img src={post.image} alt='' />
+              <img
+                src={
+                  user && post.user._id.toString() === user._id
+                    ? post.image
+                    : `/${post.image}`
+                }
+              />
             </a>
           </div>
         )}

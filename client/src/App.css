@@ -249,18 +249,9 @@ nav .logo img {
   border-radius: 10px;
 }
 
-.post-wrapper {
-  margin-top: 15px;
-  max-width: 500px;
-  width: 100%;
-}
-
-.post-wrapper .post-card {
-  margin-bottom: 0px;
-}
-
-.post-card-margin {
-  margin-top: 15px;
+.post-wrapper:first-child,
+:not(.post-wrapper) + .post-wrapper {
+  margin-top: 27px;
 }
 
 .post-info {

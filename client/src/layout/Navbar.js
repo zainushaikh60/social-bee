@@ -34,20 +34,12 @@ const Navbar = ({
           <Link to='/' className='in-active' onClick={onClick}>
             <i className='fas fa-home'></i>
           </Link>
-
-          <a href='#!' className='in-active'>
-            <i class='fab fa-facebook-messenger'></i>
-          </a>
         </div>
       ) : (
         <div className='center-menu-container'>
           <Link to='/' className='active'>
             <i className='fas fa-home'></i>
           </Link>
-
-          <a href='#!' className='in-active'>
-            <i class='fab fa-facebook-messenger'></i>
-          </a>
         </div>
       )}
 

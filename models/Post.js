@@ -55,7 +55,7 @@ PostSchema.pre('save', async function (next) {
     .populate({
       path: 'user',
       model: 'User',
-      select: 'name avatar profilePicture',
+      select: 'name avatar profilePicture friends',
     })
     .execPopulate();
   next();

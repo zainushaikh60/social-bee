@@ -76,7 +76,7 @@ const AddPost = () => {
 
           <input
             type='text'
-            placeholder={`What's on your mind, ${user && user.name}`}
+            placeholder={`What's on your mind, ${user && user.name}?`}
             onChange={(e) => setPostText(e.target.value)}
             ref={clearInput}
           />

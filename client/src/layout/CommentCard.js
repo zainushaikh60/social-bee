@@ -65,10 +65,17 @@ const CommentCard = ({
 
               <p className='comment-text'>{comment.text}</p>
 
-              {comment.images !== null && (
+              {comment.image && comment.image !== null && (
                 <div className='comment-image'>
-                  <a href='#!'>
-                    <img src={comment.image} className='comment-img'></img>
+                  <a>
+                    <img
+                      src={
+                        comment.user._id === user._id
+                          ? `/${comment.image}`
+                          : comment.image
+                      }
+                      className='comment-img'
+                    ></img>
                   </a>
                 </div>
               )}
@@ -77,7 +84,6 @@ const CommentCard = ({
 
           {user && comment.user._id === user._id && (
             <a
-              href='#!'
               className='delete-comment'
               onClick={(e) => deleteCommentOnPost(postId, comment._id)}
             >

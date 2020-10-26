@@ -26,6 +26,8 @@ const Profile = (props) => {
 
   const { getPosts, posts } = postContext;
 
+  let postWrapper = false;
+
   useEffect(() => {
     window.scrollTo(0, 0);
     getPosts();
@@ -183,24 +185,30 @@ const Profile = (props) => {
               <h4 className='no-friend-message'>{`Add ${
                 props.location.user && props.location.user.name
               } as a friend to see their posts.`}</h4>
+            ) : props.location.user &&
+              posts &&
+              posts.length > 0 &&
+              posts
+                .filter(
+                  (post) => post.user._id.toString() === props.location.user._id
+                )
+                .map((post) => post).length === 0 ? (
+              <h4 className='no-friend-message'>{`${
+                props.location.user && props.location.user.name
+              } has no posts.`}</h4>
             ) : (
-              <div className='post-wrapper'>
-                {props.location.user &&
-                  posts &&
-                  posts.length > 0 &&
-                  posts
-                    .filter(
-                      (post) =>
-                        post.user._id.toString() === props.location.user._id
-                    )
-                    .map((post) => (
-                      <PostCard
-                        key={post._id}
-                        post={post}
-                        profileUser={props.location.user}
-                      />
-                    ))}
-              </div>
+              posts
+                .filter(
+                  (post) => post.user._id.toString() === props.location.user._id
+                )
+                .map((post) => (
+                  <PostCard
+                    key={post._id}
+                    post={post}
+                    profileUser={props.location.user}
+                    postWrapper={(postWrapper = true)}
+                  />
+                ))
             )}
           </div>
         </div>
