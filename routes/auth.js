@@ -22,6 +22,7 @@ const storage = multer.diskStorage({
 
 const fileFilter = (req, file, cb) => {
   // reject file
+
   if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png') {
     cb(null, true);
   } else {
@@ -37,9 +38,7 @@ const upload = multer({
   fileFilter: fileFilter,
 });
 
-// @route  GET api/auth
-// @desc   GET logged in user
-// @access Private
+// GET logged in user
 
 router.get('/', auth, async (req, res) => {
   try {
@@ -51,9 +50,7 @@ router.get('/', auth, async (req, res) => {
   }
 });
 
-// @route  Post api/auth
-// @desc   Auth user & get token
-// @access Public
+// Auth user & get token
 
 router.post(
   '/',
@@ -119,7 +116,7 @@ router.post(
   }
 );
 
-// delete profile picture
+// Delete profile picture
 
 router.put('/deleteProfilePicture', auth, async (req, res) => {
   try {
@@ -266,7 +263,7 @@ router.get('/notifications', auth, async (req, res) => {
   }
 });
 
-// get unread notifications
+// Get unread notifications
 
 router.get('/unread-notifications', auth, async (req, res) => {
   try {
@@ -282,7 +279,7 @@ router.get('/unread-notifications', auth, async (req, res) => {
   }
 });
 
-// remove notifications
+// Remove a notification
 
 router.delete('/:id/notifications', auth, async (req, res) => {
   try {
@@ -312,7 +309,7 @@ router.delete('/:id/notifications', auth, async (req, res) => {
   }
 });
 
-// read notifications
+// Read all notifications
 
 router.put('/read-notifications', auth, async (req, res) => {
   try {

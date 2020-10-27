@@ -1,4 +1,4 @@
-import React, { Fragment, useContext, useState, useRef } from 'react';
+import React, { Fragment, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import Moment from 'react-moment';
 import CommentCard from '../layout/CommentCard';
@@ -6,17 +6,14 @@ import AddCommentCard from '../layout/AddCommentCard';
 import AuthContext from '../context/auth/authContext';
 import UserContext from '../context/user/userContext';
 import PostContext from '../context/post/postContext';
-import AlertContext from '../context/alert/alertContext';
 
 const PostCard = ({ post, profileUser, postWrapper }) => {
   const authContext = useContext(AuthContext);
   const postContext = useContext(PostContext);
-  const alertContext = useContext(AlertContext);
   const userContext = useContext(UserContext);
 
   const { user } = authContext;
   const { profilePicture } = userContext;
-  const { setAlert } = alertContext;
 
   const {
     deletePost,
@@ -25,37 +22,6 @@ const PostCard = ({ post, profileUser, postWrapper }) => {
     commentOnPost,
     deleteCommentOnPost,
   } = postContext;
-
-  const clearInput = useRef();
-
-  const clear = () => {
-    clearInput.current.value = '';
-  };
-
-  const maxAllowedSize = 5 * 1024 * 1024;
-
-  const commentTextState = null;
-  const commentImageState = null;
-
-  const [comment, setComment] = useState(commentTextState);
-  const [commentImage, setCommentImage] = useState(commentImageState);
-
-  const onClick = () => {
-    if (comment === null) {
-      setAlert('Comment can not be left empty', 'danger', 'info-circle');
-    } else if (commentImage === null) {
-      commentOnPost(post._id, comment);
-      setComment(commentTextState);
-    } else {
-      commentOnPost(post._id, comment, commentImage);
-      setComment(commentTextState);
-      setCommentImage(commentImageState);
-    }
-  };
-
-  const onClearImage = () => {
-    setCommentImage(commentImageState);
-  };
 
   return (
     <Fragment>
@@ -165,18 +131,10 @@ const PostCard = ({ post, profileUser, postWrapper }) => {
 
         <AddCommentCard
           user={user}
+          postId={post._id}
           profilePicture={profilePicture}
-          clear={clear}
-          onClick={onClick}
-          clearInput={clearInput}
-          maxAllowedSize={maxAllowedSize}
-          setComment={setComment}
-          comment={comment}
-          setCommentImage={setCommentImage}
-          commentImage={commentImage}
-          onClearImage={onClearImage}
-          setAlert={setAlert}
           profileUser={profileUser}
+          commentOnPost={commentOnPost}
         />
       </div>
     </Fragment>

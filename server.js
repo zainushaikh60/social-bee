@@ -9,7 +9,7 @@ const Posts = require('./routes/posts');
 
 connectDB();
 
-// serving images in upload folder
+// serving images from upload folder
 
 app.use('/uploads', express.static('uploads'));
 

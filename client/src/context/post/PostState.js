@@ -107,17 +107,18 @@ const PostState = (props) => {
 
   //   Comment on post
 
-  const commentOnPost = async (id, comment, commentImage) => {
-    const fd = new FormData();
-    fd.append('text', comment);
-    fd.append('image', commentImage);
+  const commentOnPost = async (id, formData) => {
     const config = {
       headers: {
-        'Content-Type': 'multipart/form-data',
+        'Content-Type': 'application/json',
       },
     };
     try {
-      const res = await axios.post(`/api/posts/comment/${id}`, fd, config);
+      const res = await axios.post(
+        `/api/posts/comment/${id}`,
+        formData,
+        config
+      );
       dispatch({
         type: COMMENT_ON_POST,
         payload: { id, comments: res.data },

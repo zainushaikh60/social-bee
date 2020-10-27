@@ -8,9 +8,7 @@ const gravatar = require('gravatar');
 const { check, validationResult } = require('express-validator');
 const User = require('../models/User');
 
-// @route  Post api/users
-// @desc   Register a user
-// @access Public
+// Register a user
 
 router.post(
   '/',
@@ -330,7 +328,7 @@ router.put('/:id/rejectFriendRequest', auth, async (req, res) => {
   }
 });
 
-// Remove friend
+// Remove a friend
 
 router.put('/:id/removeFriend', auth, async (req, res) => {
   try {
@@ -366,7 +364,7 @@ router.put('/:id/removeFriend', auth, async (req, res) => {
   }
 });
 
-// remove notifications
+// Remove a notification
 
 router.delete('/:id/notifications', auth, async (req, res) => {
   try {
