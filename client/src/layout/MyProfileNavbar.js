@@ -90,13 +90,13 @@ const MyProfileNavbar = () => {
           {user && user.name}
         </Link>
 
-        <Link className='in-active' onClick={onLogout}>
+        <a className='in-active' onClick={onLogout}>
           <i className='fas fa-sign-out-alt'></i> Sign Out
-        </Link>
+        </a>
       </div>
 
       <a className='hamburger' onClick={onSetSideMenu}>
-        <i class='fas fa-bars'></i>
+        <i className='fas fa-bars'></i>
       </a>
 
       {sideMenu ? (
@@ -107,7 +107,7 @@ const MyProfileNavbar = () => {
               onSetSideMenu();
             }}
           >
-            <i class='fas fa-times'></i>
+            <i className='fas fa-times'></i>
           </a>
 
           <div className='side-menu-user-info'>
@@ -142,7 +142,7 @@ const MyProfileNavbar = () => {
             <a>Friends ({friends && friends.length})</a>
             <a>
               <i
-                class={sideFriends ? 'fas fa-caret-up' : 'fas fa-sort-down'}
+                className={sideFriends ? 'fas fa-caret-up' : 'fas fa-sort-down'}
               ></i>
             </a>
           </div>
@@ -168,7 +168,7 @@ const MyProfileNavbar = () => {
             <a>Notifications ({unreadNotifications && unreadNotifications})</a>
             <a>
               <i
-                class={
+                className={
                   sideNotifications ? 'fas fa-caret-up' : 'fas fa-sort-down'
                 }
               ></i>
@@ -212,7 +212,9 @@ const MyProfileNavbar = () => {
               )
             </a>
             <a>
-              <i class={sideUsers ? 'fas fa-caret-up' : 'fas fa-sort-down'}></i>
+              <i
+                className={sideUsers ? 'fas fa-caret-up' : 'fas fa-sort-down'}
+              ></i>
             </a>
           </div>
 

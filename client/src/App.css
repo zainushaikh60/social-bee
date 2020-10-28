@@ -1112,11 +1112,18 @@ label {
     font-size: 90%;
   }
   .profile-cover {
-    width: 500px;
+    max-width: 500px;
+    width: 100%;
+    height: 200px;
+  }
+  .no-cover {
+    max-width: 500px;
+    width: 100%;
     height: 200px;
   }
   .profile-info {
     padding: 0px;
+    width: 400px;
   }
   .container {
     margin: 0px;
@@ -1128,9 +1135,11 @@ label {
     margin: 0px 10px;
   }
   .change-cover {
-    font-size: 30%;
-    margin-bottom: -10px;
+    font-size: 60%;
     padding: 5px;
+  }
+  .change-cp {
+    margin-bottom: 0px;
   }
   .delete-cover {
     padding: 5px;
@@ -1140,7 +1149,7 @@ label {
     padding: 5px;
   }
   .profile-cover label:first-of-type {
-    margin-bottom: -10px;
+    margin-bottom: -5px;
   }
   .profile-picture {
     margin-top: -40px;
@@ -1150,8 +1159,9 @@ label {
   }
   .change-delete-profile-picture .btn {
     padding: 4px;
-    font-size: 40%;
+    font-size: 80%;
     margin: 0px 2px;
+    text-align: center;
   }
 
   .profile-user {
@@ -1175,19 +1185,14 @@ label {
   .alert {
     width: 300px;
   }
+  .profile-cover .change-cp {
+    padding: 5px;
+  }
 }
 
 /* from 0 to 480px */
 
 @media only screen and (max-width: 480px) {
-  body {
-    align-items: center;
-  }
-  .profile-cover,
-  .no-cover {
-    width: 350px;
-    height: 200px;
-  }
   nav .center-menu-container {
     display: none;
   }

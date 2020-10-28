@@ -91,7 +91,7 @@ const Navbar = ({
 
         {fnLayout ? (
           <a className='active'>
-            <i class='far fa-bell'></i>
+            <i className='far fa-bell'></i>
             Notifications
           </a>
         ) : (
@@ -108,7 +108,7 @@ const Navbar = ({
                 }
               }}
             >
-              <i class='far fa-bell notification-bell'>
+              <i className='far fa-bell notification-bell'>
                 {unreadNotifications && unreadNotifications > 0 ? (
                   <p className='notification-length'>{unreadNotifications}</p>
                 ) : (
@@ -122,12 +122,12 @@ const Navbar = ({
 
         {!fnLayout ? (
           <a className='active'>
-            <i class='fas fa-user-friends'></i> Friends
+            <i className='fas fa-user-friends'></i> Friends
           </a>
         ) : (
           fnLayout && (
             <a className='in-active' onClick={onSetLayout}>
-              <i class='fas fa-user-friends'></i> Friends
+              <i className='fas fa-user-friends'></i> Friends
             </a>
           )
         )}
@@ -138,7 +138,7 @@ const Navbar = ({
       </div>
 
       <a className='hamburger' onClick={onSetSideMenu}>
-        <i class='fas fa-bars'></i>
+        <i className='fas fa-bars'></i>
       </a>
 
       {sideMenu ? (
@@ -149,7 +149,7 @@ const Navbar = ({
               onSetSideMenu();
             }}
           >
-            <i class='fas fa-times'></i>
+            <i className='fas fa-times'></i>
           </a>
 
           <div className='side-menu-user-info'>
@@ -184,7 +184,7 @@ const Navbar = ({
             <a>Friends ({friends && friends.length})</a>
             <a>
               <i
-                class={sideFriends ? 'fas fa-caret-up' : 'fas fa-sort-down'}
+                className={sideFriends ? 'fas fa-caret-up' : 'fas fa-sort-down'}
               ></i>
             </a>
           </div>
@@ -210,7 +210,7 @@ const Navbar = ({
             <a>Notifications ({unreadNotifications && unreadNotifications})</a>
             <a>
               <i
-                class={
+                className={
                   sideNotifications ? 'fas fa-caret-up' : 'fas fa-sort-down'
                 }
               ></i>
@@ -253,7 +253,9 @@ const Navbar = ({
               )
             </a>
             <a>
-              <i class={sideUsers ? 'fas fa-caret-up' : 'fas fa-sort-down'}></i>
+              <i
+                className={sideUsers ? 'fas fa-caret-up' : 'fas fa-sort-down'}
+              ></i>
             </a>
           </div>
 

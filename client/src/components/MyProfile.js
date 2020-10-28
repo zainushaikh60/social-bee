@@ -213,13 +213,15 @@ const MyProfile = () => {
                     className={coverPhoto !== null && 'cover-preview'}
                   />
                 </a>
-                <div className='label-container'></div>
-                <label className='btn btn-primary' onClick={onUploadCoverPhoto}>
+                <label
+                  className='btn btn-primary change-cp'
+                  onClick={onUploadCoverPhoto}
+                >
                   Change
                 </label>
                 <label
-                  className='btn btn-primary upload-cover-cancel'
-                  onClick={(e) => {
+                  className='btn btn-primary upload-cover-cancel change-cp'
+                  onClick={() => {
                     setCoverPhoto(coverInitialState);
                   }}
                 >
@@ -397,7 +399,7 @@ const MyProfile = () => {
               <div className='profile-user'>
                 <div className='upload-profile-picture-cancel'>
                   <label
-                    className='btn btn-primary'
+                    className='btn btn-primary '
                     onClick={onUploadProfilePicture}
                   >
                     Change
