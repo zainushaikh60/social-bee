@@ -68,7 +68,7 @@ const PostCard = ({ post, profileUser, postWrapper }) => {
           {user && post.user._id === user._id && (
             <div className='post-delete' onClick={(e) => deletePost(post._id)}>
               <a>
-                <i class='fas fa-times'></i>
+                <i className='fas fa-times'></i>
               </a>
             </div>
           )}
@@ -97,18 +97,19 @@ const PostCard = ({ post, profileUser, postWrapper }) => {
           <div className='post-likes-comments '>
             {user && post.likes.find((like) => like.user === user._id) ? (
               <a className='in-active' onClick={(e) => unlikePost(post._id)}>
-                <i class='fas fa-thumbs-up liked'></i> Unlike |{' '}
+                <i className='fas fa-thumbs-up liked'></i> Unlike |{' '}
                 {post.likes.length} Likes
               </a>
             ) : (
               <a className='in-active' onClick={(e) => likePost(post._id)}>
-                <i class='far fa-thumbs-up'></i> Like | {post.likes.length}{' '}
+                <i className='far fa-thumbs-up'></i> Like | {post.likes.length}{' '}
                 Likes
               </a>
             )}
 
             <a className='in-active'>
-              <i class='far fa-comment-alt'></i> {post.comments.length} Comments
+              <i className='far fa-comment-alt'></i> {post.comments.length}{' '}
+              Comments
             </a>
           </div>
           <div className='hr-line'></div>

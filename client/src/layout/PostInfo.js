@@ -21,7 +21,7 @@ const PostInfo = ({ user, post, deletePost }) => {
         {user && post.user === user._id && (
           <div className='post-delete' onClick={(e) => deletePost(post._id)}>
             <a href='#!'>
-              <i class='fas fa-times'></i>
+              <i className='fas fa-times'></i>
             </a>
           </div>
         )}

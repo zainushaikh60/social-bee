@@ -11,7 +11,7 @@ const NotificationCard = ({ notification, removeNotification }) => {
                 src={
                   notification && notification.user.profilePicture === null
                     ? notification.user.avatar
-                    : notification.user.profilePicture
+                    : `/${notification.user.profilePicture}`
                 }
                 className='user-img'
               />
@@ -27,7 +27,7 @@ const NotificationCard = ({ notification, removeNotification }) => {
           className='remove-notification'
           onClick={() => removeNotification(notification._id)}
         >
-          <i class='fas fa-times'></i>
+          <i className='fas fa-times'></i>
         </a>
       </div>
     </Fragment>

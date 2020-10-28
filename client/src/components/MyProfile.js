@@ -98,7 +98,10 @@ const MyProfile = () => {
                   }
                 />
 
-                <label for='cover-photo' className='btn btn-primary btn-upload'>
+                <label
+                  htmlFor='cover-photo'
+                  className='btn btn-primary btn-upload'
+                >
                   Add Cover Photo
                 </label>
               </div>
@@ -140,7 +143,7 @@ const MyProfile = () => {
                             overFlow();
                           }}
                         >
-                          <i class='fas fa-times'></i>
+                          <i className='fas fa-times'></i>
                         </Link>
                       </div>
                       <div className='modal-btns'>
@@ -173,7 +176,7 @@ const MyProfile = () => {
                 </a>
 
                 <label
-                  for='cover-photo'
+                  htmlFor='cover-photo'
                   className='btn btn-primary change-cover'
                 >
                   Change Cover Photo
@@ -276,7 +279,7 @@ const MyProfile = () => {
 
             {user && profilePicture === null && profilePhoto === null && (
               <div className='profile-user'>
-                <label for='profile-photo' className='btn btn-primary'>
+                <label htmlFor='profile-photo' className='btn btn-primary'>
                   Add Profile Picture
                 </label>
 
@@ -337,7 +340,7 @@ const MyProfile = () => {
                             overFlow();
                           }}
                         >
-                          <i class='fas fa-times'></i>
+                          <i className='fas fa-times'></i>
                         </a>
                       </div>
                       <div className='modal-btns'>
@@ -366,7 +369,7 @@ const MyProfile = () => {
                 )}
 
                 <div className='change-delete-profile-picture'>
-                  <label for='profile-photo' className='btn btn-primary'>
+                  <label htmlFor='profile-photo' className='btn btn-primary'>
                     Change Profile Picture
                   </label>
                   <label className='btn btn-primary' onClick={showPModal}>

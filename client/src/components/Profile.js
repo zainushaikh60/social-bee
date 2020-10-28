@@ -191,9 +191,11 @@ const Profile = (props) => {
               <h4 className='no-friend-message'>{`Add ${
                 props.location.user && props.location.user.name
               } as a friend to see their posts.`}</h4>
-            ) : props.location.user &&
-              posts &&
-              posts.length > 0 &&
+            ) : props.location.user && posts && posts.length === 0 ? (
+              <h4 className='no-friend-message'>{`${
+                props.location.user && props.location.user.name
+              } has no posts.`}</h4>
+            ) : posts.length > 0 &&
               posts
                 .filter(
                   (post) => post.user._id.toString() === props.location.user._id

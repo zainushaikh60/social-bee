@@ -136,7 +136,7 @@ const AddPost = () => {
                   onClearImage();
                 }}
               >
-                <i class='fas fa-times' />
+                <i className='fas fa-times' />
               </Link>
             </div>
           </div>

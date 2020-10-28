@@ -33,7 +33,7 @@ const FriendCard = ({ friend }) => {
               src={
                 friend && friend.profilePicture === null
                   ? friend.avatar
-                  : friend.profilePicture
+                  : `/${friend.profilePicture}`
               }
               className='user-img'
               user={friend}

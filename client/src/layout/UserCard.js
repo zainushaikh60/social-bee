@@ -111,7 +111,7 @@ const UserCard = ({ currentUser }) => {
               src={
                 currentUser.profilePicture === null
                   ? currentUser.avatar
-                  : currentUser.profilePicture
+                  : `/${currentUser.profilePicture}`
               }
               className='user-img'
             />

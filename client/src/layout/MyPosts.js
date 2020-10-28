@@ -13,11 +13,12 @@ const MyPosts = () => {
 
   return (
     <Fragment>
-      {user &&
-      posts.length > 0 &&
-      posts
-        .filter((post) => post.user._id.toString() === user._id)
-        .map((post) => post).length === 0 ? (
+      {user && posts.length === 0 ? (
+        <h4>You have no posts.</h4>
+      ) : posts.length > 0 &&
+        posts
+          .filter((post) => post.user._id.toString() === user._id)
+          .map((post) => post).length === 0 ? (
         <h4>You have no posts.</h4>
       ) : (
         posts

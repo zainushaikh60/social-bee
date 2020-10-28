@@ -87,7 +87,7 @@ const CommentCard = ({
               className='delete-comment'
               onClick={(e) => deleteCommentOnPost(postId, comment._id)}
             >
-              <i class='far fa-trash-alt'></i>
+              <i className='far fa-trash-alt'></i>
             </a>
           )}
         </div>

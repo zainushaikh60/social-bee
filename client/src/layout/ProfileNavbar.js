@@ -94,7 +94,7 @@ const ProfileNavbar = () => {
       </div>
 
       <a className='hamburger' onClick={onSetSideMenu}>
-        <i class='fas fa-bars'></i>
+        <i className='fas fa-bars'></i>
       </a>
 
       {sideMenu ? (
@@ -105,14 +105,16 @@ const ProfileNavbar = () => {
               onSetSideMenu();
             }}
           >
-            <i class='fas fa-times'></i>
+            <i className='fas fa-times'></i>
           </a>
 
           <div className='side-menu-user-info'>
             <Link to='/my-profile' className='in-active'>
               <img
                 src={
-                  user && profilePicture === null ? user.avatar : profilePicture
+                  user && profilePicture === null
+                    ? user.avatar
+                    : `/${profilePicture}`
                 }
                 className='user-img sidebar-user-img'
               />
@@ -136,7 +138,7 @@ const ProfileNavbar = () => {
             <a>Friends ({friends && friends.length})</a>
             <a>
               <i
-                class={sideFriends ? 'fas fa-caret-up' : 'fas fa-sort-down'}
+                className={sideFriends ? 'fas fa-caret-up' : 'fas fa-sort-down'}
               ></i>
             </a>
           </div>
@@ -162,13 +164,12 @@ const ProfileNavbar = () => {
             <a>Notifications ({unreadNotifications && unreadNotifications})</a>
             <a>
               <i
-                class={
+                className={
                   sideNotifications ? 'fas fa-caret-up' : 'fas fa-sort-down'
                 }
               ></i>
             </a>
           </div>
-
           {sideNotifications && (
             <div
               className='side-menu-user-friends'
@@ -206,7 +207,9 @@ const ProfileNavbar = () => {
               )
             </a>
             <a>
-              <i class={sideUsers ? 'fas fa-caret-up' : 'fas fa-sort-down'}></i>
+              <i
+                className={sideUsers ? 'fas fa-caret-up' : 'fas fa-sort-down'}
+              ></i>
             </a>
           </div>
 
