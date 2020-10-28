@@ -179,7 +179,10 @@ const MyProfile = () => {
                   Change Cover Photo
                 </label>
 
-                <label className='btn btn-primary' onClick={showCModal}>
+                <label
+                  className='btn btn-primary change-cover'
+                  onClick={showCModal}
+                >
                   Delete Cover Photo
                 </label>
 

@@ -42,8 +42,8 @@ const Home = () => {
   }, []);
 
   const [profile, setProfile] = useState(false);
-
   const [fnLayout, setFnLayout] = useState(false);
+  const [sideMenu, setSideMenu] = useState(false);
 
   const onSetProfile = () => {
     setProfile((profile) => !profile);
@@ -53,12 +53,18 @@ const Home = () => {
     setFnLayout((fnLayout) => !fnLayout);
   };
 
+  const onSetSideMenu = () => {
+    setSideMenu((sideMenu) => !sideMenu);
+  };
+
   return (
     <Fragment>
       <Navbar
         onClick={onSetProfile}
         profile={profile}
         onSetLayout={onSetFnLayout}
+        onSetSideMenu={onSetSideMenu}
+        sideMenu={sideMenu}
         fnLayout={fnLayout}
         unreadNotifications={unreadNotifications}
         readAllNotifications={readAllNotifications}

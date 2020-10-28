@@ -42,7 +42,9 @@ const FriendCard = ({ friend }) => {
           </Link>
         </div>
         <div className='user-badge'>
-          <a onClick={onRemoveFriend}>Unfriend</a>
+          <a className='clearfix' onClick={onRemoveFriend}>
+            Unfriend
+          </a>
         </div>
       </div>
     </Fragment>

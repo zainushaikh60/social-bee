@@ -50,13 +50,12 @@ const PostCard = ({ post, profileUser, postWrapper }) => {
                 className='user-img'
               />
             </Link>
-
             <div className='post-by-name-date'>
               <Link
                 to={
                   user && post.user._id.toString() === user._id
                     ? '/my-profile'
-                    : '/profile'
+                    : { pathname: `/profile/${post.user._id}`, user: post.user }
                 }
               >
                 {post.user.name}

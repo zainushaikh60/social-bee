@@ -122,9 +122,7 @@ const Profile = (props) => {
             {props.location.user && props.location.user.cover !== null && (
               <div className='profile-cover'>
                 <a>
-                  <img
-                    src={props.location.user && `/${props.location.user.cover}`}
-                  />
+                  <img src={`/${props.location.user.cover}`} />
                 </a>
               </div>
             )}
@@ -155,7 +153,7 @@ const Profile = (props) => {
 
             {isFriends && (
               <div className='user-badge profile-user-margin'>
-                <a>Friend</a>
+                <a className='clearfix'>Friend</a>
               </div>
             )}
 
@@ -163,21 +161,29 @@ const Profile = (props) => {
               <div className='user-badge profile-user-request'>
                 <p>Respond to friend request</p>
                 <div>
-                  <a onClick={onRejectFriendRequest}>Reject</a>
-                  <a onClick={onAcceptFriendRequest}>Accept</a>
+                  <a className='clearfix' onClick={onRejectFriendRequest}>
+                    Reject
+                  </a>
+                  <a className='clearfix' onClick={onAcceptFriendRequest}>
+                    Accept
+                  </a>
                 </div>
               </div>
             )}
 
             {isFriendRequestTo && (
               <div className='user-badge profile-user-margin'>
-                <a onClick={onCancelFriendRequest}>Cancel Friend Request</a>
+                <a className='clearfix' onClick={onCancelFriendRequest}>
+                  Cancel Friend Request
+                </a>
               </div>
             )}
 
             {!isFriends && !isFriendRequestTo && !isFriendRequestBy && (
               <div className='user-badge profile-user-margin'>
-                <a onClick={onSendFriendRequest}>Add Friend</a>
+                <a className='clearfix' onClick={onSendFriendRequest}>
+                  Add Friend
+                </a>
               </div>
             )}
 

@@ -121,27 +121,35 @@ const UserCard = ({ currentUser }) => {
 
         {isFriends && (
           <div className='user-badge'>
-            <a>Friend</a>
+            <a className='clearfix'>Friend</a>
           </div>
         )}
 
         {isFriendRequestBy && (
           <div className='user-badge'>
             <p>Respond to friend request</p>
-            <a onClick={onRejectFriendRequest}>Reject</a>
-            <a onClick={onAcceptFriendRequest}>Accept</a>
+            <a className='clearfix' onClick={onRejectFriendRequest}>
+              Reject
+            </a>
+            <a className='clearfix' onClick={onAcceptFriendRequest}>
+              Accept
+            </a>
           </div>
         )}
 
         {isFriendRequestTo && (
           <div className='user-badge'>
-            <a onClick={onCancelFriendRequest}>Cancel Friend Request</a>
+            <a className='clearfix' onClick={onCancelFriendRequest}>
+              Cancel Friend Request
+            </a>
           </div>
         )}
 
         {!isFriends && !isFriendRequestTo && !isFriendRequestBy && (
           <div className='user-badge'>
-            <a onClick={onSendFriendRequest}>Add Friend</a>
+            <a className='clearfix' onClick={onSendFriendRequest}>
+              Add Friend
+            </a>
           </div>
         )}
       </div>
