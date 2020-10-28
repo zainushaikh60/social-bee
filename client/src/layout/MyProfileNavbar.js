@@ -111,7 +111,11 @@ const MyProfileNavbar = () => {
           </a>
 
           <div className='side-menu-user-info'>
-            <Link to='/my-profile' className='in-active'>
+            <Link
+              to='/my-profile'
+              className='in-active'
+              onClick={onSetSideMenu}
+            >
               <img
                 src={
                   user && profilePicture === null ? user.avatar : profilePicture

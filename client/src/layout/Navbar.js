@@ -164,7 +164,11 @@ const Navbar = ({
             </Link>
           </div>
 
-          <Link to='/' className='in-active sidemenu-logout'>
+          <Link
+            to='/'
+            className='in-active sidemenu-logout'
+            onClick={onSetSideMenu}
+          >
             <i className='fas fa-home'></i>
             Home
           </Link>
