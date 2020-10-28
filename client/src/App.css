@@ -1005,7 +1005,8 @@ label {
 }
 
 .sidebar-user-img {
-  width: 130px;
+  width: 100px;
+  height: 100px;
   margin-top: 10px;
 }
 
@@ -1145,12 +1146,31 @@ label {
     margin-top: -40px;
     width: 100px;
     height: 100px;
-    margin-bottom: 5px;
+    margin-bottom: 10px;
   }
   .change-delete-profile-picture .btn {
     padding: 4px;
     font-size: 40%;
     margin: 0px 2px;
+  }
+
+  .profile-user {
+    margin-bottom: 10px;
+  }
+
+  .profile-user label {
+    margin: 5px 0px;
+    padding: 5px;
+  }
+
+  .btn-upload {
+    width: 50%;
+    padding: 4px;
+  }
+
+  .no-posts-h4 {
+    text-align: center;
+    margin: 0px 5px;
   }
 }
 
@@ -1160,8 +1180,9 @@ label {
   body {
     align-items: center;
   }
-  .profile-cover {
-    width: 250px;
+  .profile-cover,
+  .no-cover {
+    width: 350px;
     height: 200px;
   }
   nav .center-menu-container {

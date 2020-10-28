@@ -23,7 +23,9 @@ const Post = () => {
           post.user.friends.find((friend) => friend.toString() === user._id)
         )
         .map((post) => post).length === 0 ? (
-        <h4>Add a post or add friends to see their posts.</h4>
+        <h4 className='no-posts-h4'>
+          Add a post or add friends to see their posts.
+        </h4>
       ) : (
         user &&
         posts
