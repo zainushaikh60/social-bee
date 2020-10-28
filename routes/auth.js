@@ -239,7 +239,7 @@ router.get('/friends', auth, async (req, res) => {
   try {
     const user = await User.findById(req.user.id).populate({
       path: 'friends',
-      select: 'name avatar profilePicture email',
+      select: 'name avatar profilePicture email cover',
     });
     return res.json(user.friends);
   } catch (err) {

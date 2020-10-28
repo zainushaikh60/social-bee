@@ -46,7 +46,7 @@ const UserSchema = mongoose.Schema({
 UserSchema.pre('save', async function (next) {
   await this.populate({
     path: 'friends',
-    select: 'name email avatar profilePicture',
+    select: 'name email avatar profilePicture cover',
   })
     .populate({
       path: 'notifications',
