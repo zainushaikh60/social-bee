@@ -1172,6 +1172,9 @@ label {
     text-align: center;
     margin: 0px 5px;
   }
+  .alert {
+    width: 300px;
+  }
 }
 
 /* from 0 to 480px */

@@ -15,7 +15,7 @@ const SignUp = (props) => {
     }
 
     if (error === 'User already exists') {
-      setAlert(error);
+      setAlert(error, 'danger', 'info-circle');
       clearErrors();
     }
   }, [error, isAuthenticated, props.history]);

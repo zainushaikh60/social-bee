@@ -14,7 +14,7 @@ const SignIn = (props) => {
       props.history.push('/');
     }
     if (error === 'Invalid Credentials') {
-      setAlert(error, 'danger');
+      setAlert(error, 'danger', 'info-circle');
       clearErrors();
     }
     // eslint-disable-next-line
