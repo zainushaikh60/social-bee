@@ -1183,7 +1183,9 @@ label {
     margin: 0px 5px;
   }
   .alert {
-    width: 300px;
+    width: 340px;
+
+    font-size: 70%;
   }
   .profile-cover .change-cp {
     padding: 5px;
