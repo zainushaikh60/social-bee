@@ -35,6 +35,12 @@ const SignUp = (props) => {
     e.preventDefault();
     if (name === '' || email === '' || password === '' || password2 === '') {
       setAlert('Please enter all fields', 'danger', 'info-circle');
+    } else if (password.length < 6) {
+      setAlert(
+        'Password should be of atleast 6 characters',
+        'danger',
+        'info-circle'
+      );
     } else if (password !== password2) {
       setAlert('Passwords do not match', 'danger', 'info-circle');
     } else {
