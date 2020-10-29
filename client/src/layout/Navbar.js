@@ -205,9 +205,16 @@ const Navbar = ({
 
           <div
             className='side-menu-user-friends-toggle'
-            onClick={onSetSideNotifications}
+            onClick={() => {
+              onSetSideNotifications();
+              {
+                unreadNotifications &&
+                  unreadNotifications > 0 &&
+                  readAllNotifications();
+              }
+            }}
           >
-            <a>Notifications ({unreadNotifications && unreadNotifications})</a>
+            <a>Notifications ({notifications && notifications.length})</a>
             <a>
               <i
                 className={
@@ -218,14 +225,7 @@ const Navbar = ({
           </div>
 
           {sideNotifications && (
-            <div
-              className='side-menu-user-friends'
-              onClick={() => {
-                unreadNotifications &&
-                  unreadNotifications > 0 &&
-                  readAllNotifications();
-              }}
-            >
+            <div className='side-menu-user-friends'>
               {notifications && notifications.length === 0 && (
                 <p className='no-update'>No notifications</p>
               )}

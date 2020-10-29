@@ -19,7 +19,9 @@ const NotificationCard = ({ notification, removeNotification }) => {
           </div>
 
           <div className='notification-text'>
-            <p>{notification && notification.notification}</p>
+            <p className='notification-msg'>
+              {notification && notification.notification}
+            </p>
           </div>
         </div>
 

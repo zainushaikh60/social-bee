@@ -138,7 +138,7 @@ const UserCard = ({ currentUser }) => {
         )}
 
         {isFriendRequestTo && (
-          <div className='user-badge'>
+          <div className='user-badge sidemenu-badge'>
             <a className='clearfix' onClick={onCancelFriendRequest}>
               Cancel Friend Request
             </a>

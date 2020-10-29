@@ -1188,6 +1188,14 @@ label {
   .profile-cover .change-cp {
     padding: 5px;
   }
+  .sidemenu-badge {
+    padding: 3px;
+    text-align: center;
+    font-size: 86%;
+  }
+  .notification-text .notification-msg {
+    font-size: 97%;
+  }
 }
 
 /* from 0 to 480px */
