@@ -1198,6 +1198,9 @@ label {
   .notification-text .notification-msg {
     font-size: 97%;
   }
+  .post-body p {
+    font-weight: 300;
+  }
 }
 
 /* from 0 to 480px */

@@ -75,7 +75,7 @@ const PostCard = ({ post, profileUser, postWrapper }) => {
         </div>
 
         <div className='post-body'>
-          <p>{post.text}</p>
+          <p className='post-text'>{post.text}</p>
         </div>
 
         {post.image && post.image !== null && (
